@@ -32,6 +32,21 @@ export function RevealObserver() {
           if (!e.isIntersecting) continue;
           io.unobserve(e.target);
           const urutan = parseFloat(getComputedStyle(e.target).getPropertyValue("--d")) || 0;
+          // Mode kata per kata: tiap span.kata naik halus bergiliran.
+          if (e.target.hasAttribute("data-reveal-kata")) {
+            const jeda = parseFloat(e.target.getAttribute("data-reveal-kata") || "") || 30;
+            e.target.querySelectorAll<HTMLElement>(".kata").forEach((k) => {
+              const i = parseFloat(k.style.getPropertyValue("--i")) || 0;
+              k.animate(
+                [
+                  { opacity: 0, transform: "translate3d(0, 0.6em, 0)" },
+                  { opacity: 1, transform: "none" },
+                ],
+                { duration: 700, delay: urutan * 110 + i * jeda, easing, fill: "both" },
+              );
+            });
+            continue;
+          }
           (e.target as HTMLElement).animate(
             [
               { opacity: 0, transform: "translate3d(0, 32px, 0)" },
@@ -45,7 +60,7 @@ export function RevealObserver() {
     );
 
     const pindai = () => {
-      document.querySelectorAll("[data-reveal]").forEach((el) => {
+      document.querySelectorAll("[data-reveal], [data-reveal-kata]").forEach((el) => {
         if (sudah.has(el)) return;
         sudah.add(el);
         io.observe(el);

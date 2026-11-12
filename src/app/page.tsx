@@ -8,6 +8,7 @@ import { EkskulTabs } from "@/components/home/ekskul-tabs";
 import { SectionHead } from "@/components/ui/section-head";
 import { CountUp } from "@/components/ui/count-up";
 import { Contoh } from "@/components/ui/contoh";
+import { TeksKata, jumlahKata } from "@/components/ui/teks-kata";
 import { Foto, LabelIlustrasi } from "@/components/ui/foto";
 import { IkonWhatsApp } from "@/components/ui/icons";
 import { AGENDA, urutBerita } from "@/data/berita";
@@ -121,17 +122,22 @@ export default function Beranda() {
             <div className="potret-alas" aria-hidden="true" />
           </div>
           <div className="min-w-0">
-            <div data-reveal className="flex flex-wrap items-center gap-3">
-              <h2 id="judul-sambutan" className="text-h2">
-                Sambutan kepala sekolah
+            <div className="flex flex-wrap items-center gap-3">
+              {/* Teks muncul kata per kata (lihat TeksKata + RevealObserver). */}
+              <h2 id="judul-sambutan" data-reveal-kata="70" className="text-h2">
+                <TeksKata teks="Sambutan kepala sekolah" />
               </h2>
               {SAMBUTAN.contoh && <Contoh teks="Teks contoh" />}
             </div>
-            <div data-reveal style={{ "--d": 1 } as React.CSSProperties} className="mt-8 flex flex-col gap-5 text-lead text-ink-2">
-              <p>{SAMBUTAN.salam}</p>
-              <p>{SAMBUTAN.paragraf[0]}</p>
+            <div className="mt-8 flex flex-col gap-5 text-lead text-ink-2">
+              <p data-reveal-kata="28" style={{ "--d": 3 } as React.CSSProperties}>
+                <TeksKata teks={SAMBUTAN.salam} />
+              </p>
+              <p data-reveal-kata="28" style={{ "--d": 4 } as React.CSSProperties}>
+                <TeksKata teks={SAMBUTAN.paragraf[0]} mulai={jumlahKata(SAMBUTAN.salam)} />
+              </p>
             </div>
-            <div data-reveal style={{ "--d": 2 } as React.CSSProperties} className="mt-10 flex flex-wrap items-end justify-between gap-6">
+            <div data-reveal style={{ "--d": 9 } as React.CSSProperties} className="mt-10 flex flex-wrap items-end justify-between gap-6">
               <div>
                 <p className="text-h3 text-ink">{SAMBUTAN.nama}</p>
                 <p className="mt-1 text-ink-2">{SAMBUTAN.jabatan}</p>

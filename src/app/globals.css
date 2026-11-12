@@ -496,7 +496,16 @@
   opacity: 0;
   transform: translate3d(0, 32px, 0);
 }
+/* Teks muncul kata per kata (TeksKata). */
+.kata {
+  display: inline-block;
+}
+.js [data-reveal-kata] .kata {
+  opacity: 0;
+  transform: translate3d(0, 0.6em, 0);
+}
 @media print {
+  .js [data-reveal-kata] .kata,
   .js [data-reveal] {
     opacity: 1;
     transform: none;
@@ -676,6 +685,7 @@ dialog.lightbox::backdrop {
 
 /* ---------- Gerak dikurangi ---------- */
 @media (prefers-reduced-motion: reduce) {
+  .js [data-reveal-kata] .kata,
   .js [data-reveal] {
     opacity: 1;
     transform: none;
