@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Award, CircleCheck, HeartHandshake, MessageCircle } from "lucide-react";
 import { PageHero } from "@/components/ui/page-hero";
 import { SubNav } from "@/components/ui/sub-nav";
@@ -6,7 +7,7 @@ import { SectionHead } from "@/components/ui/section-head";
 import { CatatanContoh, Contoh } from "@/components/ui/contoh";
 import { IkonWhatsApp } from "@/components/ui/icons";
 import { EkskulGrid } from "@/components/kesiswaan/ekskul-grid";
-import { EKSKUL, KATEGORI_EKSKUL, LAYANAN_BK, OSIS, PRESTASI, TATA_TERTIB } from "@/data/kesiswaan";
+import { EKSKUL, KATEGORI_EKSKUL, LAYANAN_BK, OSIS, POSTER_PRESTASI, PRESTASI, TATA_TERTIB } from "@/data/kesiswaan";
 import { waLink } from "@/lib/format";
 
 export const metadata: Metadata = {
@@ -74,8 +75,21 @@ export default function Kesiswaan() {
       <section id="prestasi" aria-labelledby="judul-prestasi" className="section-y">
         <div className="container-site">
           <SectionHead id="judul-prestasi" judul="Prestasi siswa" teks={<p>Capaian siswa di berbagai lomba dan kejuaraan.</p>} />
-          <CatatanContoh className="mt-8">Semua prestasi di bawah ini contoh, bukan capaian sebenarnya.</CatatanContoh>
-          <div data-reveal className="mt-8 overflow-x-auto rounded-[14px] border border-line">
+          {/* Poster prestasi dari Instagram sekolah; ketuk untuk ukuran penuh. */}
+          <ul className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+            {POSTER_PRESTASI.map((p, i) => (
+              <li key={p.src} data-reveal style={{ "--d": i % 4 } as React.CSSProperties}>
+                <a href={p.src} target="_blank" rel="noopener noreferrer" className="zoom-wrap group block">
+                  <span className="relative block aspect-[9/10] overflow-hidden rounded-[14px] border border-line bg-paper-2">
+                    <Image src={p.src} alt={p.judul} fill sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw" className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]" />
+                  </span>
+                  <span className="mt-3 block text-sm font-semibold leading-snug text-ink">{p.judul}</span>
+                  <span className="mt-1 block text-[0.8125rem] text-muted">{p.ket}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+          <div data-reveal className="mt-12 overflow-x-auto rounded-[14px] border border-line">
             <table className="w-full min-w-[640px] text-left">
               <caption className="sr-only">Daftar prestasi siswa</caption>
               <thead className="bg-paper-2">
@@ -91,9 +105,12 @@ export default function Kesiswaan() {
                   <tr key={p.judul} className="border-t border-line">
                     <td className="px-6 py-4 tabular-nums text-ink-2">{p.tahun}</td>
                     <th scope="row" className="px-6 py-4 font-semibold text-ink">
-                      <span className="flex items-center gap-3">
-                        <Award size={18} aria-hidden="true" className="shrink-0 text-brand" />
-                        {p.judul}
+                      <span className="flex items-start gap-3">
+                        <Award size={18} aria-hidden="true" className="mt-0.5 shrink-0 text-brand" />
+                        <span>
+                          {p.judul}
+                          {p.nama && <span className="mt-0.5 block text-sm font-normal text-ink-2">{p.nama}</span>}
+                        </span>
                       </span>
                     </th>
                     <td className="px-6 py-4 text-ink-2">{p.tingkat}</td>

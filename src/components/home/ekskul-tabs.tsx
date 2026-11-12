@@ -3,8 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { Award } from "lucide-react";
-import type { Ekskul, Prestasi } from "@/data/kesiswaan";
+import { ArrowRight } from "lucide-react";
+import type { Ekskul, PosterPrestasi } from "@/data/kesiswaan";
 import { TAMPILKAN_LABEL_CONTOH } from "@/data/sekolah";
 import { apakahIlustrasi } from "@/data/foto";
 import { Contoh } from "@/components/ui/contoh";
@@ -13,7 +13,7 @@ import { IKON_EKSKUL } from "@/components/ui/icons";
 const TAB = ["Ekstrakurikuler", "Prestasi"] as const;
 
 /** Kartu foto vertikal gaya "Our Group Businesses" Pertamina. */
-export function EkskulTabs({ ekskul, prestasi }: { ekskul: Ekskul[]; prestasi: Prestasi[] }) {
+export function EkskulTabs({ ekskul, prestasi }: { ekskul: Ekskul[]; prestasi: PosterPrestasi[] }) {
   const [tab, setTab] = useState<(typeof TAB)[number]>("Ekstrakurikuler");
   // Yang punya foto tampil dulu; sisanya memakai panel hijau berikon sampai fotonya tersedia.
   const kartu = [...ekskul].sort((a, b) => Number(!!b.gambar) - Number(!!a.gambar)).slice(0, 5);
@@ -55,7 +55,7 @@ export function EkskulTabs({ ekskul, prestasi }: { ekskul: Ekskul[]; prestasi: P
                         alt={`Kegiatan ${e.nama}`}
                         fill
                         sizes="(min-width: 1024px) 20vw, 64vw"
-                        className="object-cover"
+                        className="object-cover" style={{ objectPosition: e.posisiGambar }}
                       />
                       <span className="scrim-top absolute inset-0" aria-hidden="true" />
                     </>
@@ -84,25 +84,31 @@ export function EkskulTabs({ ekskul, prestasi }: { ekskul: Ekskul[]; prestasi: P
         </div>
 
         <div role="tabpanel" id="panel-Prestasi" aria-labelledby="tab-Prestasi" hidden={tab !== "Prestasi"}>
-          <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {prestasi.map((p) => (
-              <li key={p.judul} className="flex gap-5 rounded-[10px] border border-line bg-paper p-6">
-                <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-brand-soft text-brand">
-                  <Award size={22} aria-hidden="true" />
-                </span>
-                <span className="min-w-0">
-                  <span className="block text-sm text-muted">
-                    {p.tahun}, tingkat {p.tingkat.toLowerCase()}
+              <li key={p.src}>
+                <Link href="/kesiswaan#prestasi" className="zoom-wrap group flex h-full flex-col overflow-hidden rounded-[10px] border border-line bg-paper">
+                  <span className="relative block aspect-[4/3] overflow-hidden bg-paper-2">
+                    <Image
+                      src={p.src}
+                      alt={p.judul}
+                      fill
+                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+                    />
                   </span>
-                  <span className="mt-1 block font-semibold leading-snug text-ink">{p.judul}</span>
-                  <span className="mt-3 flex flex-wrap items-center gap-2 text-sm text-ink-2">
-                    {p.bidang}
-                    {p.contoh && <Contoh />}
+                  <span className="flex flex-1 flex-col p-5">
+                    <span className="text-sm text-muted">{p.ket}</span>
+                    <span className="mt-1 font-semibold leading-snug text-ink">{p.judul}</span>
                   </span>
-                </span>
+                </Link>
               </li>
             ))}
           </ul>
+          <Link href="/kesiswaan#prestasi" className="btn-pill mt-8">
+            Semua prestasi
+            <ArrowRight size={18} aria-hidden="true" />
+          </Link>
         </div>
       </div>
     </div>

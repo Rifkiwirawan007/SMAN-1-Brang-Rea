@@ -49,10 +49,12 @@ export default async function DetailBerita({ params }: PageProps<"/berita/[slug]
           <div className="min-w-0">
             <p className="flex flex-wrap items-center gap-3 text-sm text-muted">
               <span className="font-semibold text-brand">{b.kategori}</span>
-              <span className="flex items-center gap-2">
-                <CalendarDays size={15} aria-hidden="true" />
-                <time dateTime={b.tanggal}>{formatTanggal(b.tanggal)}</time>
-              </span>
+              {b.tanggal && (
+                <span className="flex items-center gap-2">
+                  <CalendarDays size={15} aria-hidden="true" />
+                  <time dateTime={b.tanggal}>{formatTanggal(b.tanggal)}</time>
+                </span>
+              )}
               {b.contoh && <Contoh teks="Berita contoh" />}
             </p>
             <div className="prose-sekolah mt-8 max-w-[68ch] text-ink-2">
@@ -65,7 +67,7 @@ export default async function DetailBerita({ params }: PageProps<"/berita/[slug]
                 <a href={b.halaman} target="_blank" rel="noopener noreferrer" className="block overflow-hidden rounded-[14px] border border-line">
                   <Image
                     src={b.halaman}
-                    alt={`Halaman buletin Lensa Barema: ${b.judul}`}
+                    alt={b.keteranganHalaman ? b.judul : `Halaman buletin Lensa Barema: ${b.judul}`}
                     width={1486}
                     height={1800}
                     sizes="(min-width: 768px) 720px, 100vw"
@@ -73,9 +75,16 @@ export default async function DetailBerita({ params }: PageProps<"/berita/[slug]
                     className="h-auto w-full"
                   />
                 </a>
-                <figcaption className="mt-3 text-sm text-muted">Halaman buletin Lensa Barema. Ketuk gambar untuk membuka ukuran penuh.</figcaption>
+                <figcaption className="mt-3 text-sm text-muted">{b.keteranganHalaman ?? "Halaman buletin Lensa Barema. Ketuk gambar untuk membuka ukuran penuh."}</figcaption>
               </figure>
             )}
+            {b.fotoLain?.map((src) => (
+              <figure key={src} className="mt-6 max-w-[720px]">
+                <a href={src} target="_blank" rel="noopener noreferrer" className="block overflow-hidden rounded-[14px] border border-line">
+                  <Image src={src} alt={b.judul} width={1080} height={1010} sizes="(min-width: 768px) 720px, 100vw" quality={90} className="h-auto w-full" />
+                </a>
+              </figure>
+            ))}
             {b.sumber && <p className="mt-8 text-sm text-muted">Sumber: {b.sumber}</p>}
             <Link href="/berita" className="btn-pill mt-8">
               <ArrowLeft size={18} aria-hidden="true" />

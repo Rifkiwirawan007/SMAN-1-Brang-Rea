@@ -12,7 +12,7 @@ import { TeksKata, jumlahKata } from "@/components/ui/teks-kata";
 import { Foto, LabelIlustrasi } from "@/components/ui/foto";
 import { IkonWhatsApp } from "@/components/ui/icons";
 import { AGENDA, urutBerita } from "@/data/berita";
-import { EKSKUL, PRESTASI } from "@/data/kesiswaan";
+import { EKSKUL, POSTER_PRESTASI } from "@/data/kesiswaan";
 import { SAMBUTAN } from "@/data/profil";
 import { apakahIlustrasi } from "@/data/foto";
 import { MAPS_EMBED, MAPS_LINK, SEKOLAH, TAMPILKAN_LABEL_CONTOH } from "@/data/sekolah";
@@ -257,11 +257,11 @@ export default function Beranda() {
           <SectionHead
             id="judul-kegiatan"
             judul="Kegiatan dan prestasi siswa"
-            teks={<p>Sepuluh ekstrakurikuler menjadi tempat siswa berlatih memimpin, berkarya, dan bertanding.</p>}
+            teks={<p>Sepuluh ekstrakurikuler menjadi tempat siswa berlatih memimpin, berkarya, dan bertanding hingga tingkat provinsi dan nasional.</p>}
             aksi={{ label: "Kesiswaan", href: "/kesiswaan" }}
           />
           <div className="mt-14">
-            <EkskulTabs ekskul={EKSKUL} prestasi={PRESTASI} />
+            <EkskulTabs ekskul={EKSKUL} prestasi={POSTER_PRESTASI.slice(0, 6)} />
           </div>
         </div>
       </section>

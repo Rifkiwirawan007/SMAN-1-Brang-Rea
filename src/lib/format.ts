@@ -3,6 +3,7 @@ import { SEKOLAH } from "@/data/sekolah";
 const zonaSekolah = "Asia/Makassar"; // WITA
 
 export function formatTanggal(iso: string, opsi?: { pendek?: boolean }) {
+  if (!iso) return "";
   return new Intl.DateTimeFormat("id-ID", {
     day: "numeric",
     month: opsi?.pendek ? "short" : "long",

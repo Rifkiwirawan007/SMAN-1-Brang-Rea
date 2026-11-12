@@ -112,9 +112,13 @@ export function BeritaList({ daftar, kategori }: { daftar: BeritaTampil[]; kateg
                 </span>
                 <span className="mt-5 text-h3 text-ink transition-colors duration-200 group-hover:text-brand">{b.judul}</span>
                 <span className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.8125rem] text-muted">
-                  <CalendarDays size={15} aria-hidden="true" />
-                  {b.tanggalTampil}
-                  <span aria-hidden="true">·</span>
+                  {b.tanggalTampil && (
+                    <>
+                      <CalendarDays size={15} aria-hidden="true" />
+                      {b.tanggalTampil}
+                      <span aria-hidden="true">·</span>
+                    </>
+                  )}
                   <span className="font-semibold text-brand">{b.kategori}</span>
                   {b.contoh && <Contoh className="ml-1" />}
                 </span>

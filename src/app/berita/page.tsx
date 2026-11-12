@@ -58,9 +58,13 @@ export default function HalamanBerita() {
                     </span>
                     {i === 0 && <span className="max-w-[56ch] text-white/85">{b.ringkasan}</span>}
                     <span className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.8125rem] text-white/80">
-                      <CalendarDays size={15} aria-hidden="true" />
-                      {b.tanggalTampil}
-                      <span aria-hidden="true">·</span>
+                      {b.tanggalTampil && (
+                        <>
+                          <CalendarDays size={15} aria-hidden="true" />
+                          {b.tanggalTampil}
+                          <span aria-hidden="true">·</span>
+                        </>
+                      )}
                       {b.kategori}
                       {b.contoh && <Contoh className="ml-1" />}
                     </span>

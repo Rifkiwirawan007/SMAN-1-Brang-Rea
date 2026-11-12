@@ -31,7 +31,7 @@ export function EkskulGrid({ daftar, kategori }: { daftar: Ekskul[]; kategori: K
               <div className="relative aspect-[16/9] overflow-hidden bg-brand">
                 {e.gambar ? (
                   <>
-                    <Image src={e.gambar} alt={`Kegiatan ${e.nama}`} fill sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw" className="object-cover" />
+                    <Image src={e.gambar} alt={`Kegiatan ${e.nama}`} fill sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw" className="object-cover" style={{ objectPosition: e.posisiGambar }} />
                     {TAMPILKAN_LABEL_CONTOH && apakahIlustrasi(e.gambar) && (
                       <span className="absolute right-3 top-3 rounded-full bg-scrim/60 px-2.5 py-0.5 text-[0.6875rem] leading-5 text-white">
                         Foto ilustrasi
