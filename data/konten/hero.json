@@ -23,18 +23,18 @@
   {
     "id": "561239d939",
     "dibuat": "2026-11-12T14:51:12.699Z",
-    "diubah": "2026-11-12T14:51:12.699Z",
+    "diubah": "2026-11-13T06:33:00.750Z",
     "oleh": "Sistem",
     "tab": "Ekstrakurikuler",
     "judul": "Ruang tumbuh di luar kelas",
     "teks": "Pramuka, Paskibra, seni tari, olahraga, dan kegiatan keagamaan.",
-    "gambar": "/images/sekolah/video-ekskul-poster.jpg",
-    "alt": "Penampil berkostum merah menari di depan air terjun di Brang Rea",
+    "gambar": "/images/sekolah/video-sekolah-poster.jpg",
+    "alt": "Siswi SMAN 1 Brang Rea belajar bersama di kelas",
     "video": {
-      "besar": "/video/ekskul-hd.mp4",
-      "kecil": "/video/ekskul-hp.mp4"
+      "besar": "/video/sekolah-hd.mp4",
+      "kecil": "/video/sekolah-hp.mp4"
     },
-    "durasi": 20,
+    "durasi": 15,
     "aksi": {
       "label": "Lihat kesiswaan",
       "href": "/kesiswaan"
