@@ -39,7 +39,7 @@ export function SubNav({ items }: { items: Item[] }) {
   return (
     <div className="subnav sticky top-0 z-30 border-b border-line bg-paper/95 backdrop-blur-md">
       <nav aria-label="Bagian halaman" className="container-site">
-        <ul ref={listRef} className="rail -mx-1 flex gap-1 overflow-x-auto">
+        <ul ref={listRef} className="rail -mx-1 flex gap-1 overflow-x-auto scroll-px-1">
           {items.map((i) => {
             const on = aktif === i.id;
             return (

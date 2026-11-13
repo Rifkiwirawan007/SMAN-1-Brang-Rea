@@ -679,6 +679,7 @@ html:not(.js) .hero-slide:not([data-active="true"]) {
 /* ---------- Carousel kartu ---------- */
 .rail {
   scroll-snap-type: x mandatory;
+  scroll-padding-inline: clamp(20px, 5vw, 64px);
   scrollbar-width: none;
   overscroll-behavior-x: contain;
 }

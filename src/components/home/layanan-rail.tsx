@@ -43,7 +43,7 @@ export function LayananRail({ kartu }: { kartu: KartuLayanan[] }) {
     <div>
       <ul
         ref={railRef}
-        className="rail group/rail flex gap-6 overflow-x-auto py-5 pr-[clamp(20px,5vw,64px)]"
+        className="rail group/rail flex gap-6 overflow-x-auto px-[clamp(20px,5vw,64px)] py-5 lg:pl-0 lg:scroll-pl-0"
         aria-label="Layanan sekolah"
       >
         {kartu.map((k, i) => (
@@ -73,7 +73,7 @@ export function LayananRail({ kartu }: { kartu: KartuLayanan[] }) {
           </li>
         ))}
       </ul>
-      <div className="mt-6 flex gap-3 lg:ml-36">
+      <div className="mt-6 flex gap-3 px-[clamp(20px,5vw,64px)] lg:ml-36 lg:px-0">
         <button type="button" className="btn-square" onClick={() => geser(-1)} disabled={awal} aria-label="Kartu sebelumnya">
           <ArrowLeft size={20} aria-hidden="true" />
         </button>

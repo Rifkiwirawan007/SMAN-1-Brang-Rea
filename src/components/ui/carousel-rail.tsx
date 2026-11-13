@@ -56,8 +56,8 @@ export function CarouselRail({
     const jumlahAnak = el.children.length;
     setTotal(jumlahAnak);
     setBisaGeser(maxScroll > 12);
-    setAwal(el.scrollLeft < 8);
-    setAkhir(el.scrollLeft >= maxScroll - 8);
+    setAwal(el.scrollLeft <= 4);
+    setAkhir(el.scrollLeft >= maxScroll - 4);
 
     if (jumlahAnak > 0 && maxScroll > 0) {
       const rasio = Math.min(1, Math.max(0, el.scrollLeft / maxScroll));
@@ -85,6 +85,16 @@ export function CarouselRail({
   const geser = (arah: 1 | -1) => {
     const el = ref.current;
     if (!el) return;
+    const maxScroll = el.scrollWidth - el.clientWidth;
+    const targetIndeks = Math.min(total, Math.max(1, aktif + arah));
+    if (targetIndeks <= 1) {
+      el.scrollTo({ left: 0, behavior: "smooth" });
+      return;
+    }
+    if (targetIndeks >= total) {
+      el.scrollTo({ left: maxScroll, behavior: "smooth" });
+      return;
+    }
     const anakPertama = el.firstElementChild as HTMLElement | null;
     const gap = parseFloat(getComputedStyle(el).columnGap || getComputedStyle(el).gap || "16") || 16;
     const lebar = anakPertama ? anakPertama.clientWidth + gap : el.clientWidth * 0.82;
@@ -93,7 +103,7 @@ export function CarouselRail({
 
   const kelasBleed = bleed
     ? "-mx-[clamp(20px,5vw,64px)] px-[clamp(20px,5vw,64px)]"
-    : "";
+    : "px-[clamp(20px,5vw,64px)]";
 
   const kelasResetDesktop =
     batas === "lg"

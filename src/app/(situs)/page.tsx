@@ -236,7 +236,7 @@ export default async function Beranda() {
             label="kiri-atas"
           />
           <div className="relative z-10 bg-paper-2 py-12 lg:ml-[50%] lg:flex lg:min-h-[600px] lg:flex-col lg:justify-center lg:py-16">
-            <div className="pl-[clamp(20px,5vw,64px)] lg:-ml-36 lg:pl-0">
+            <div className="lg:-ml-36">
               <LayananRail kartu={LAYANAN} />
             </div>
           </div>
