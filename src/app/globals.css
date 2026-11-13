@@ -154,7 +154,7 @@
   font-variant-numeric: tabular-nums;
 }
 @utility section-y {
-  padding-block: clamp(72px, 6vw + 40px, 128px);
+  padding-block: clamp(56px, 6vw + 24px, 128px);
 }
 
 /* ---------- Tombol ---------- */
@@ -324,18 +324,32 @@
   /* Segmented tabs (gaya Pertamina) */
   .seg {
     display: inline-flex;
+    max-width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
     gap: 0.25rem;
     padding: 0.375rem;
     border-radius: 999px;
     background: var(--color-paper-3);
   }
+  .seg::-webkit-scrollbar {
+    display: none;
+  }
   .seg-btn {
-    padding: 0.5rem 1.125rem;
+    flex-shrink: 0;
+    padding: 0.4375rem 0.9375rem;
     border-radius: 999px;
-    font-size: 0.9375rem;
+    font-size: 0.875rem;
     color: var(--color-ink-2);
     line-height: 1.4;
+    white-space: nowrap;
     transition: background-color 200ms ease, color 200ms ease;
+  }
+  @media (min-width: 640px) {
+    .seg-btn {
+      padding: 0.5rem 1.125rem;
+      font-size: 0.9375rem;
+    }
   }
   .seg-btn:hover {
     color: var(--color-brand);
@@ -348,15 +362,23 @@
 
   .chip-filter {
     display: inline-flex;
+    flex-shrink: 0;
     align-items: center;
-    min-height: 2.75rem;
-    padding: 0.375rem 1rem;
+    min-height: 2.5rem;
+    padding: 0.375rem 0.9375rem;
     border-radius: 999px;
     font-size: 0.875rem;
+    white-space: nowrap;
     background: var(--color-paper-3);
     color: var(--color-ink-2);
     border: 1px solid transparent;
     transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease;
+  }
+  @media (min-width: 640px) {
+    .chip-filter {
+      min-height: 2.75rem;
+      padding: 0.375rem 1rem;
+    }
   }
   .chip-filter:hover {
     border-color: var(--color-brand);

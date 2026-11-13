@@ -46,7 +46,11 @@ export function GaleriGrid({ foto, kategori }: { foto: FotoGaleri[]; kategori: s
 
   return (
     <div>
-      <div className="flex flex-wrap gap-2" role="group" aria-label="Saring kategori foto">
+      <div
+        className="rail -mx-[clamp(20px,5vw,64px)] flex gap-2 overflow-x-auto px-[clamp(20px,5vw,64px)] pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0"
+        role="group"
+        aria-label="Saring kategori foto"
+      >
         {(["Semua", ...kategori] as const).map((k) => (
           <button
             key={k}

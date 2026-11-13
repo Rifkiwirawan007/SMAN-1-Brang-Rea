@@ -51,7 +51,7 @@ export function LayananRail({ kartu }: { kartu: KartuLayanan[] }) {
             <Link
               href={k.href}
               className={cx(
-                "group flex h-full min-h-[340px] flex-col rounded-[10px] p-8 shadow-card transition-colors duration-300 md:p-10",
+                "group flex h-full min-h-[280px] flex-col rounded-[10px] p-6 shadow-card transition-colors duration-300 sm:min-h-[320px] sm:p-8 md:min-h-[340px] md:p-10",
                 i === 0
                   ? "bg-brand text-white group-hover/rail:bg-paper group-hover/rail:text-ink hover:bg-brand! hover:text-white!"
                   : "bg-paper text-ink hover:bg-brand hover:text-white",

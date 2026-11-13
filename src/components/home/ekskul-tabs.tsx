@@ -7,6 +7,7 @@ import { ArrowRight } from "lucide-react";
 import type { Ekskul, PosterPrestasi } from "@/lib/konten/tipe";
 import { apakahIlustrasi } from "@/lib/konten/util";
 import { useLabelContoh } from "@/components/situs/konteks";
+import { CarouselRail } from "@/components/ui/carousel-rail";
 import { Contoh } from "@/components/ui/contoh";
 import { IKON_EKSKUL } from "@/components/ui/icons";
 
@@ -40,11 +41,14 @@ export function EkskulTabs({ ekskul, prestasi }: { ekskul: Ekskul[]; prestasi: P
 
       <div className="mt-8">
         <div role="tabpanel" id="panel-Ekstrakurikuler" aria-labelledby="tab-Ekstrakurikuler" hidden={tab !== "Ekstrakurikuler"}>
-          <ul className="rail -mx-[clamp(20px,5vw,64px)] flex gap-4 overflow-x-auto px-[clamp(20px,5vw,64px)] pb-2 lg:mx-0 lg:grid lg:grid-cols-5 lg:overflow-visible lg:px-0">
+          <CarouselRail
+            ariaLabel="Daftar ekstrakurikuler"
+            className="lg:grid lg:grid-cols-5 lg:gap-4"
+          >
             {kartu.map((e) => {
               const Ikon = IKON_EKSKUL[e.ikon] ?? IKON_EKSKUL.buku;
               return (
-              <li key={e.id} className="w-[min(64vw,240px)] shrink-0 lg:w-auto">
+              <li key={e.id} className="w-[min(68vw,240px)] shrink-0 lg:w-auto">
                 <Link
                   href="/kesiswaan#ekstrakurikuler"
                   className="zoom-wrap group relative block aspect-[4/5] overflow-hidden rounded-[10px] bg-brand-ink text-white"
@@ -55,7 +59,7 @@ export function EkskulTabs({ ekskul, prestasi }: { ekskul: Ekskul[]; prestasi: P
                         src={e.gambar}
                         alt={`Kegiatan ${e.nama}`}
                         fill
-                        sizes="(min-width: 1024px) 20vw, 64vw"
+                        sizes="(min-width: 1024px) 20vw, 68vw"
                         className="object-cover" style={{ objectPosition: e.posisiGambar }}
                       />
                       <span className="scrim-top absolute inset-0" aria-hidden="true" />
@@ -65,7 +69,7 @@ export function EkskulTabs({ ekskul, prestasi }: { ekskul: Ekskul[]; prestasi: P
                       <Ikon size={72} strokeWidth={1.25} className="text-white/35 transition-transform duration-500 group-hover:scale-110" />
                     </span>
                   )}
-                  <span className="absolute inset-x-0 top-0 flex flex-col gap-1 p-6">
+                  <span className="absolute inset-x-0 top-0 flex flex-col gap-1 p-5 sm:p-6">
                     <span className="text-[1.125rem] font-semibold leading-snug">{e.nama}</span>
                     <span className="text-[0.8125rem] text-white/80">{e.kategori}</span>
                   </span>
@@ -78,7 +82,7 @@ export function EkskulTabs({ ekskul, prestasi }: { ekskul: Ekskul[]; prestasi: P
               </li>
               );
             })}
-          </ul>
+          </CarouselRail>
           {labelContoh && ekskul.some((e) => e.contoh) ? (
             <p className="mt-6 flex flex-wrap items-center gap-2 text-sm text-muted">
               <Contoh /> Daftar ekstrakurikuler dan jadwalnya masih contoh.
@@ -87,16 +91,19 @@ export function EkskulTabs({ ekskul, prestasi }: { ekskul: Ekskul[]; prestasi: P
         </div>
 
         <div role="tabpanel" id="panel-Prestasi" aria-labelledby="tab-Prestasi" hidden={tab !== "Prestasi"}>
-          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <CarouselRail
+            ariaLabel="Daftar prestasi siswa"
+            className="lg:grid lg:grid-cols-3 lg:gap-4"
+          >
             {prestasi.map((p) => (
-              <li key={p.id}>
+              <li key={p.id} className="w-[min(80vw,300px)] shrink-0 sm:w-[320px] lg:w-auto">
                 <Link href="/kesiswaan#prestasi" className="zoom-wrap group flex h-full flex-col overflow-hidden rounded-[10px] border border-line bg-paper">
                   <span className="relative block aspect-[4/3] overflow-hidden bg-paper-2">
                     <Image
                       src={p.src}
                       alt={p.judul}
                       fill
-                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      sizes="(min-width: 1024px) 33vw, 80vw"
                       className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
                     />
                   </span>
@@ -107,7 +114,7 @@ export function EkskulTabs({ ekskul, prestasi }: { ekskul: Ekskul[]; prestasi: P
                 </Link>
               </li>
             ))}
-          </ul>
+          </CarouselRail>
           <Link href="/kesiswaan#prestasi" className="btn-pill mt-8">
             Semua prestasi
             <ArrowRight size={18} aria-hidden="true" />

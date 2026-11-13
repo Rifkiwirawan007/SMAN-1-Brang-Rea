@@ -3,6 +3,7 @@ import { CircleCheck, FileText, MessageCircleQuestion } from "lucide-react";
 import { PageHero } from "@/components/ui/page-hero";
 import { SubNav } from "@/components/ui/sub-nav";
 import { SectionHead } from "@/components/ui/section-head";
+import { CarouselRail } from "@/components/ui/carousel-rail";
 import { CatatanContoh, Contoh } from "@/components/ui/contoh";
 import { IkonWhatsApp } from "@/components/ui/icons";
 import { WaForm } from "@/components/kontak/wa-form";
@@ -56,16 +57,25 @@ export default async function Spmb() {
             judul="Empat jalur pendaftaran"
             teks={<p>Pilih jalur yang sesuai dengan kondisi calon murid. Kuota mengikuti aturan SPMB jenjang SMA dan petunjuk teknis Provinsi NTB.</p>}
           />
-          <ul className="mt-14 grid gap-px overflow-hidden rounded-[14px] border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+          <CarouselRail
+            ariaLabel="Jalur pendaftaran SPMB"
+            wrapClassName="mt-10 lg:mt-14"
+            className="lg:grid lg:grid-cols-4 lg:gap-px lg:overflow-hidden lg:rounded-[14px] lg:border lg:border-line lg:bg-line"
+          >
             {spmb.jalur.map((j, i) => (
-              <li key={j.nama} data-reveal style={{ "--d": i } as React.CSSProperties} className="flex flex-col bg-paper p-8">
+              <li
+                key={j.nama}
+                data-reveal
+                style={{ "--d": i } as React.CSSProperties}
+                className="flex w-[min(80vw,300px)] shrink-0 flex-col rounded-[14px] border border-line bg-paper p-6 sm:w-[320px] sm:p-8 lg:w-auto lg:rounded-none lg:border-0"
+              >
                 <h3 className="text-h2">{j.nama}</h3>
                 <p className="mt-2 text-sm font-semibold text-brand">Kuota {j.kuota}</p>
                 <span aria-hidden="true" className="mt-5 block h-1 w-10 rounded-full bg-sun" />
                 <p className="mt-5 text-[0.9375rem] text-ink-2">{j.teks}</p>
               </li>
             ))}
-          </ul>
+          </CarouselRail>
         </div>
       </section>
 
@@ -74,15 +84,26 @@ export default async function Spmb() {
         <div className="container-site">
           <SectionHead id="judul-jadwal-spmb" judul="Jadwal" teks={<p>Perkiraan tahapan SPMB. Tanggal pasti diumumkan setelah juknis resmi terbit.</p>} />
           {spmb.contoh ? <CatatanContoh className="mt-8">Tanggal di bawah ini contoh.</CatatanContoh> : null}
-          <ol className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
+          <CarouselRail
+            sebagai="ol"
+            ariaLabel="Jadwal tahapan SPMB"
+            wrapClassName="mt-8 lg:mt-10"
+            className="lg:grid lg:grid-cols-6 lg:gap-4"
+          >
             {spmb.jadwal.map((j, i) => (
-              <li key={j.tahap} data-reveal style={{ "--d": i % 3 } as React.CSSProperties} className="flex flex-col rounded-[14px] border border-line bg-paper p-6">
+              <li
+                key={j.tahap}
+                data-reveal
+                style={{ "--d": i % 3 } as React.CSSProperties}
+                className="flex w-[min(76vw,260px)] shrink-0 flex-col rounded-[14px] border border-line bg-paper p-6 sm:w-[280px] lg:w-auto"
+              >
                 <span className="text-[2.5rem] font-light leading-none tabular-nums text-brand">{String(i + 1).padStart(2, "0")}</span>
                 <span className="mt-6 font-semibold text-ink">{j.tahap}</span>
                 <span className="mt-1 text-sm text-ink-2">{j.waktu}</span>
+                {j.keterangan ? <span className="mt-2 text-xs leading-relaxed text-muted">{j.keterangan}</span> : null}
               </li>
             ))}
-          </ol>
+          </CarouselRail>
         </div>
       </section>
 
@@ -114,16 +135,27 @@ export default async function Spmb() {
           <h2 id="judul-alur" data-reveal className="text-h2 text-white">
             Alur pendaftaran
           </h2>
-          <ol className="mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+          <CarouselRail
+            sebagai="ol"
+            gelap
+            ariaLabel="Alur pendaftaran SPMB"
+            wrapClassName="mt-10 lg:mt-12"
+            className="lg:grid lg:grid-cols-3 lg:gap-x-8 lg:gap-y-10"
+          >
             {spmb.alur.map((a, i) => (
-              <li key={a.judul} data-reveal style={{ "--d": i % 3 } as React.CSSProperties} className="border-t border-white/25 pt-6">
+              <li
+                key={a.judul}
+                data-reveal
+                style={{ "--d": i % 3 } as React.CSSProperties}
+                className="w-[min(80vw,300px)] shrink-0 rounded-[14px] border border-white/25 bg-white/10 p-6 sm:w-[320px] lg:w-auto lg:rounded-none lg:border-0 lg:border-t lg:border-white/25 lg:bg-transparent lg:p-0 lg:pt-6"
+              >
                 <h3 className="text-h3 text-white">
                   <span className="tabular-nums text-white/60">{i + 1}.</span> {a.judul}
                 </h3>
                 <p className="mt-2 text-white/85">{a.teks}</p>
               </li>
             ))}
-          </ol>
+          </CarouselRail>
         </div>
       </section>
 

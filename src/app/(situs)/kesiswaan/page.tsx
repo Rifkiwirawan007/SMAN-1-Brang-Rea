@@ -4,6 +4,7 @@ import { Award, CircleCheck, HeartHandshake, MessageCircle } from "lucide-react"
 import { PageHero } from "@/components/ui/page-hero";
 import { SubNav } from "@/components/ui/sub-nav";
 import { SectionHead } from "@/components/ui/section-head";
+import { CarouselRail } from "@/components/ui/carousel-rail";
 import { CatatanContoh, Contoh } from "@/components/ui/contoh";
 import { IkonWhatsApp } from "@/components/ui/icons";
 import { EkskulGrid } from "@/components/kesiswaan/ekskul-grid";
@@ -54,14 +55,24 @@ export default async function Kesiswaan() {
             tambahan={osis.contoh ? <Contoh className="self-start" /> : null}
             teks={<p>{osis.ringkas}</p>}
           />
-          <ol className="mt-14 grid gap-px overflow-hidden rounded-[14px] border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+          <CarouselRail
+            sebagai="ol"
+            ariaLabel="Bidang OSIS"
+            wrapClassName="mt-10 lg:mt-14"
+            className="lg:grid lg:grid-cols-4 lg:gap-px lg:overflow-hidden lg:rounded-[14px] lg:border lg:border-line lg:bg-line"
+          >
             {osis.bidang.map((b, i) => (
-              <li key={b.nama} data-reveal style={{ "--d": i } as React.CSSProperties} className="flex flex-col bg-paper p-7">
+              <li
+                key={b.nama}
+                data-reveal
+                style={{ "--d": i } as React.CSSProperties}
+                className="flex w-[min(80vw,300px)] shrink-0 flex-col rounded-[14px] border border-line bg-paper p-6 sm:w-[320px] sm:p-7 lg:w-auto lg:rounded-none lg:border-0"
+              >
                 <h3 className="text-h3">{b.nama}</h3>
                 <p className="mt-3 text-[0.9375rem] text-ink-2">{b.teks}</p>
               </li>
             ))}
-          </ol>
+          </CarouselRail>
         </div>
       </section>
 
@@ -87,19 +98,28 @@ export default async function Kesiswaan() {
         <div className="container-site">
           <SectionHead id="judul-prestasi" judul="Prestasi siswa" teks={<p>Capaian siswa di berbagai lomba dan kejuaraan.</p>} />
           {/* Poster prestasi dari Instagram sekolah; ketuk untuk ukuran penuh. */}
-          <ul className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+          <CarouselRail
+            ariaLabel="Poster prestasi siswa"
+            wrapClassName="mt-8 lg:mt-10"
+            className="lg:grid lg:grid-cols-4 lg:gap-4"
+          >
             {poster.map((p, i) => (
-              <li key={p.id} data-reveal style={{ "--d": i % 4 } as React.CSSProperties}>
+              <li
+                key={p.id}
+                data-reveal
+                style={{ "--d": i % 4 } as React.CSSProperties}
+                className="w-[min(74vw,260px)] shrink-0 sm:w-[280px] lg:w-auto"
+              >
                 <a href={p.src} target="_blank" rel="noopener noreferrer" className="zoom-wrap group block">
                   <span className="relative block aspect-[9/10] overflow-hidden rounded-[14px] border border-line bg-paper-2">
-                    <Image src={p.src} alt={p.judul} fill sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw" className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]" />
+                    <Image src={p.src} alt={p.judul} fill sizes="(min-width: 1024px) 25vw, 74vw" className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]" />
                   </span>
                   <span className="mt-3 block text-sm font-semibold leading-snug text-ink">{p.judul}</span>
                   <span className="mt-1 block text-[0.8125rem] text-muted">{p.ket}</span>
                 </a>
               </li>
             ))}
-          </ul>
+          </CarouselRail>
           <div data-reveal className="mt-12 overflow-x-auto rounded-[14px] border border-line">
             <table className="w-full min-w-[640px] text-left">
               <caption className="sr-only">Daftar prestasi siswa</caption>
@@ -180,9 +200,18 @@ export default async function Kesiswaan() {
             tambahan={layananBk.contoh ? <Contoh className="self-start" /> : null}
             teks={<p>{layananBk.ringkas}</p>}
           />
-          <ul className="mt-12 grid gap-5 md:grid-cols-3">
+          <CarouselRail
+            ariaLabel="Layanan bimbingan konseling"
+            wrapClassName="mt-10 lg:mt-12"
+            className="lg:grid lg:grid-cols-3 lg:gap-5"
+          >
             {layananBk.layanan.map((l, i) => (
-              <li key={l.nama} data-reveal style={{ "--d": i } as React.CSSProperties} className="rounded-[14px] border border-line bg-paper p-8">
+              <li
+                key={l.nama}
+                data-reveal
+                style={{ "--d": i } as React.CSSProperties}
+                className="w-[min(82vw,320px)] shrink-0 rounded-[14px] border border-line bg-paper p-6 sm:w-[340px] sm:p-8 lg:w-auto"
+              >
                 <span className="grid h-12 w-12 place-items-center rounded-full bg-brand-soft text-brand">
                   {i === 0 ? <HeartHandshake size={22} aria-hidden="true" /> : <MessageCircle size={22} aria-hidden="true" />}
                 </span>
@@ -190,7 +219,7 @@ export default async function Kesiswaan() {
                 <p className="mt-3 text-ink-2">{l.teks}</p>
               </li>
             ))}
-          </ul>
+          </CarouselRail>
           <div data-reveal className="mt-10 flex flex-wrap items-center gap-4">
             <a
               href={waLink("Halo, saya ingin membuat janji dengan guru bimbingan konseling SMAN 1 Brang Rea.", sekolah.kontak.whatsapp)}

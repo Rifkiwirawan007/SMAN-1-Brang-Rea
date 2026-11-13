@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import type { Spmb } from "@/lib/konten/tipe";
 import { Contoh } from "@/components/ui/contoh";
+import { CarouselRail } from "@/components/ui/carousel-rail";
 import { PitaJalan } from "@/components/home/pita-jalan";
 
 type Tahap = Spmb["jadwal"][number];
@@ -95,24 +96,37 @@ export function TimelineSpmb({ spmb }: { spmb: Spmb }) {
           })}
         </PitaJalan>
 
-        {/* HP & tablet: daftar vertikal */}
-        <ol className="mt-10 flex flex-col lg:hidden" aria-label={`Tahapan SPMB ${spmb.tahunAjaran}`}>
+        {/* HP & tablet: carousel horizontal tahapan */}
+        <CarouselRail
+          sebagai="ol"
+          ariaLabel={`Tahapan SPMB ${spmb.tahunAjaran}`}
+          wrapClassName="mt-8 lg:hidden"
+          batas="selalu"
+        >
           {jadwal.map((t, i) => (
-            <li key={i} data-reveal style={{ "--d": i } as React.CSSProperties} className="tl-v">
-              <span className="tl-v-garis" style={{ background: warna(i) }} aria-hidden="true" />
-              <span className="tl-nomor shrink-0" style={{ background: warna(i) }}>
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <div className="min-w-0 pb-8">
-                <p className="text-sm font-semibold text-brand">{t.waktu}</p>
-                <p className="mt-1 text-lg font-semibold text-ink">{t.tahap}</p>
-                {t.keterangan ? <p className="mt-1 text-ink-2">{t.keterangan}</p> : null}
+            <li
+              key={i}
+              data-reveal
+              style={{ "--d": i } as React.CSSProperties}
+              className="w-[min(80vw,300px)] shrink-0 sm:w-[320px]"
+            >
+              <div className="flex h-full flex-col rounded-[14px] border border-line bg-paper p-5 shadow-card">
+                <div className="flex items-center gap-3">
+                  <span className="tl-nomor shrink-0" style={{ background: warna(i) }}>
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="rounded-full bg-brand-soft px-3 py-1 text-xs font-semibold text-brand-ink">
+                    {t.waktu}
+                  </span>
+                </div>
+                <p className="mt-4 text-lg font-semibold leading-snug text-ink">{t.tahap}</p>
+                {t.keterangan ? <p className="mt-2 text-sm leading-relaxed text-ink-2">{t.keterangan}</p> : null}
               </div>
             </li>
           ))}
-        </ol>
+        </CarouselRail>
 
-        <div data-reveal className="mt-14 flex flex-wrap justify-center gap-3">
+        <div data-reveal className="mt-10 flex flex-wrap justify-center gap-3 lg:mt-14">
           <Link href="/spmb" className="btn-pill">
             Info lengkap SPMB
             <ArrowRight size={18} aria-hidden="true" />

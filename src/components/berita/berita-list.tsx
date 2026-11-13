@@ -32,8 +32,12 @@ export function BeritaList({ daftar, kategori }: { daftar: BeritaTampil[]; kateg
 
   return (
     <div>
-      <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
-        <div className="flex flex-wrap gap-2" role="group" aria-label="Saring kategori">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div
+          className="rail -mx-[clamp(20px,5vw,64px)] flex gap-2 overflow-x-auto px-[clamp(20px,5vw,64px)] pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0"
+          role="group"
+          aria-label="Saring kategori"
+        >
           {(["Semua", ...kategori] as const).map((k) => (
             <button
               key={k}

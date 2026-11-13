@@ -4,6 +4,7 @@ import { ExternalLink, UserRound } from "lucide-react";
 import { PageHero } from "@/components/ui/page-hero";
 import { SubNav } from "@/components/ui/sub-nav";
 import { SectionHead } from "@/components/ui/section-head";
+import { CarouselRail } from "@/components/ui/carousel-rail";
 import { CountUp } from "@/components/ui/count-up";
 import { CatatanContoh, Contoh } from "@/components/ui/contoh";
 import { Foto } from "@/components/ui/foto";
@@ -101,10 +102,10 @@ export default async function Profil() {
             judul="Identitas sekolah"
             teks={<p>Data resmi sekolah sebagaimana tercatat di Data Pokok Pendidikan Kementerian Pendidikan Dasar dan Menengah.</p>}
           />
-          <dl data-reveal className="mt-12 grid overflow-hidden rounded-[14px] border border-line bg-paper md:grid-cols-2">
+          <dl data-reveal className="mt-10 grid overflow-hidden rounded-[14px] border border-line bg-paper md:mt-12 md:grid-cols-2">
             {identitas.map(([k, v]) => (
-              <div key={k} className="grid grid-cols-[minmax(0,10rem)_minmax(0,1fr)] gap-4 border-b border-line px-6 py-4 md:odd:border-r">
-                <dt className="text-sm text-muted">{k}</dt>
+              <div key={k} className="flex flex-col gap-0.5 border-b border-line px-5 py-3.5 sm:grid sm:grid-cols-[minmax(0,10rem)_minmax(0,1fr)] sm:gap-4 sm:px-6 sm:py-4 md:odd:border-r">
+                <dt className="text-xs font-medium text-muted sm:text-sm sm:font-normal">{k}</dt>
                 <dd className="min-w-0 break-words text-[0.9375rem] font-medium text-ink">{v}</dd>
               </div>
             ))}
@@ -128,16 +129,26 @@ export default async function Profil() {
             judul={`Perjalanan sejak ${sekolah.pendirian.tahun}`}
             teks={<p>Dua dekade melayani pendidikan menengah atas di Brang Rea, Sumbawa Barat.</p>}
           />
-          <ol className="mt-14 grid gap-px overflow-hidden rounded-[14px] border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+          <CarouselRail
+            sebagai="ol"
+            ariaLabel="Tonggak sejarah sekolah"
+            wrapClassName="mt-10 lg:mt-14"
+            className="lg:grid lg:grid-cols-4 lg:gap-px lg:overflow-hidden lg:rounded-[14px] lg:border lg:border-line lg:bg-line"
+          >
             {profil.sejarah.map((p, i) => (
-              <li key={`${i}-${p.tahun}`} data-reveal style={{ "--d": i } as React.CSSProperties} className="flex flex-col bg-paper p-7 md:p-8">
+              <li
+                key={`${i}-${p.tahun}`}
+                data-reveal
+                style={{ "--d": i } as React.CSSProperties}
+                className="flex w-[min(80vw,300px)] shrink-0 flex-col rounded-[14px] border border-line bg-paper p-6 sm:w-[320px] md:p-8 lg:w-auto lg:rounded-none lg:border-0"
+              >
                 <span className="text-stat text-brand">{p.tahun}</span>
                 <span className="mt-6 text-h3 text-ink">{p.judul}</span>
                 <span className="mt-3 text-[0.9375rem] text-ink-2">{p.teks}</span>
                 {p.contoh && <Contoh className="mt-5 self-start" />}
               </li>
             ))}
-          </ol>
+          </CarouselRail>
         </div>
       </section>
 
@@ -177,9 +188,18 @@ export default async function Profil() {
             judul="Struktur organisasi"
             teks={<p>Pimpinan dan pengelola sekolah. Nama yang belum tersedia ditandai dan akan dilengkapi.</p>}
           />
-          <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <CarouselRail
+            ariaLabel="Struktur organisasi sekolah"
+            wrapClassName="mt-10 lg:mt-12"
+            className="lg:grid lg:grid-cols-4 lg:gap-5"
+          >
             {profil.struktur.map((p, i) => (
-              <li key={`${i}-${p.jabatan}`} data-reveal style={{ "--d": i % 4 } as React.CSSProperties} className="flex flex-col rounded-[14px] border border-line bg-paper p-6">
+              <li
+                key={`${i}-${p.jabatan}`}
+                data-reveal
+                style={{ "--d": i % 4 } as React.CSSProperties}
+                className="flex w-[min(76vw,260px)] shrink-0 flex-col rounded-[14px] border border-line bg-paper p-6 sm:w-[280px] lg:w-auto"
+              >
                 <div className="relative grid h-20 w-20 place-items-center overflow-hidden rounded-full bg-brand-soft text-brand">
                   {p.foto ? (
                     <Image src={p.foto} alt={p.nama} fill sizes="80px" className="object-cover object-top" />
@@ -192,7 +212,7 @@ export default async function Profil() {
                 {p.contoh && <Contoh className="mt-4 self-start" />}
               </li>
             ))}
-          </ul>
+          </CarouselRail>
         </div>
       </section>
 
@@ -204,7 +224,7 @@ export default async function Profil() {
             judul="Guru dan tenaga kependidikan"
             teks={<p>Pendidik yang mendampingi {s.siswa} siswa setiap hari, dengan rasio satu guru untuk {s.rasioSiswaGuru} siswa.</p>}
           />
-          <dl className="mt-12 grid gap-8 border-y border-line py-10 sm:grid-cols-2 lg:grid-cols-4">
+          <dl className="mt-10 grid grid-cols-2 gap-6 border-y border-line py-8 sm:gap-8 sm:py-10 lg:mt-12 lg:grid-cols-4">
             <div data-reveal>
               <dt className="text-sm font-semibold text-brand">Guru aktif</dt>
               <dd className="mt-3 text-stat-sm text-ink">
@@ -223,9 +243,16 @@ export default async function Profil() {
             ))}
           </dl>
           <CatatanContoh className="mt-10">Nama dan foto guru di bawah masih contoh, akan diisi dari data kepegawaian sekolah.</CatatanContoh>
-          <ul className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-4">
+          <CarouselRail
+            ariaLabel="Daftar guru dan tenaga kependidikan"
+            wrapClassName="mt-6"
+            className="lg:grid lg:grid-cols-4 lg:gap-4"
+          >
             {profil.guru.map((g, i) => (
-              <li key={`${i}-${g.nama}`} className="flex flex-col items-start rounded-[14px] border border-line bg-paper p-5">
+              <li
+                key={`${i}-${g.nama}`}
+                className="flex w-[min(72vw,240px)] shrink-0 flex-col items-start rounded-[14px] border border-line bg-paper p-5 sm:w-[260px] lg:w-auto"
+              >
                 <span className="grid h-12 w-12 place-items-center rounded-full bg-brand-soft text-brand">
                   <UserRound size={22} aria-hidden="true" />
                 </span>
@@ -233,7 +260,7 @@ export default async function Profil() {
                 <span className="text-sm text-ink-2">Guru {g.mapel}</span>
               </li>
             ))}
-          </ul>
+          </CarouselRail>
         </div>
       </section>
 
@@ -245,11 +272,20 @@ export default async function Profil() {
             judul="Sarana dan prasarana"
             teks={<p>Ruang belajar dan fasilitas pendukung di atas lahan seluas {formatAngka(s.luasTanah)} meter persegi.</p>}
           />
-          <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <CarouselRail
+            ariaLabel="Daftar sarana dan prasarana"
+            wrapClassName="mt-10 lg:mt-12"
+            className="lg:grid lg:grid-cols-4 lg:gap-6"
+          >
             {profil.sarana.map((r, i) => (
-              <li key={`${i}-${r.satuan}`} data-reveal style={{ "--d": i } as React.CSSProperties} className="zoom-wrap flex flex-col">
+              <li
+                key={`${i}-${r.satuan}`}
+                data-reveal
+                style={{ "--d": i } as React.CSSProperties}
+                className="zoom-wrap flex w-[min(78vw,280px)] shrink-0 flex-col sm:w-[300px] lg:w-auto"
+              >
                 {r.gambar ? (
-                  <Foto src={r.gambar} alt={r.satuan} sizes="(min-width: 1024px) 300px, (min-width: 640px) 50vw, 100vw" className="aspect-[4/3] rounded-[14px]" />
+                  <Foto src={r.gambar} alt={r.satuan} sizes="(min-width: 1024px) 300px, 78vw" className="aspect-[4/3] rounded-[14px]" />
                 ) : (
                   <div className="grid aspect-[4/3] place-items-center rounded-[14px] bg-brand-soft">
                     <Image src="/images/logo-sman1brangrea.png" alt="" width={88} height={88} className="opacity-90" />
@@ -264,7 +300,7 @@ export default async function Profil() {
                 <p className="mt-2 text-[0.9375rem] text-ink-2">{r.ket}</p>
               </li>
             ))}
-          </ul>
+          </CarouselRail>
           <p className="mt-10 text-sm text-muted">
             Listrik {s.listrik}, internet {s.internet.toLowerCase()}. Sumber angka: Dapodik semester {s.semesterData}.
           </p>

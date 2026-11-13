@@ -3,6 +3,7 @@ import { BookOpenCheck, CalendarDays, Coffee, Download, Layers3, Sparkles, Users
 import { PageHero } from "@/components/ui/page-hero";
 import { SubNav } from "@/components/ui/sub-nav";
 import { SectionHead } from "@/components/ui/section-head";
+import { CarouselRail } from "@/components/ui/carousel-rail";
 import { CountUp } from "@/components/ui/count-up";
 import { CatatanContoh, Contoh } from "@/components/ui/contoh";
 import { ambilAkademik, ambilSekolah } from "@/lib/konten/baca";
@@ -47,11 +48,20 @@ export default async function Akademik() {
             tambahan={kurikulum.contoh ? <Contoh className="self-start" /> : null}
             teks={<p>{kurikulum.ringkas}</p>}
           />
-          <ul className="mt-14 grid gap-5 md:grid-cols-3">
+          <CarouselRail
+            ariaLabel="Komponen kurikulum"
+            wrapClassName="mt-10 lg:mt-14"
+            className="lg:grid lg:grid-cols-3 lg:gap-5"
+          >
             {kurikulum.komponen.map((k, i) => {
               const Ikon = IKON_KOMPONEN[i % IKON_KOMPONEN.length];
               return (
-                <li key={k.nama} data-reveal style={{ "--d": i } as React.CSSProperties} className="flex flex-col rounded-[14px] border border-line bg-paper p-8">
+                <li
+                  key={k.nama}
+                  data-reveal
+                  style={{ "--d": i } as React.CSSProperties}
+                  className="flex w-[min(82vw,320px)] shrink-0 flex-col rounded-[14px] border border-line bg-paper p-6 sm:w-[340px] sm:p-8 lg:w-auto"
+                >
                   <span className="grid h-12 w-12 place-items-center rounded-full bg-brand-soft text-brand">
                     <Ikon size={22} aria-hidden="true" />
                   </span>
@@ -61,7 +71,7 @@ export default async function Akademik() {
                 </li>
               );
             })}
-          </ul>
+          </CarouselRail>
         </div>
       </section>
 
@@ -73,7 +83,7 @@ export default async function Akademik() {
             judul="Rombongan belajar tahun ini"
             teks={<p>Angka resmi semester {s.semesterData} dari Data Pokok Pendidikan, bukan perkiraan.</p>}
           />
-          <dl className="mt-12 grid gap-10 border-t border-line pt-12 sm:grid-cols-2 lg:grid-cols-4">
+          <dl className="mt-10 grid grid-cols-2 gap-x-5 gap-y-8 border-t border-line pt-10 sm:gap-10 sm:pt-12 lg:mt-12 lg:grid-cols-4">
             {[
               { k: "Rombongan belajar", v: s.rombel, ket: "kelas X, XI, dan XII" },
               { k: "Peserta didik", v: s.siswa, ket: `${s.siswaLaki} laki-laki, ${s.siswaPerempuan} perempuan` },
@@ -101,24 +111,34 @@ export default async function Akademik() {
             tambahan={mapel.contoh ? <Contoh className="self-start" /> : null}
             teks={<p>Kelas X mempelajari mata pelajaran umum. Mulai kelas XI, siswa memilih mata pelajaran sesuai minat dan rencana studi lanjut.</p>}
           />
-          <div className="mt-12 grid gap-5 lg:grid-cols-2">
+          <CarouselRail
+            sebagai="div"
+            ariaLabel="Kelompok mata pelajaran"
+            wrapClassName="mt-10 lg:mt-12"
+            className="lg:grid lg:grid-cols-2 lg:gap-5"
+          >
             {[
               { judul: "Mata pelajaran umum", ket: "Fase E, kelas X", daftar: mapel.umum },
               { judul: "Mata pelajaran pilihan", ket: "Fase F, kelas XI dan XII", daftar: mapel.pilihan },
             ].map((g, i) => (
-              <div key={g.judul} data-reveal style={{ "--d": i } as React.CSSProperties} className="rounded-[14px] border border-line bg-paper p-8">
+              <div
+                key={g.judul}
+                data-reveal
+                style={{ "--d": i } as React.CSSProperties}
+                className="w-[min(86vw,420px)] shrink-0 rounded-[14px] border border-line bg-paper p-6 sm:w-[460px] sm:p-8 lg:w-auto"
+              >
                 <h3 className="text-h3">{g.judul}</h3>
                 <p className="mt-1 text-sm text-muted">{g.ket}</p>
-                <ul className="mt-6 grid gap-x-6 sm:grid-cols-2">
+                <ul className="mt-5 grid grid-cols-2 gap-x-4 sm:mt-6 sm:gap-x-6">
                   {g.daftar.map((m) => (
-                    <li key={m} className="border-b border-line py-3 text-[0.9375rem] text-ink">
+                    <li key={m} className="border-b border-line py-2.5 text-sm text-ink sm:py-3 sm:text-[0.9375rem]">
                       {m}
                     </li>
                   ))}
                 </ul>
               </div>
             ))}
-          </div>
+          </CarouselRail>
         </div>
       </section>
 
@@ -170,27 +190,37 @@ export default async function Akademik() {
           {akademik.kalenderContoh ? (
             <CatatanContoh className="mt-8">Semua tanggal di kalender ini contoh dan perlu dicocokkan dengan kalender resmi.</CatatanContoh>
           ) : null}
-          <div className="mt-8 grid gap-6 lg:grid-cols-2">
+          <CarouselRail
+            sebagai="div"
+            ariaLabel="Kalender akademik per semester"
+            wrapClassName="mt-8"
+            className="lg:grid lg:grid-cols-2 lg:gap-6"
+          >
             {kalender.map((sem, i) => (
-              <div key={sem.semester} data-reveal style={{ "--d": i } as React.CSSProperties} className="rounded-[14px] border border-line bg-paper">
-                <div className="flex items-center justify-between gap-4 border-b border-line px-7 py-5">
+              <div
+                key={sem.semester}
+                data-reveal
+                style={{ "--d": i } as React.CSSProperties}
+                className="w-[min(86vw,420px)] shrink-0 rounded-[14px] border border-line bg-paper sm:w-[460px] lg:w-auto"
+              >
+                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-5 py-4 sm:px-7 sm:py-5">
                   <h3 className="text-h3">Semester {sem.semester.toLowerCase()}</h3>
                   <span className="text-sm text-muted">{sem.periode}</span>
                 </div>
-                <ol className="px-7 py-3">
+                <ol className="px-5 py-3 sm:px-7">
                   {sem.butir.map((b, j) => (
-                    <li key={`${j}-${b.kegiatan}`} className="grid gap-1 border-b border-line py-4 last:border-0 sm:grid-cols-[minmax(0,12rem)_minmax(0,1fr)] sm:gap-6">
+                    <li key={`${j}-${b.kegiatan}`} className="grid gap-1 border-b border-line py-3.5 last:border-0 sm:grid-cols-[minmax(0,11rem)_minmax(0,1fr)] sm:gap-5 sm:py-4">
                       <span className="flex items-center gap-2 text-sm font-semibold text-brand">
-                        <CalendarDays size={15} aria-hidden="true" />
+                        <CalendarDays size={15} aria-hidden="true" className="shrink-0" />
                         {b.tanggal}
                       </span>
-                      <span className="text-ink">{b.kegiatan}</span>
+                      <span className="text-[0.9375rem] text-ink">{b.kegiatan}</span>
                     </li>
                   ))}
                 </ol>
               </div>
             ))}
-          </div>
+          </CarouselRail>
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <span className="btn-pill" aria-disabled="true">
               <Download size={18} aria-hidden="true" />

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Clock, Mail, MapPin, Navigation, Phone } from "lucide-react";
 import { PageHero } from "@/components/ui/page-hero";
 import { SectionHead } from "@/components/ui/section-head";
+import { CarouselRail } from "@/components/ui/carousel-rail";
 import { Contoh } from "@/components/ui/contoh";
 import { IkonFacebook, IkonWhatsApp } from "@/components/ui/icons";
 import { WaForm } from "@/components/kontak/wa-form";
@@ -64,14 +65,23 @@ export default async function Kontak() {
             judul="Saluran resmi sekolah"
             teks={<p>Pilih saluran yang paling mudah. Untuk urusan administrasi, sertakan nama lengkap dan kelas atau tahun lulus.</p>}
           />
-          <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <CarouselRail
+            ariaLabel="Saluran kontak resmi sekolah"
+            wrapClassName="mt-10 lg:mt-12"
+            className="lg:grid lg:grid-cols-4 lg:gap-4"
+          >
             {kanal.map((k, i) => (
-              <li key={k.judul} data-reveal style={{ "--d": i } as React.CSSProperties}>
+              <li
+                key={k.judul}
+                data-reveal
+                style={{ "--d": i } as React.CSSProperties}
+                className="w-[min(78vw,280px)] shrink-0 sm:w-[300px] lg:w-auto"
+              >
                 <a
                   href={k.href}
                   target={k.luar ? "_blank" : undefined}
                   rel={k.luar ? "noopener noreferrer" : undefined}
-                  className="group flex h-full flex-col rounded-[14px] border border-line bg-paper p-7 transition-colors duration-300 hover:border-brand hover:bg-brand hover:text-white"
+                  className="group flex h-full flex-col rounded-[14px] border border-line bg-paper p-6 transition-colors duration-300 hover:border-brand hover:bg-brand hover:text-white sm:p-7"
                 >
                   <span className="grid h-12 w-12 place-items-center rounded-full bg-brand-soft text-brand transition-colors duration-300 group-hover:bg-white/15 group-hover:text-white">
                     {k.ikon}
@@ -81,7 +91,7 @@ export default async function Kontak() {
                 </a>
               </li>
             ))}
-          </ul>
+          </CarouselRail>
           <p className="mt-6 text-sm text-muted">
             {sekolah.kontak.dapodikEmail ? `Data Dapodik juga mencatat email ${sekolah.kontak.dapodikEmail}. ` : null}
             Nomor WhatsApp dan email di atas diambil dari unggahan resmi sekolah.

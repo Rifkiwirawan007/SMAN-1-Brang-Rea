@@ -7,6 +7,7 @@ import { KabarTabs } from "@/components/home/kabar-tabs";
 import { EkskulTabs } from "@/components/home/ekskul-tabs";
 import { TimelineSpmb } from "@/components/home/timeline-spmb";
 import { SectionHead } from "@/components/ui/section-head";
+import { CarouselRail } from "@/components/ui/carousel-rail";
 import { CountUp } from "@/components/ui/count-up";
 import { Contoh } from "@/components/ui/contoh";
 import { TeksKata, jumlahKata } from "@/components/ui/teks-kata";
@@ -149,26 +150,34 @@ export default async function Beranda() {
       {/* Timeline SPMB */}
       <TimelineSpmb spmb={spmb} />
 
-      {/* Ubin foto penuh 4 kolom */}
-      <section aria-label="Jelajahi sekolah" className="grid sm:grid-cols-2 lg:grid-cols-4">
-        {UBIN.map((u, i) => (
-          <Link
-            key={u.href}
-            href={u.href}
-            data-reveal
-            style={{ "--d": i } as React.CSSProperties}
-            className="zoom-wrap group relative isolate flex min-h-[340px] flex-col justify-end overflow-hidden bg-brand-ink p-6 text-white md:min-h-[460px] lg:min-h-[560px] lg:p-8"
-          >
-            <Foto src={u.gambar} alt={u.alt} posisi={"posisi" in u ? u.posisi : undefined} sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" penuh className="-z-20" label="tidak" />
-            <span className="scrim-bottom absolute inset-0 -z-10 opacity-90 transition-opacity duration-500 group-hover:opacity-100" aria-hidden="true" />
-            {apakahIlustrasi(u.gambar) && <LabelIlustrasi posisi="kanan-atas" />}
-            <span className="text-h3 text-white">{u.judul}</span>
-            <span className="mt-2 text-sm text-white/80">{u.label}</span>
-            <span className="btn-round mt-6 text-white group-hover:bg-white group-hover:text-brand-ink">
-              <ArrowRight size={20} aria-hidden="true" />
-            </span>
-          </Link>
-        ))}
+      {/* Ubin foto penuh 4 kolom (carousel di HP & tablet, grid 4 kolom di desktop) */}
+      <section aria-label="Jelajahi sekolah">
+        <CarouselRail
+          sebagai="div"
+          ariaLabel="Jelajahi halaman utama sekolah"
+          bleed={false}
+          kontrolClassName="container-site mt-4"
+          className="gap-3 px-[clamp(20px,5vw,64px)] sm:gap-4 lg:grid lg:grid-cols-4 lg:gap-0 lg:px-0"
+        >
+          {UBIN.map((u, i) => (
+            <Link
+              key={u.href}
+              href={u.href}
+              data-reveal
+              style={{ "--d": i } as React.CSSProperties}
+              className="zoom-wrap group relative isolate flex min-h-[320px] w-[min(80vw,300px)] shrink-0 flex-col justify-end overflow-hidden rounded-[14px] bg-brand-ink p-6 text-white sm:min-h-[380px] sm:w-[320px] lg:min-h-[560px] lg:w-auto lg:rounded-none lg:p-8"
+            >
+              <Foto src={u.gambar} alt={u.alt} posisi={"posisi" in u ? u.posisi : undefined} sizes="(min-width: 1024px) 25vw, 80vw" penuh className="-z-20" label="tidak" />
+              <span className="scrim-bottom absolute inset-0 -z-10 opacity-90 transition-opacity duration-500 group-hover:opacity-100" aria-hidden="true" />
+              {apakahIlustrasi(u.gambar) && <LabelIlustrasi posisi="kanan-atas" />}
+              <span className="text-h3 text-white">{u.judul}</span>
+              <span className="mt-2 text-sm text-white/80">{u.label}</span>
+              <span className="btn-round mt-6 text-white group-hover:bg-white group-hover:text-brand-ink">
+                <ArrowRight size={20} aria-hidden="true" />
+              </span>
+            </Link>
+          ))}
+        </CarouselRail>
       </section>
 
       {/* Tentang + angka */}
@@ -186,8 +195,8 @@ export default async function Beranda() {
             }
             aksi={{ label: "Profil sekolah", href: "/profil" }}
           />
-          <div className="mt-14 border-t border-line pt-14 md:mt-20 md:pt-16">
-            <dl className="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 border-t border-line pt-12 md:mt-20 md:pt-16">
+            <dl className="grid grid-cols-2 gap-x-5 gap-y-10 sm:gap-x-8 sm:gap-y-12 lg:grid-cols-4">
               {statistik.map((st, i) => (
                 <div key={st.label} data-reveal style={{ "--d": i } as React.CSSProperties} className="flex flex-col">
                   <dt className="order-1 text-sm font-semibold text-brand">{st.label}</dt>
