@@ -6,6 +6,9 @@ import { LABEL_PERAN, KET_PERAN } from "@/lib/cms/peran";
 import { JudulHalaman, waktuLengkap } from "@/components/dasbor/ui";
 import { AkunSaya } from "@/components/dasbor/akun-saya";
 
+/** Halaman dashboard selalu dinamis (butuh sesi masuk). */
+export const instant = false;
+
 export const metadata: Metadata = { title: "Akun saya" };
 
 export default async function HalamanAkun() {

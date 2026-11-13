@@ -7,6 +7,9 @@ import { bacaAktivitas, type JenisAksi } from "@/lib/server/aktivitas";
 import { JudulHalaman, Kartu } from "@/components/dasbor/ui";
 import { BarisAktivitas, KATA_AKSI, labelModul } from "@/components/dasbor/aktivitas";
 
+/** Halaman dashboard selalu dinamis (butuh sesi masuk). */
+export const instant = false;
+
 export const metadata: Metadata = { title: "Log aktivitas" };
 const PER = 50;
 

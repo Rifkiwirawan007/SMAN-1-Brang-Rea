@@ -5,6 +5,7 @@ import { HeroSlider, type SlideHero } from "@/components/home/hero-slider";
 import { LayananRail, type KartuLayanan } from "@/components/home/layanan-rail";
 import { KabarTabs } from "@/components/home/kabar-tabs";
 import { EkskulTabs } from "@/components/home/ekskul-tabs";
+import { TimelineSpmb } from "@/components/home/timeline-spmb";
 import { SectionHead } from "@/components/ui/section-head";
 import { CountUp } from "@/components/ui/count-up";
 import { Contoh } from "@/components/ui/contoh";
@@ -20,6 +21,7 @@ import {
   ambilPosterPrestasi,
   ambilSambutan,
   ambilSekolah,
+  ambilSpmb,
 } from "@/lib/konten/baca";
 import { apakahIlustrasi, mapsEmbed, mapsLink } from "@/lib/konten/util";
 import { angkaHuruf, bagianTanggal, formatTanggal, ringkasJamLayanan, waLink } from "@/lib/format";
@@ -41,7 +43,7 @@ const UBIN = [
 ];
 
 export default async function Beranda() {
-  const [sekolah, sambutan, hero, semuaBerita, semuaAgenda, ekskul, poster] = await Promise.all([
+  const [sekolah, sambutan, hero, semuaBerita, semuaAgenda, ekskul, poster, spmb] = await Promise.all([
     ambilSekolah(),
     ambilSambutan(),
     ambilHero(),
@@ -49,6 +51,7 @@ export default async function Beranda() {
     ambilAgenda(),
     ambilEkskul(),
     ambilPosterPrestasi(),
+    ambilSpmb(),
   ]);
   // Slide aktif dari dashboard. Durasi disimpan dalam detik, sedangkan slider memakai milidetik.
   const slides: SlideHero[] = hero.map((h) => ({
@@ -95,7 +98,7 @@ export default async function Beranda() {
       {slides.length > 0 ? <HeroSlider slides={slides} /> : null}
 
       {/* Sambutan kepala sekolah */}
-      <section aria-labelledby="judul-sambutan" className="section-y bg-paper-2">
+      <section aria-labelledby="judul-sambutan" className="section-y">
         <div className="container-site grid items-center gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-20">
           {/* Potret berdiri di atas alas 3D tipis (diam, tanpa animasi). */}
           <div className="relative mx-auto w-full max-w-[480px]">
@@ -141,6 +144,9 @@ export default async function Beranda() {
           </div>
         </div>
       </section>
+
+      {/* Timeline SPMB */}
+      <TimelineSpmb spmb={spmb} />
 
       {/* Ubin foto penuh 4 kolom */}
       <section aria-label="Jelajahi sekolah" className="grid sm:grid-cols-2 lg:grid-cols-4">

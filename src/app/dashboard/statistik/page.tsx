@@ -8,6 +8,9 @@ import { ringkasanKunjungan } from "@/lib/server/kunjungan";
 import { JudulHalaman, Kartu } from "@/components/dasbor/ui";
 import { BatangHorizontal, formatAngka, GrafikHarian } from "@/components/dasbor/grafik";
 
+/** Halaman dashboard selalu dinamis (butuh sesi masuk). */
+export const instant = false;
+
 export const metadata: Metadata = { title: "Statistik kunjungan" };
 
 const RENTANG = [7, 30, 90] as const;

@@ -6,6 +6,9 @@ import { bacaSemuaPesan } from "@/lib/server/pesan";
 import { JudulHalaman } from "@/components/dasbor/ui";
 import { PesanMasuk } from "@/components/dasbor/pesan-masuk";
 
+/** Halaman dashboard selalu dinamis (butuh sesi masuk). */
+export const instant = false;
+
 export const metadata: Metadata = { title: "Pesan masuk" };
 
 export default async function HalamanPesan({ searchParams }: PageProps<"/dashboard/pesan">) {

@@ -210,7 +210,7 @@ export type Spmb = {
   status: string;
   contoh: boolean;
   jalur: { nama: string; kuota: string; teks: string }[];
-  jadwal: { tahap: string; waktu: string }[];
+  jadwal: { tahap: string; waktu: string; keterangan?: string }[];
   syarat: string[];
   alur: { judul: string; teks: string }[];
   tanya: { q: string; a: string }[];

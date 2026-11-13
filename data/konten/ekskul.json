@@ -1,18 +1,5 @@
 [
   {
-    "id": "b339db9e06",
-    "dibuat": "2026-11-12T14:51:12.699Z",
-    "diubah": "2026-11-12T14:51:12.699Z",
-    "oleh": "Sistem",
-    "nama": "Pramuka",
-    "kategori": "Organisasi",
-    "deskripsi": "Ekstrakurikuler wajib untuk kelas X: kepemimpinan, kemandirian, dan kerja regu.",
-    "jadwal": "Sabtu, 14.00 WITA",
-    "ikon": "tenda",
-    "wajib": true,
-    "contoh": true
-  },
-  {
     "id": "eb0656f21a",
     "dibuat": "2026-11-12T14:51:12.699Z",
     "diubah": "2026-11-12T14:51:12.699Z",
@@ -41,15 +28,16 @@
   {
     "id": "215e1732d3",
     "dibuat": "2026-11-12T14:51:12.699Z",
-    "diubah": "2026-11-12T14:51:12.699Z",
-    "oleh": "Sistem",
-    "nama": "Rohis dan hadroh",
-    "kategori": "Keagamaan",
-    "deskripsi": "Kajian keislaman, tadarus, dan latihan hadroh untuk peringatan hari besar.",
+    "diubah": "2026-11-13T04:44:07.031Z",
+    "oleh": "Rifki Wirawan",
+    "nama": "seni budaya",
+    "kategori": "Seni",
+    "deskripsi": "tampilan kreatifitas siswa",
     "jadwal": "Jumat, 14.00 WITA",
-    "gambar": "/images/ekskul/rohis-halal-bihalal-2.jpg",
-    "ikon": "bulan",
-    "contoh": true
+    "gambar": "/media/2026/11/tangkapan-layar-2026-11-12-pukul-21-14-44-26a318.webp",
+    "ikon": "musik",
+    "contoh": true,
+    "wajib": false
   },
   {
     "id": "a1ece756c6",

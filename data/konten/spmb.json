@@ -27,27 +27,33 @@
   "jadwal": [
     {
       "tahap": "Sosialisasi",
-      "waktu": "Mei 2027"
+      "waktu": "Mei 2027",
+      "keterangan": "Informasi jalur, kuota, dan syarat disampaikan ke SMP dan masyarakat sekitar."
     },
     {
       "tahap": "Pendaftaran",
-      "waktu": "2 – 6 Juni 2027"
+      "waktu": "2 – 6 Juni 2027",
+      "keterangan": "Daftar secara daring di portal SPMB Provinsi NTB, pilih SMAN 1 Brang Rea."
     },
     {
       "tahap": "Verifikasi berkas",
-      "waktu": "7 – 9 Juni 2027"
+      "waktu": "7 – 9 Juni 2027",
+      "keterangan": "Panitia memeriksa dokumen. Pantau status verifikasi di akun pendaftaran."
     },
     {
       "tahap": "Pengumuman hasil",
-      "waktu": "12 Juni 2027"
+      "waktu": "12 Juni 2027",
+      "keterangan": "Hasil seleksi diumumkan di portal dan papan pengumuman sekolah."
     },
     {
       "tahap": "Daftar ulang",
-      "waktu": "14 – 16 Juni 2027"
+      "waktu": "14 – 16 Juni 2027",
+      "keterangan": "Calon murid yang diterima datang ke sekolah membawa berkas asli."
     },
     {
       "tahap": "MPLS",
-      "waktu": "Juli 2027"
+      "waktu": "Juli 2027",
+      "keterangan": "Masa Pengenalan Lingkungan Sekolah, hari pertama sebagai siswa Barema."
     }
   ],
   "syarat": [

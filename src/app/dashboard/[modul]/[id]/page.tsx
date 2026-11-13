@@ -8,6 +8,9 @@ import { NAMA_KOLEKSI, type NamaKoleksi } from "@/lib/konten/tipe";
 import { JudulHalaman } from "@/components/dasbor/ui";
 import { FormulirKoleksi } from "@/components/dasbor/formulir";
 
+/** Halaman dashboard selalu dinamis (butuh sesi masuk). */
+export const instant = false;
+
 const sah = (k: string): k is NamaKoleksi => (NAMA_KOLEKSI as string[]).includes(k);
 
 async function ambil(kunci: string, id: string) {

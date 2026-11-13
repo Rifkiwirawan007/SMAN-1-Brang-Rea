@@ -742,6 +742,14 @@ const spmb: ModulDokumen = {
           bidang: [
             { jenis: "teks", nama: "tahap", label: "Tahap", wajib: true, lebar: "setengah" },
             { jenis: "teks", nama: "waktu", label: "Waktu", wajib: true, placeholder: "2 – 6 Juni 2027", lebar: "setengah" },
+            {
+              jenis: "teksPanjang",
+              nama: "keterangan",
+              label: "Keterangan singkat",
+              maks: 120,
+              baris: 2,
+              bantuan: "Tampil di timeline SPMB beranda. Satu kalimat pendek.",
+            },
           ],
         },
       ],

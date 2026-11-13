@@ -36,19 +36,17 @@
     "facebook": "SMAN 1 Brang Rea",
     "facebookUrl": "https://www.facebook.com/search/top?q=SMAN%201%20BRANG%20REA",
     "dapodikTelepon": "082339567867",
-    "dapodikEmail": "smanbrangrea@gmail.com",
-    "instagram": "",
-    "instagramUrl": ""
+    "dapodikEmail": "smanbrangrea@gmail.com"
   },
   "tagar": "#BAREMAMEMESONA",
   "statistik": {
-    "guru": 30,
+    "siswa": 508,
     "siswaLaki": 230,
     "siswaPerempuan": 278,
-    "siswa": 508,
+    "guru": 30,
     "rombel": 14,
     "ruangKelas": 20,
-    "laboratorium": 8,
+    "laboratorium": 1,
     "perpustakaan": 1,
     "luasTanah": 13000,
     "rasioSiswaRombel": 37,
@@ -56,10 +54,10 @@
     "guruKualifikasi": "100%",
     "guruSertifikasi": "96,67%",
     "guruPns": "83,33%",
+    "semesterData": "2026/2027 gasal",
     "listrik": "PLN, 13.900 VA",
     "internet": "Broadband",
-    "penyelenggaraan": "Pagi, 6 hari",
-    "semesterData": "2026/2027 gasal"
+    "penyelenggaraan": "Pagi, 6 hari"
   },
   "sumber": {
     "dapodik": "https://sekolah.data.kemendikdasmen.go.id/profil-sekolah/014F1A8B-6921-481E-9606-ABB3F25F5F1F"

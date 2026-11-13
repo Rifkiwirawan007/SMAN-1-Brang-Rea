@@ -5,6 +5,9 @@ import { wajibMasuk } from "@/lib/server/pengguna";
 import { JudulHalaman } from "@/components/dasbor/ui";
 import { KelolaMedia } from "@/components/dasbor/kelola-media";
 
+/** Halaman dashboard selalu dinamis (butuh sesi masuk). */
+export const instant = false;
+
 export const metadata: Metadata = { title: "Pustaka foto" };
 
 export default async function HalamanMedia() {

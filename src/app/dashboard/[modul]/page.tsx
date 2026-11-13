@@ -10,6 +10,9 @@ import { JudulHalaman } from "@/components/dasbor/ui";
 import { DaftarKonten } from "@/components/dasbor/daftar-konten";
 import { FormulirDokumen } from "@/components/dasbor/formulir";
 
+/** Halaman dashboard selalu dinamis (butuh sesi masuk). */
+export const instant = false;
+
 export async function generateMetadata({ params }: PageProps<"/dashboard/[modul]">): Promise<Metadata> {
   const { modul } = await params;
   return { title: cariModul(modul)?.label ?? "Tidak ditemukan" };

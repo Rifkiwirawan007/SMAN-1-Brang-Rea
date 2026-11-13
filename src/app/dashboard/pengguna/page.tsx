@@ -5,6 +5,9 @@ import { amankan, bacaSemuaPengguna, wajibMasuk } from "@/lib/server/pengguna";
 import { JudulHalaman } from "@/components/dasbor/ui";
 import { KelolaPengguna } from "@/components/dasbor/kelola-pengguna";
 
+/** Halaman dashboard selalu dinamis (butuh sesi masuk). */
+export const instant = false;
+
 export const metadata: Metadata = { title: "Pengguna" };
 
 export default async function HalamanPengguna() {

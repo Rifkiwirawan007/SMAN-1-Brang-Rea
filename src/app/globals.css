@@ -725,3 +725,182 @@ dialog.lightbox::backdrop {
     scroll-behavior: auto;
   }
 }
+
+/* ---------- Timeline SPMB (pita berkelok) ---------- */
+.tl-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 600;
+  color: var(--color-brand);
+}
+.tl-kicker::before {
+  content: "";
+  width: 2.5rem;
+  height: 2px;
+  background: currentColor;
+}
+.tl-pita {
+  --tl-label: 9.5rem;
+  --tl-bar: 4rem;
+  --tl-ujung: 1.25rem;
+  --tl-belok: 7rem;
+  padding-right: var(--tl-belok);
+}
+/* Ruang kiri hanya bila ada belokan di sisi kiri (3 baris atau lebih). */
+.tl-pita.ada-kiri {
+  padding-left: var(--tl-belok);
+}
+.tl-baris {
+  position: relative;
+}
+.tl-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.tl-sel {
+  grid-row: 1;
+  min-width: 0;
+}
+.tl-label {
+  position: relative;
+  height: var(--tl-label);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.875rem;
+  padding: 1rem 1.25rem 0;
+  text-align: center;
+}
+/* Kurung siku di kiri-kanan kartu, seperti penanda tahap. */
+.tl-kurung {
+  position: absolute;
+  top: 2.75rem;
+  left: 12%;
+  right: 12%;
+  height: 1.25rem;
+  border: 2px solid var(--color-line-2);
+  border-bottom: 0;
+}
+.tl-kartu {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.375rem 1.25rem 0.375rem 0.375rem;
+  border-radius: 999px;
+  background: var(--color-paper);
+  box-shadow: var(--shadow-card);
+  white-space: nowrap;
+}
+.tl-nomor {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.75rem;
+  color: var(--color-white);
+  font-weight: 700;
+  font-size: 1.125rem;
+  font-variant-numeric: tabular-nums;
+}
+.tl-tahap {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  font-size: 0.9375rem;
+}
+.tl-ket {
+  max-width: 30ch;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--color-ink-2);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.tl-seg {
+  position: relative;
+  height: var(--tl-bar);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-white);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  --u: var(--tl-ujung);
+}
+.tl-seg span {
+  padding-inline: calc(var(--u) + 0.5rem);
+}
+/* Arah kanan: ujung runcing ke kanan menembus takik segmen berikutnya. */
+.tl-seg.kanan.panah {
+  width: calc(100% + var(--u));
+  margin-right: calc(var(--u) * -1);
+  z-index: 1;
+  clip-path: polygon(0 0, calc(100% - var(--u)) 0, 100% 50%, calc(100% - var(--u)) 100%, 0 100%);
+}
+.tl-seg.kanan.panah.takik {
+  clip-path: polygon(0 0, calc(100% - var(--u)) 0, 100% 50%, calc(100% - var(--u)) 100%, 0 100%, var(--u) 50%);
+}
+.tl-seg.kanan.takik:not(.panah) {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, var(--u) 50%);
+}
+/* Arah kiri (baris berbalik): cerminan. */
+.tl-seg.kiri.panah {
+  width: calc(100% + var(--u));
+  margin-left: calc(var(--u) * -1);
+  z-index: 1;
+  clip-path: polygon(var(--u) 0, 100% 0, 100% 100%, var(--u) 100%, 0 50%);
+}
+.tl-seg.kiri.panah.takik {
+  clip-path: polygon(var(--u) 0, 100% 0, calc(100% - var(--u)) 50%, 100% 100%, var(--u) 100%, 0 50%);
+}
+.tl-seg.kiri.takik:not(.panah) {
+  clip-path: polygon(0 0, 100% 0, calc(100% - var(--u)) 50%, 100% 100%, 0 100%);
+}
+/* Belokan U yang menyambung ke baris berikutnya. */
+.tl-belok {
+  position: absolute;
+  top: var(--tl-label);
+  height: calc(var(--tl-label) + var(--tl-bar) * 2);
+  width: var(--tl-belok);
+  border: var(--tl-bar) solid;
+}
+.tl-belok.kanan {
+  right: calc(var(--tl-belok) * -1 + 1px);
+  border-left: 0;
+  border-radius: 0 999px 999px 0;
+}
+.tl-belok.kiri {
+  left: calc(var(--tl-belok) * -1 + 1px);
+  border-right: 0;
+  border-radius: 999px 0 0 999px;
+}
+/* Versi HP: garis vertikal */
+.tl-v {
+  position: relative;
+  display: flex;
+  gap: 1rem;
+}
+.tl-v-garis {
+  position: absolute;
+  left: calc(1.375rem - 3px);
+  top: 2.75rem;
+  bottom: 0;
+  width: 6px;
+  border-radius: 3px;
+}
+.tl-v:last-child .tl-v-garis {
+  display: none;
+}

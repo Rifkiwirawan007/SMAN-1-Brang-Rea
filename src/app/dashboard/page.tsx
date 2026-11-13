@@ -28,6 +28,9 @@ import { Kartu, Lencana, waktuRelatif } from "@/components/dasbor/ui";
 import { formatAngka, GrafikHarian } from "@/components/dasbor/grafik";
 import { BarisAktivitas } from "@/components/dasbor/aktivitas";
 
+/** Halaman dashboard selalu dinamis (butuh sesi masuk). */
+export const instant = false;
+
 export const metadata = { title: { absolute: "Ringkasan · Dashboard" } };
 
 function sapaan() {
