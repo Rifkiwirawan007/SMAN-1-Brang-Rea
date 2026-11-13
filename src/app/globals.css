@@ -741,8 +741,8 @@ dialog.lightbox::backdrop {
   background: currentColor;
 }
 .tl-pita {
-  --tl-label: 9.5rem;
-  --tl-bar: 4rem;
+  --tl-label: 12rem;
+  --tl-bar: 4.25rem;
   --tl-ujung: 1.25rem;
   --tl-belok: 7rem;
   padding-right: var(--tl-belok);
@@ -750,13 +750,15 @@ dialog.lightbox::backdrop {
 /* Ruang kiri hanya bila ada belokan di sisi kiri (3 baris atau lebih). */
 .tl-pita.ada-kiri {
   padding-left: var(--tl-belok);
+  margin-inline: auto;
+  max-width: 1080px;
 }
 .tl-baris {
   position: relative;
 }
 .tl-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   list-style: none;
   margin: 0;
   padding: 0;
@@ -903,4 +905,81 @@ dialog.lightbox::backdrop {
 }
 .tl-v:last-child .tl-v-garis {
   display: none;
+}
+
+/* ---------- Efek mengetik berulang (judul hero) ---------- */
+.ketik {
+  position: relative;
+  display: inline-block;
+}
+.ketik-bayang {
+  visibility: hidden;
+  white-space: pre;
+}
+.ketik-hidup {
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: pre;
+}
+.ketik-kursor {
+  display: inline-block;
+  width: 0.06em;
+  height: 0.8em;
+  margin-left: 0.05em;
+  vertical-align: -0.04em;
+  background: #7fd39b;
+  animation: kedip-kursor 1s steps(1) infinite;
+}
+@keyframes kedip-kursor {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Timeline: pita "berjalan" mengikuti alur saat pertama terlihat. */
+.js .tl-pita .tl-seg {
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.5s cubic-bezier(0.55, 0, 0.35, 1) var(--jeda, 0s);
+}
+.js .tl-pita .tl-seg.kiri {
+  transform-origin: right center;
+}
+.js .tl-pita .tl-seg span {
+  opacity: 0;
+  transition: opacity 0.35s ease calc(var(--jeda, 0s) + 0.35s);
+}
+.js .tl-pita .tl-belok {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.5s cubic-bezier(0.55, 0, 0.35, 1) var(--jeda, 0s);
+}
+.js .tl-pita .tl-label {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.5s ease var(--jeda, 0s),
+    transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) var(--jeda, 0s);
+}
+.js .tl-pita[data-jalan="true"] .tl-seg {
+  transform: none;
+}
+.js .tl-pita[data-jalan="true"] .tl-seg span,
+.js .tl-pita[data-jalan="true"] .tl-label {
+  opacity: 1;
+  transform: none;
+}
+.js .tl-pita[data-jalan="true"] .tl-belok {
+  clip-path: inset(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .js .tl-pita .tl-seg,
+  .js .tl-pita .tl-seg span,
+  .js .tl-pita .tl-label,
+  .js .tl-pita .tl-belok {
+    transform: none;
+    opacity: 1;
+    clip-path: none;
+    transition: none;
+  }
 }

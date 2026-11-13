@@ -7,6 +7,7 @@ import { ArrowRight, Pause, Play } from "lucide-react";
 import { apakahIlustrasi } from "@/lib/konten/util";
 import { Contoh, LabelIlustrasi } from "@/components/ui/contoh";
 import { cx } from "@/lib/format";
+import { KetikUlang } from "@/components/ui/ketik-ulang";
 
 export type SlideHero = {
   tab: string;
@@ -172,7 +173,9 @@ export function HeroSlider({ slides, durasi = 7000 }: { slides: SlideHero[]; dur
             <div className="container-site flex h-full flex-col justify-end pb-[128px] md:pb-[168px]">
               <div className="hero-copy max-w-[44rem]">
                 {s.contoh ? <Contoh className="mb-4" /> : null}
-                <Judul className="text-display max-w-[15ch] text-white">{s.judul}</Judul>
+                <Judul className="text-display max-w-[15ch] text-white">
+                  <JudulKetik judul={s.judul} aktif={on && !gerakDikurangi} />
+                </Judul>
                 <p className="mt-5 max-w-[46ch] text-lead text-white/88">{s.teks}</p>
                 <div className="mt-8 flex flex-wrap gap-3">
                   <Link href={s.aksi.href} className="btn-solid" tabIndex={on ? undefined : -1}>
@@ -257,5 +260,19 @@ export function HeroSlider({ slides, durasi = 7000 }: { slides: SlideHero[]; dur
         </div>
       </div>
     </section>
+  );
+}
+
+/** Nama sekolah di judul hero diberi efek mengetik berulang; bagian judul lain tetap diam. */
+const NAMA_KETIK = "SMAN 1 Brang Rea";
+function JudulKetik({ judul, aktif }: { judul: string; aktif: boolean }) {
+  const i = judul.indexOf(NAMA_KETIK);
+  if (i < 0) return <>{judul}</>;
+  return (
+    <>
+      {judul.slice(0, i)}
+      <KetikUlang teks={NAMA_KETIK} aktif={aktif} />
+      {judul.slice(i + NAMA_KETIK.length)}
+    </>
   );
 }

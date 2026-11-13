@@ -2,10 +2,15 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import type { Spmb } from "@/lib/konten/tipe";
 import { Contoh } from "@/components/ui/contoh";
+import { PitaJalan } from "@/components/home/pita-jalan";
 
 type Tahap = Spmb["jadwal"][number];
 
-const PER_BARIS = 3;
+/** 2 tahap per baris: alur berkelok lebih panjang ke bawah. */
+const PER_BARIS = 2;
+/** Lama satu langkah animasi pita (detik). Belokan dihitung satu langkah tersendiri. */
+const LANGKAH = 0.45;
+const jedaSeg = (i: number) => (i + Math.floor(i / PER_BARIS)) * LANGKAH;
 
 /** Warna segmen bergantian: hijau sekolah dan hijau tua. */
 const warna = (i: number) => (i % 2 === 0 ? "var(--color-brand)" : "var(--color-brand-ink)");
@@ -16,9 +21,9 @@ function bagi<T>(daftar: T[], n: number) {
   return hasil;
 }
 
-function Label({ no, t, w }: { no: number; t: Tahap; w: string }) {
+function Label({ no, t, w, jeda }: { no: number; t: Tahap; w: string; jeda: number }) {
   return (
-    <div className="tl-label">
+    <div className="tl-label" style={{ "--jeda": `${jeda}s` } as React.CSSProperties}>
       <div className="tl-kurung" aria-hidden="true" />
       <p className="tl-kartu">
         <span className="tl-nomor" style={{ background: w }}>
@@ -57,13 +62,13 @@ export function TimelineSpmb({ spmb }: { spmb: Spmb }) {
         </h2>
 
         {/* Desktop: pita berkelok */}
-        <div className={`tl-pita mt-14 hidden lg:block ${baris.length > 2 ? "ada-kiri" : ""}`}>
+        <PitaJalan className={`tl-pita mt-14 hidden lg:block ${baris.length > 2 ? "ada-kiri" : ""}`}>
           {baris.map((isi, b) => {
             const balik = b % 2 === 1;
             const adaBerikut = b < baris.length - 1;
             const iTerakhir = b * PER_BARIS + isi.length - 1;
             return (
-              <div key={b} className="tl-baris" data-reveal style={{ "--d": 2 + b * 2 } as React.CSSProperties}>
+              <div key={b} className="tl-baris">
                 <ol start={b * PER_BARIS + 1} className="tl-grid" aria-label={b === 0 ? `Tahapan SPMB ${spmb.tahunAjaran}` : undefined}>
                   {isi.map((t, j) => {
                     const i = b * PER_BARIS + j;
@@ -71,10 +76,10 @@ export function TimelineSpmb({ spmb }: { spmb: Spmb }) {
                     const rata = j === isi.length - 1 && adaBerikut;
                     return (
                       <li key={i} className="tl-sel" style={{ gridColumn: balik ? PER_BARIS - j : j + 1 }}>
-                        <Label no={i + 1} t={t} w={warna(i)} />
+                        <Label no={i + 1} t={t} w={warna(i)} jeda={jedaSeg(i) + 0.3} />
                         <div
                           className={`tl-seg ${balik ? "kiri" : "kanan"} ${rata ? "" : "panah"} ${j > 0 ? "takik" : ""}`}
-                          style={{ background: warna(i) }}
+                          style={{ background: warna(i), "--jeda": `${jedaSeg(i)}s` } as React.CSSProperties}
                         >
                           <span>{t.waktu}</span>
                         </div>
@@ -83,12 +88,12 @@ export function TimelineSpmb({ spmb }: { spmb: Spmb }) {
                   })}
                 </ol>
                 {adaBerikut ? (
-                  <div className={`tl-belok ${balik ? "kiri" : "kanan"}`} style={{ borderColor: warna(iTerakhir) }} aria-hidden="true" />
+                  <div className={`tl-belok ${balik ? "kiri" : "kanan"}`} style={{ borderColor: warna(iTerakhir), "--jeda": `${jedaSeg(iTerakhir) + LANGKAH}s` } as React.CSSProperties} aria-hidden="true" />
                 ) : null}
               </div>
             );
           })}
-        </div>
+        </PitaJalan>
 
         {/* HP & tablet: daftar vertikal */}
         <ol className="mt-10 flex flex-col lg:hidden" aria-label={`Tahapan SPMB ${spmb.tahunAjaran}`}>
