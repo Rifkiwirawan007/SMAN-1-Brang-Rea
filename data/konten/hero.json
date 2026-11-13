@@ -18,7 +18,8 @@
       "label": "Info SPMB",
       "href": "/spmb"
     },
-    "aktif": true
+    "aktif": true,
+    "posisiHp": "18% 40%"
   },
   {
     "id": "561239d939",

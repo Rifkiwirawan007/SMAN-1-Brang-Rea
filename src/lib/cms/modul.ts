@@ -344,6 +344,7 @@ const hero: ModulKoleksi<SlideHero & Item> = {
     { jenis: "saklar", nama: "aktif", label: "Status", teks: "Tampilkan di beranda", sisi: true },
     { jenis: "gambar", nama: "gambar", label: "Gambar", wajib: true, sisi: true, rasio: "16/9" },
     { jenis: "fokus", nama: "posisi", label: "Titik fokus gambar", gambar: "gambar", sisi: true },
+    { jenis: "fokus", nama: "posisiHp", label: "Titik fokus di HP", gambar: "gambar", sisi: true },
     { jenis: "saklar", nama: "poster", label: "Poster", teks: "Gambar sudah memuat judul", bantuan: "Teks situs disembunyikan; seluruh slide menjadi tautan tombol utama.", sisi: true },
   ],
   judul: (x) => x.judul,

@@ -16,6 +16,8 @@ export type SlideHero = {
   gambar: string;
   alt: string;
   posisi?: string;
+  /** Titik fokus khusus HP (layar tegak memotong sisi kiri-kanan gambar). */
+  posisiHp?: string;
   aksi: { label: string; href: string };
   aksi2?: { label: string; href: string };
   contoh?: boolean;
@@ -143,7 +145,7 @@ export function HeroSlider({ slides, durasi = 7000 }: { slides: SlideHero[]; dur
                 loading={i === 0 ? "eager" : "lazy"}
                 fetchPriority={i === 0 ? "high" : "auto"}
                 className={cx("hero-media", s.poster ? "object-contain md:object-cover" : "object-cover")}
-                style={{ objectPosition: s.posisi ?? "center" }}
+                style={{ "--pos": s.posisi ?? "center", "--pos-hp": s.posisiHp ?? s.posisi ?? "center" } as React.CSSProperties}
               />
               {s.video ? (
                 <VideoHero video={s.video} poster={s.gambar} main={on && !jeda && terlihat && !gerakDikurangi} aktif={on} />

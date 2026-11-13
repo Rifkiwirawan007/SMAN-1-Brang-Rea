@@ -61,6 +61,7 @@ export default async function Beranda() {
     gambar: h.gambar,
     alt: h.alt,
     posisi: h.posisi,
+    posisiHp: h.posisiHp,
     aksi: h.aksi,
     aksi2: h.aksi2,
     video: h.video,

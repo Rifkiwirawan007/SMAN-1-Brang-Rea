@@ -103,6 +103,8 @@ export type SlideHero = Meta & {
   gambar: string;
   alt: string;
   posisi?: string;
+  /** Titik fokus khusus layar HP (tegak). Kosong = sama dengan `posisi`. */
+  posisiHp?: string;
   aksi: Tautan;
   aksi2?: Tautan;
   video?: { besar: string; kecil?: string };

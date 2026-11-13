@@ -983,3 +983,13 @@ dialog.lightbox::backdrop {
     transition: none;
   }
 }
+
+/* Titik fokus gambar hero: di HP (layar tegak) bisa berbeda dari desktop. */
+.hero-media {
+  object-position: var(--pos-hp, center);
+}
+@media (min-width: 768px) {
+  .hero-media {
+    object-position: var(--pos, center);
+  }
+}
