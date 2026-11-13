@@ -6,6 +6,7 @@ import { ArrowLeft, CalendarDays } from "lucide-react";
 import { PageHero } from "@/components/ui/page-hero";
 import { Contoh } from "@/components/ui/contoh";
 import { BagikanBerita } from "@/components/berita/bagikan";
+import { GambarPerbesar } from "@/components/ui/gambar-perbesar";
 import { ambilBerita, cariBerita } from "@/lib/konten/baca";
 import { formatTanggal } from "@/lib/format";
 
@@ -26,7 +27,12 @@ export async function generateMetadata({ params }: PageProps<"/berita/[slug]">):
   const { slug } = await params;
   const b = slug === SLUG_KOSONG ? null : await cariBerita(slug);
   if (!b) return { title: "Berita tidak ditemukan" };
-  return { title: b.judul, description: b.ringkasan };
+  const foto = b.gambar ?? b.halaman;
+  return {
+    title: b.judul,
+    description: b.ringkasan,
+    openGraph: { type: "article", title: b.judul, description: b.ringkasan, images: foto ? [{ url: foto, alt: b.judul }] : undefined },
+  };
 }
 
 export default async function DetailBerita({ params }: PageProps<"/berita/[slug]">) {
@@ -69,25 +75,19 @@ export default async function DetailBerita({ params }: PageProps<"/berita/[slug]
             </div>
             {b.halaman && (
               <figure className="mt-10 max-w-[720px]">
-                <a href={b.halaman} target="_blank" rel="noopener noreferrer" className="block overflow-hidden rounded-[14px] border border-line">
-                  <Image
-                    src={b.halaman}
-                    alt={b.keteranganHalaman ? b.judul : `Halaman buletin Lensa Barema: ${b.judul}`}
-                    width={1486}
-                    height={1800}
-                    sizes="(min-width: 768px) 720px, 100vw"
-                    quality={90}
-                    className="h-auto w-full"
-                  />
-                </a>
+                <GambarPerbesar
+                  src={b.halaman}
+                  alt={b.keteranganHalaman ? b.judul : `Halaman buletin Lensa Barema: ${b.judul}`}
+                  width={1486}
+                  height={1800}
+                  sizes="(min-width: 768px) 720px, 100vw"
+                />
                 <figcaption className="mt-3 text-sm text-muted">{b.keteranganHalaman ?? "Halaman buletin Lensa Barema. Ketuk gambar untuk membuka ukuran penuh."}</figcaption>
               </figure>
             )}
             {b.fotoLain?.map((src) => (
               <figure key={src} className="mt-6 max-w-[720px]">
-                <a href={src} target="_blank" rel="noopener noreferrer" className="block overflow-hidden rounded-[14px] border border-line">
-                  <Image src={src} alt={b.judul} width={1080} height={1010} sizes="(min-width: 768px) 720px, 100vw" quality={90} className="h-auto w-full" />
-                </a>
+                <GambarPerbesar src={src} alt={b.judul} width={1080} height={1010} sizes="(min-width: 768px) 720px, 100vw" />
               </figure>
             ))}
             {b.sumber && <p className="mt-8 text-sm text-muted">Sumber: {b.sumber}</p>}

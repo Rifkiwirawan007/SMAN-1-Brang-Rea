@@ -10,7 +10,7 @@ import { SectionHead } from "@/components/ui/section-head";
 import { CarouselRail } from "@/components/ui/carousel-rail";
 import { CountUp } from "@/components/ui/count-up";
 import { Contoh } from "@/components/ui/contoh";
-import { TeksKata, jumlahKata } from "@/components/ui/teks-kata";
+import { TeksKata } from "@/components/ui/teks-kata";
 import { Foto, LabelIlustrasi } from "@/components/ui/foto";
 import { IkonWhatsApp } from "@/components/ui/icons";
 import { beritaTampil } from "@/components/berita/tampil";
@@ -25,6 +25,7 @@ import {
   ambilSpmb,
 } from "@/lib/konten/baca";
 import { apakahIlustrasi, mapsEmbed, mapsLink } from "@/lib/konten/util";
+import { URL_SITUS } from "@/lib/situs-url";
 import { angkaHuruf, bagianTanggal, formatTanggal, ringkasJamLayanan, waLink } from "@/lib/format";
 
 const LAYANAN: KartuLayanan[] = [
@@ -97,6 +98,34 @@ export default async function Beranda() {
 
   return (
     <>
+      {/* Data terstruktur untuk Google (profil sekolah di hasil pencarian). */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "HighSchool",
+            name: sekolah.nama,
+            alternateName: sekolah.namaPendek,
+            url: URL_SITUS,
+            logo: `${URL_SITUS}/images/logo-sman1brangrea.png`,
+            image: `${URL_SITUS}/images/hero-sekolah-baru.jpg`,
+            identifier: { "@type": "PropertyValue", propertyID: "NPSN", value: sekolah.npsn },
+            foundingDate: String(sekolah.pendirian.tahun),
+            email: sekolah.kontak.email || undefined,
+            telephone: sekolah.kontak.whatsapp ? `+${sekolah.kontak.whatsapp}` : undefined,
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: sekolah.alamat.jalan,
+              addressLocality: sekolah.alamat.kecamatan,
+              addressRegion: sekolah.alamat.provinsi,
+              addressCountry: "ID",
+            },
+            geo: { "@type": "GeoCoordinates", latitude: sekolah.koordinat.lat, longitude: sekolah.koordinat.lng },
+            sameAs: [sekolah.kontak.instagramUrl, sekolah.kontak.facebookUrl].filter(Boolean),
+          }).replace(/</g, "\\u003c"),
+        }}
+      />
       {slides.length > 0 ? <HeroSlider slides={slides} /> : null}
 
       {/* Sambutan kepala sekolah */}
@@ -124,12 +153,12 @@ export default async function Beranda() {
               {sambutan.contoh && <Contoh teks="Teks contoh" />}
             </div>
             <div className="mt-8 flex flex-col gap-5 text-lead text-ink-2">
-              <p data-reveal-kata="28" style={{ "--d": 3 } as React.CSSProperties}>
-                <TeksKata teks={sambutan.salam} />
+              <p data-reveal style={{ "--d": 3 } as React.CSSProperties}>
+                {sambutan.salam}
               </p>
               {sambutan.paragraf[0] ? (
-                <p data-reveal-kata="28" style={{ "--d": 4 } as React.CSSProperties}>
-                  <TeksKata teks={sambutan.paragraf[0]} mulai={jumlahKata(sambutan.salam)} />
+                <p data-reveal style={{ "--d": 4 } as React.CSSProperties}>
+                  {sambutan.paragraf[0]}
                 </p>
               ) : null}
             </div>

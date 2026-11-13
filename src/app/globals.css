@@ -1074,3 +1074,19 @@ html:not(.js) .pemuat {
     animation-duration: 2.4s;
   }
 }
+
+/* Petunjuk geser tabel di HP */
+.geser-panah {
+  display: inline-block;
+  animation: geser-panah 1.4s ease-in-out infinite;
+}
+@keyframes geser-panah {
+  50% {
+    transform: translateX(6px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .geser-panah {
+    animation: none;
+  }
+}

@@ -151,7 +151,10 @@ export default async function Akademik() {
             tambahan={jadwal.contoh ? <Contoh className="self-start" /> : null}
             teks={<p>Sekolah menyelenggarakan pembelajaran pagi selama enam hari, Senin sampai Sabtu (data Dapodik).{labelContoh && jadwal.contoh ? " Jam di bawah ini contoh." : null}</p>}
           />
-          <div data-reveal className="mt-12 overflow-x-auto rounded-[14px] border border-line bg-paper">
+          <p className="mt-10 flex items-center gap-2 text-sm text-muted md:hidden" aria-hidden="true">
+            Geser tabel ke samping <span className="geser-panah">→</span>
+          </p>
+          <div data-reveal className="mt-3 overflow-x-auto rounded-[14px] border border-line bg-paper md:mt-12">
             <table className="w-full min-w-[560px] text-left">
               <caption className="sr-only">Jam pelajaran per hari</caption>
               <thead>

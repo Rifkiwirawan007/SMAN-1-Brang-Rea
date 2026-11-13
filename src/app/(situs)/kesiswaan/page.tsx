@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { PemicuLightbox } from "@/components/ui/gambar-perbesar";
 import { Award, CircleCheck, HeartHandshake, MessageCircle } from "lucide-react";
 import { PageHero } from "@/components/ui/page-hero";
 import { SubNav } from "@/components/ui/sub-nav";
@@ -110,17 +111,20 @@ export default async function Kesiswaan() {
                 style={{ "--d": i % 4 } as React.CSSProperties}
                 className="w-[min(74vw,260px)] shrink-0 sm:w-[280px] lg:w-auto"
               >
-                <a href={p.src} target="_blank" rel="noopener noreferrer" className="zoom-wrap group block">
+                <PemicuLightbox src={p.src} alt={p.judul} className="zoom-wrap group block w-full cursor-zoom-in text-left">
                   <span className="relative block aspect-[9/10] overflow-hidden rounded-[14px] border border-line bg-paper-2">
                     <Image src={p.src} alt={p.judul} fill sizes="(min-width: 1024px) 25vw, 74vw" className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]" />
                   </span>
                   <span className="mt-3 block text-sm font-semibold leading-snug text-ink">{p.judul}</span>
                   <span className="mt-1 block text-[0.8125rem] text-muted">{p.ket}</span>
-                </a>
+                </PemicuLightbox>
               </li>
             ))}
           </CarouselRail>
-          <div data-reveal className="mt-12 overflow-x-auto rounded-[14px] border border-line">
+          <p className="mt-10 flex items-center gap-2 text-sm text-muted md:hidden" aria-hidden="true">
+            Geser tabel ke samping <span className="geser-panah">→</span>
+          </p>
+          <div data-reveal className="mt-3 overflow-x-auto rounded-[14px] border border-line md:mt-12">
             <table className="w-full min-w-[640px] text-left">
               <caption className="sr-only">Daftar prestasi siswa</caption>
               <thead className="bg-paper-2">

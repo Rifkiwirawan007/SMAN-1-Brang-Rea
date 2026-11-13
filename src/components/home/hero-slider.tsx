@@ -84,6 +84,10 @@ function langgananGerak(cb: () => void) {
 /** Hero layar penuh gaya pertamina.com: slide memudar, zoom pelan, tab progres di dasar. */
 export function HeroSlider({ slides, durasi = 7000 }: { slides: SlideHero[]; durasi?: number }) {
   const [aktif, setAktif] = useState(0);
+  // Slide hanya memuat gambar/video setelah slide sebelumnya aktif (slide 1 & 2 langsung).
+  const [jangkauan, setJangkauan] = useState(1);
+  const targetJangkauan = Math.min(aktif + 1, slides.length - 1);
+  if (targetJangkauan > jangkauan) setJangkauan(targetJangkauan);
   const [putaran, setPutaran] = useState(0);
   const [jedaPengguna, setJedaPengguna] = useState<boolean | null>(null);
   const [terlihat, setTerlihat] = useState(true);
@@ -133,9 +137,11 @@ export function HeroSlider({ slides, durasi = 7000 }: { slides: SlideHero[]; dur
             aria-label={`${i + 1} dari ${slides.length}: ${s.tab}`}
           >
             <div className="absolute inset-0 -z-20 overflow-hidden">
+              {i <= jangkauan ? (
+              <>
               {s.poster ? (
                 // Di HP poster ditampilkan utuh; latar diisi salinan buram poster yang sama.
-                <Image src={s.gambar} alt="" aria-hidden="true" fill sizes="50vw" className="scale-110 object-cover blur-2xl brightness-75 md:hidden" />
+                <Image src={s.gambar} alt="" aria-hidden="true" fill sizes="20vw" quality={30} className="scale-110 object-cover blur-2xl brightness-75 md:hidden" />
               ) : null}
               <Image
                 src={s.gambar}
@@ -149,6 +155,8 @@ export function HeroSlider({ slides, durasi = 7000 }: { slides: SlideHero[]; dur
               />
               {s.video ? (
                 <VideoHero video={s.video} poster={s.gambar} main={on && !jeda && terlihat && !gerakDikurangi} aktif={on} />
+              ) : null}
+              </>
               ) : null}
             </div>
             <div className={cx(s.video || s.poster ? "scrim-video" : "scrim-hero", "absolute inset-0 -z-10")} aria-hidden="true" />
