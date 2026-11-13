@@ -1,0 +1,106 @@
+{
+  "tahunAjaran": "2027/2028",
+  "status": "Belum dibuka",
+  "contoh": true,
+  "jalur": [
+    {
+      "nama": "Domisili",
+      "kuota": "min. 30%",
+      "teks": "Calon murid yang berdomisili di wilayah yang ditetapkan pemerintah daerah, dibuktikan dengan Kartu Keluarga."
+    },
+    {
+      "nama": "Afirmasi",
+      "kuota": "min. 30%",
+      "teks": "Calon murid dari keluarga kurang mampu (KIP, PKH, atau program sejenis) dan penyandang disabilitas."
+    },
+    {
+      "nama": "Prestasi",
+      "kuota": "min. 30%",
+      "teks": "Calon murid dengan nilai rapor atau prestasi lomba akademik maupun non-akademik."
+    },
+    {
+      "nama": "Mutasi",
+      "kuota": "maks. 5%",
+      "teks": "Calon murid yang pindah mengikuti tugas orang tua atau anak guru di sekolah tujuan."
+    }
+  ],
+  "jadwal": [
+    {
+      "tahap": "Sosialisasi",
+      "waktu": "Mei 2027"
+    },
+    {
+      "tahap": "Pendaftaran",
+      "waktu": "2 – 6 Juni 2027"
+    },
+    {
+      "tahap": "Verifikasi berkas",
+      "waktu": "7 – 9 Juni 2027"
+    },
+    {
+      "tahap": "Pengumuman hasil",
+      "waktu": "12 Juni 2027"
+    },
+    {
+      "tahap": "Daftar ulang",
+      "waktu": "14 – 16 Juni 2027"
+    },
+    {
+      "tahap": "MPLS",
+      "waktu": "Juli 2027"
+    }
+  ],
+  "syarat": [
+    "Ijazah SMP/sederajat atau surat keterangan lulus",
+    "Akta kelahiran (usia paling tinggi 21 tahun pada 1 Juli 2027)",
+    "Kartu Keluarga yang diterbitkan paling singkat 1 tahun sebelum pendaftaran",
+    "Rapor semester 1–5 untuk jalur prestasi",
+    "Sertifikat lomba (bila mendaftar jalur prestasi non-akademik)",
+    "Bukti KIP, PKH, atau program sejenis untuk jalur afirmasi",
+    "Surat penugasan orang tua untuk jalur mutasi"
+  ],
+  "alur": [
+    {
+      "judul": "Siapkan dokumen",
+      "teks": "Pindai dokumen persyaratan sesuai jalur yang dipilih."
+    },
+    {
+      "judul": "Daftar akun",
+      "teks": "Buat akun di portal SPMB resmi Provinsi Nusa Tenggara Barat."
+    },
+    {
+      "judul": "Pilih jalur dan sekolah",
+      "teks": "Pilih jalur pendaftaran, lalu pilih SMA Negeri 1 Brang Rea."
+    },
+    {
+      "judul": "Verifikasi berkas",
+      "teks": "Panitia memeriksa dokumen. Pantau status verifikasi di akun Anda."
+    },
+    {
+      "judul": "Lihat pengumuman",
+      "teks": "Hasil seleksi diumumkan melalui portal dan papan pengumuman sekolah."
+    },
+    {
+      "judul": "Daftar ulang",
+      "teks": "Calon murid yang diterima melakukan daftar ulang sesuai jadwal."
+    }
+  ],
+  "tanya": [
+    {
+      "q": "Kapan pendaftaran SPMB dibuka?",
+      "a": "Jadwal resmi mengikuti petunjuk teknis Dinas Pendidikan dan Kebudayaan Provinsi NTB. Pengumuman akan dimuat di halaman berita sekolah."
+    },
+    {
+      "q": "Apakah pendaftaran dipungut biaya?",
+      "a": "Tidak. Pendaftaran SPMB di sekolah negeri tidak dipungut biaya."
+    },
+    {
+      "q": "Bolehkah mendaftar lebih dari satu jalur?",
+      "a": "Ketentuan jumlah pilihan jalur dan sekolah mengikuti juknis tahun berjalan. Tanyakan kepada panitia bila ragu."
+    },
+    {
+      "q": "Di mana bisa bertanya langsung?",
+      "a": "Datang ke sekolah pada jam layanan atau kirim pesan WhatsApp kepada panitia melalui tombol di halaman ini."
+    }
+  ]
+}

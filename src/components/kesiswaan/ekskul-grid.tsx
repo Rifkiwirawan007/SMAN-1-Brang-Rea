@@ -3,14 +3,15 @@
 import Image from "next/image";
 import { useMemo, useState } from "react";
 import { CalendarClock } from "lucide-react";
-import type { Ekskul, KategoriEkskul } from "@/data/kesiswaan";
-import { TAMPILKAN_LABEL_CONTOH } from "@/data/sekolah";
+import type { Ekskul, KategoriEkskul } from "@/lib/konten/tipe";
+import { apakahIlustrasi } from "@/lib/konten/util";
+import { useLabelContoh } from "@/components/situs/konteks";
 import { Contoh } from "@/components/ui/contoh";
 import { IKON_EKSKUL } from "@/components/ui/icons";
-import { apakahIlustrasi } from "@/data/foto";
 
 /** Kisi ekstrakurikuler dengan saringan kategori. */
-export function EkskulGrid({ daftar, kategori }: { daftar: Ekskul[]; kategori: KategoriEkskul[] }) {
+export function EkskulGrid({ daftar, kategori }: { daftar: Ekskul[]; kategori: readonly KategoriEkskul[] }) {
+  const labelContoh = useLabelContoh();
   const [pilih, setPilih] = useState<KategoriEkskul | "Semua">("Semua");
   const hasil = useMemo(() => daftar.filter((e) => pilih === "Semua" || e.kategori === pilih), [daftar, pilih]);
 
@@ -25,14 +26,14 @@ export function EkskulGrid({ daftar, kategori }: { daftar: Ekskul[]; kategori: K
       </div>
       <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {hasil.map((e) => {
-          const Ikon = IKON_EKSKUL[e.ikon];
+          const Ikon = IKON_EKSKUL[e.ikon] ?? IKON_EKSKUL.buku;
           return (
-            <li key={e.nama} className="flex flex-col overflow-hidden rounded-[14px] border border-line bg-paper">
+            <li key={e.id} className="flex flex-col overflow-hidden rounded-[14px] border border-line bg-paper">
               <div className="relative aspect-[16/9] overflow-hidden bg-brand">
                 {e.gambar ? (
                   <>
                     <Image src={e.gambar} alt={`Kegiatan ${e.nama}`} fill sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw" className="object-cover" style={{ objectPosition: e.posisiGambar }} />
-                    {TAMPILKAN_LABEL_CONTOH && apakahIlustrasi(e.gambar) && (
+                    {labelContoh && apakahIlustrasi(e.gambar) && (
                       <span className="absolute right-3 top-3 rounded-full bg-scrim/60 px-2.5 py-0.5 text-[0.6875rem] leading-5 text-white">
                         Foto ilustrasi
                       </span>

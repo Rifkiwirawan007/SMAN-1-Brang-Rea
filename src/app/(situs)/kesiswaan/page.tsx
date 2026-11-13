@@ -7,8 +7,9 @@ import { SectionHead } from "@/components/ui/section-head";
 import { CatatanContoh, Contoh } from "@/components/ui/contoh";
 import { IkonWhatsApp } from "@/components/ui/icons";
 import { EkskulGrid } from "@/components/kesiswaan/ekskul-grid";
-import { EKSKUL, KATEGORI_EKSKUL, LAYANAN_BK, OSIS, POSTER_PRESTASI, PRESTASI, TATA_TERTIB } from "@/data/kesiswaan";
-import { waLink } from "@/lib/format";
+import { ambilEkskul, ambilKesiswaan, ambilPosterPrestasi, ambilPrestasi, ambilSekolah } from "@/lib/konten/baca";
+import { KATEGORI_EKSKUL } from "@/lib/konten/tipe";
+import { angkaHuruf, waLink } from "@/lib/format";
 
 export const metadata: Metadata = {
   title: "Kesiswaan",
@@ -23,7 +24,15 @@ const BAGIAN = [
   { id: "bk", label: "Bimbingan konseling" },
 ];
 
-export default function Kesiswaan() {
+export default async function Kesiswaan() {
+  const [sekolah, ekskul, kesiswaan, prestasi, poster] = await Promise.all([
+    ambilSekolah(),
+    ambilEkskul(),
+    ambilKesiswaan(),
+    ambilPrestasi(),
+    ambilPosterPrestasi(),
+  ]);
+  const { osis, tataTertib, layananBk } = kesiswaan;
   return (
     <>
       <PageHero
@@ -42,11 +51,11 @@ export default function Kesiswaan() {
           <SectionHead
             id="judul-osis"
             judul="Organisasi Siswa Intra Sekolah"
-            tambahan={OSIS.contoh ? <Contoh className="self-start" /> : null}
-            teks={<p>{OSIS.ringkas}</p>}
+            tambahan={osis.contoh ? <Contoh className="self-start" /> : null}
+            teks={<p>{osis.ringkas}</p>}
           />
           <ol className="mt-14 grid gap-px overflow-hidden rounded-[14px] border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
-            {OSIS.bidang.map((b, i) => (
+            {osis.bidang.map((b, i) => (
               <li key={b.nama} data-reveal style={{ "--d": i } as React.CSSProperties} className="flex flex-col bg-paper p-7">
                 <h3 className="text-h3">{b.nama}</h3>
                 <p className="mt-3 text-[0.9375rem] text-ink-2">{b.teks}</p>
@@ -62,11 +71,13 @@ export default function Kesiswaan() {
           <SectionHead
             id="judul-ekskul"
             judul="Ekstrakurikuler"
-            teks={<p>Sepuluh pilihan kegiatan di luar jam pelajaran. Pramuka wajib bagi kelas X, sisanya dipilih sesuai minat.</p>}
+            teks={<p>{angkaHuruf(ekskul.length, { kapital: true })} pilihan kegiatan di luar jam pelajaran. Pramuka wajib bagi kelas X, sisanya dipilih sesuai minat.</p>}
           />
-          <CatatanContoh className="mt-8">Daftar, jadwal, dan foto ekstrakurikuler masih contoh.</CatatanContoh>
+          {ekskul.some((e) => e.contoh) ? (
+            <CatatanContoh className="mt-8">Daftar, jadwal, dan foto ekstrakurikuler masih contoh.</CatatanContoh>
+          ) : null}
           <div className="mt-8">
-            <EkskulGrid daftar={EKSKUL} kategori={KATEGORI_EKSKUL} />
+            <EkskulGrid daftar={ekskul} kategori={KATEGORI_EKSKUL} />
           </div>
         </div>
       </section>
@@ -77,8 +88,8 @@ export default function Kesiswaan() {
           <SectionHead id="judul-prestasi" judul="Prestasi siswa" teks={<p>Capaian siswa di berbagai lomba dan kejuaraan.</p>} />
           {/* Poster prestasi dari Instagram sekolah; ketuk untuk ukuran penuh. */}
           <ul className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-            {POSTER_PRESTASI.map((p, i) => (
-              <li key={p.src} data-reveal style={{ "--d": i % 4 } as React.CSSProperties}>
+            {poster.map((p, i) => (
+              <li key={p.id} data-reveal style={{ "--d": i % 4 } as React.CSSProperties}>
                 <a href={p.src} target="_blank" rel="noopener noreferrer" className="zoom-wrap group block">
                   <span className="relative block aspect-[9/10] overflow-hidden rounded-[14px] border border-line bg-paper-2">
                     <Image src={p.src} alt={p.judul} fill sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw" className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]" />
@@ -101,8 +112,8 @@ export default function Kesiswaan() {
                 </tr>
               </thead>
               <tbody>
-                {PRESTASI.map((p) => (
-                  <tr key={p.judul} className="border-t border-line">
+                {prestasi.map((p) => (
+                  <tr key={p.id} className="border-t border-line">
                     <td className="px-6 py-4 tabular-nums text-ink-2">{p.tahun}</td>
                     <th scope="row" className="px-6 py-4 font-semibold text-ink">
                       <span className="flex items-start gap-3">
@@ -131,14 +142,14 @@ export default function Kesiswaan() {
               <h2 id="judul-tatib" data-reveal className="text-h2">
                 Tata tertib siswa
               </h2>
-              {TATA_TERTIB.contoh && <Contoh />}
+              {tataTertib.contoh && <Contoh />}
             </div>
             <p data-reveal className="mt-6 max-w-[44ch] text-lead text-ink-2">
               Aturan bersama agar sekolah tetap aman, tertib, dan nyaman untuk belajar. Buka tiap bagian untuk membaca butirnya.
             </p>
           </div>
           <div data-reveal className="flex flex-col gap-3">
-            {TATA_TERTIB.butir.map((b, i) => (
+            {tataTertib.butir.map((b, i) => (
               <details key={b.judul} className="group rounded-[14px] border border-line bg-paper" open={i === 0}>
                 <summary className="flex cursor-pointer items-center justify-between gap-4 rounded-[14px] px-6 py-5 font-semibold text-ink hover:text-brand">
                   {b.judul}
@@ -166,11 +177,11 @@ export default function Kesiswaan() {
           <SectionHead
             id="judul-bk"
             judul="Bimbingan konseling"
-            tambahan={LAYANAN_BK.contoh ? <Contoh className="self-start" /> : null}
-            teks={<p>{LAYANAN_BK.ringkas}</p>}
+            tambahan={layananBk.contoh ? <Contoh className="self-start" /> : null}
+            teks={<p>{layananBk.ringkas}</p>}
           />
           <ul className="mt-12 grid gap-5 md:grid-cols-3">
-            {LAYANAN_BK.layanan.map((l, i) => (
+            {layananBk.layanan.map((l, i) => (
               <li key={l.nama} data-reveal style={{ "--d": i } as React.CSSProperties} className="rounded-[14px] border border-line bg-paper p-8">
                 <span className="grid h-12 w-12 place-items-center rounded-full bg-brand-soft text-brand">
                   {i === 0 ? <HeartHandshake size={22} aria-hidden="true" /> : <MessageCircle size={22} aria-hidden="true" />}
@@ -182,7 +193,7 @@ export default function Kesiswaan() {
           </ul>
           <div data-reveal className="mt-10 flex flex-wrap items-center gap-4">
             <a
-              href={waLink("Halo, saya ingin membuat janji dengan guru bimbingan konseling SMAN 1 Brang Rea.")}
+              href={waLink("Halo, saya ingin membuat janji dengan guru bimbingan konseling SMAN 1 Brang Rea.", sekolah.kontak.whatsapp)}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-solid"

@@ -11,55 +11,18 @@ import { Contoh } from "@/components/ui/contoh";
 import { TeksKata, jumlahKata } from "@/components/ui/teks-kata";
 import { Foto, LabelIlustrasi } from "@/components/ui/foto";
 import { IkonWhatsApp } from "@/components/ui/icons";
-import { AGENDA, urutBerita } from "@/data/berita";
-import { EKSKUL, POSTER_PRESTASI } from "@/data/kesiswaan";
-import { SAMBUTAN } from "@/data/profil";
-import { apakahIlustrasi } from "@/data/foto";
-import { MAPS_EMBED, MAPS_LINK, SEKOLAH, TAMPILKAN_LABEL_CONTOH } from "@/data/sekolah";
-import { bagianTanggal, formatTanggal, waLink } from "@/lib/format";
-
-const SLIDES: SlideHero[] = [
-  {
-    tab: "Selamat datang",
-    judul: "Selamat datang di SMAN 1 Brang Rea",
-    teks: "Sekolah menengah atas negeri di Desa Beru, Sumbawa Barat, sejak 2006.",
-    gambar: "/images/hero-sekolah-baru.jpg",
-    alt: "Papan nama SMAN 1 Brang Rea, siswa berjalan menuju gedung sekolah, dan penari berkostum sayap emas",
-    posisi: "center 40%",
-    aksi: { label: "Profil sekolah", href: "/profil" },
-    aksi2: { label: "Info SPMB", href: "/spmb" },
-  },
-  {
-    tab: "Ekstrakurikuler",
-    judul: "Ruang tumbuh di luar kelas",
-    teks: "Pramuka, Paskibra, seni tari, olahraga, dan kegiatan keagamaan.",
-    gambar: "/images/sekolah/video-ekskul-poster.jpg",
-    alt: "Penampil berkostum merah menari di depan air terjun di Brang Rea",
-    video: { besar: "/video/ekskul-hd.mp4", kecil: "/video/ekskul-hp.mp4" },
-    durasi: 20000,
-    aksi: { label: "Lihat kesiswaan", href: "/kesiswaan" },
-  },
-  {
-    tab: "Kabar sekolah",
-    judul: "Kabar terbaru dari sekolah",
-    teks: "Berita, pengumuman, dan agenda untuk siswa serta orang tua.",
-    gambar: "/images/sekolah/snbp-2026.jpg",
-    alt: "Poster Selamat dan Sukses siswa-siswi SMAN 1 Brang Rea atas kelulusan SNBP 2026, berisi foto 14 siswa berjas hitam",
-    posisi: "50% center",
-    poster: true,
-    aksi: { label: "Baca berita", href: "/berita" },
-  },
-  {
-    tab: "SPMB 2027/2028",
-    judul: "SPMB 2027/2028 segera dibuka",
-    teks: "Pelajari jalur, jadwal, dan syarat pendaftaran murid baru.",
-    gambar: "/images/sekolah/spmb-poster.jpg",
-    alt: "Poster SPMB SMAN 1 Brang Rea: kepala sekolah dan dua siswa berseragam di depan gedung sekolah",
-    posisi: "50% center",
-    poster: true,
-    aksi: { label: "Lihat info SPMB", href: "/spmb" },
-  },
-];
+import { beritaTampil } from "@/components/berita/tampil";
+import {
+  ambilAgenda,
+  ambilBerita,
+  ambilEkskul,
+  ambilHero,
+  ambilPosterPrestasi,
+  ambilSambutan,
+  ambilSekolah,
+} from "@/lib/konten/baca";
+import { apakahIlustrasi, mapsEmbed, mapsLink } from "@/lib/konten/util";
+import { angkaHuruf, bagianTanggal, formatTanggal, ringkasJamLayanan, waLink } from "@/lib/format";
 
 const LAYANAN: KartuLayanan[] = [
   { judul: "Kalender akademik", teks: "Tanggal penting semester ganjil dan genap tahun pelajaran 2026/2027.", href: "/akademik#kalender" },
@@ -77,15 +40,34 @@ const UBIN = [
   { label: "Murid baru", judul: "SPMB 2027/2028", href: "/spmb", gambar: "/images/sekolah/upacara-pemimpin.jpg", alt: "Siswa pemimpin upacara berselempang hijau" },
 ];
 
-export default function Beranda() {
-  const urut = urutBerita();
-  const berita = urut
-    .filter((b) => b.kategori !== "Pengumuman")
-    .map((b) => ({ ...b, tanggalTampil: formatTanggal(b.tanggal) }));
-  const pengumuman = urut
-    .filter((b) => b.kategori === "Pengumuman")
-    .map((b) => ({ ...b, tanggalTampil: formatTanggal(b.tanggal) }));
-  const agenda = AGENDA.map((a) => {
+export default async function Beranda() {
+  const [sekolah, sambutan, hero, semuaBerita, semuaAgenda, ekskul, poster] = await Promise.all([
+    ambilSekolah(),
+    ambilSambutan(),
+    ambilHero(),
+    ambilBerita(),
+    ambilAgenda(),
+    ambilEkskul(),
+    ambilPosterPrestasi(),
+  ]);
+  // Slide aktif dari dashboard. Durasi disimpan dalam detik, sedangkan slider memakai milidetik.
+  const slides: SlideHero[] = hero.map((h) => ({
+    tab: h.tab,
+    judul: h.judul,
+    teks: h.teks,
+    gambar: h.gambar,
+    alt: h.alt,
+    posisi: h.posisi,
+    aksi: h.aksi,
+    aksi2: h.aksi2,
+    video: h.video,
+    poster: h.poster,
+    contoh: h.contoh,
+    durasi: h.durasi ? h.durasi * 1000 : undefined,
+  }));
+  const berita = semuaBerita.filter((b) => b.kategori !== "Pengumuman").slice(0, 5).map(beritaTampil);
+  const pengumuman = semuaBerita.filter((b) => b.kategori === "Pengumuman").map(beritaTampil);
+  const agenda = semuaAgenda.map((a) => {
     const t = bagianTanggal(a.tanggal);
     return {
       ...a,
@@ -93,7 +75,14 @@ export default function Beranda() {
       rentang: a.sampai ? `${t.namaHari}, s.d. ${formatTanggal(a.sampai, { pendek: true })}` : t.namaHari,
     };
   });
-  const s = SEKOLAH.statistik;
+  const s = sekolah.statistik;
+  const labelContoh = sekolah.tampilkanLabelContoh !== false;
+  // Penanda contoh di seksi kabar: hanya bila label contoh aktif dan datanya memang masih contoh.
+  const kabarContoh = [pengumuman.some((p) => p.contoh) && "pengumuman", agenda.some((a) => a.contoh) && "agenda"]
+    .filter(Boolean)
+    .join(" dan ");
+  const catatanKabar =
+    labelContoh && kabarContoh ? ` ${kabarContoh.charAt(0).toUpperCase()}${kabarContoh.slice(1)} masih contoh.` : "";
   const statistik = [
     { label: "Peserta didik", nilai: s.siswa, ket: `${s.siswaLaki} laki-laki dan ${s.siswaPerempuan} perempuan` },
     { label: "Guru", nilai: s.guru, ket: `${s.guruSertifikasi} bersertifikat pendidik` },
@@ -103,7 +92,7 @@ export default function Beranda() {
 
   return (
     <>
-      <HeroSlider slides={SLIDES} />
+      {slides.length > 0 ? <HeroSlider slides={slides} /> : null}
 
       {/* Sambutan kepala sekolah */}
       <section aria-labelledby="judul-sambutan" className="section-y bg-paper-2">
@@ -112,8 +101,8 @@ export default function Beranda() {
           <div className="relative mx-auto w-full max-w-[480px]">
             <div className="relative aspect-[4/5]">
               <Image
-                src={SAMBUTAN.foto}
-                alt={`${SAMBUTAN.nama}, ${SAMBUTAN.jabatan}`}
+                src={sambutan.foto}
+                alt={`${sambutan.nama}, ${sambutan.jabatan}`}
                 fill
                 sizes="(min-width: 1024px) 480px, 90vw"
                 className="object-contain object-bottom"
@@ -127,20 +116,22 @@ export default function Beranda() {
               <h2 id="judul-sambutan" data-reveal-kata="70" className="text-h2">
                 <TeksKata teks="Sambutan kepala sekolah" />
               </h2>
-              {SAMBUTAN.contoh && <Contoh teks="Teks contoh" />}
+              {sambutan.contoh && <Contoh teks="Teks contoh" />}
             </div>
             <div className="mt-8 flex flex-col gap-5 text-lead text-ink-2">
               <p data-reveal-kata="28" style={{ "--d": 3 } as React.CSSProperties}>
-                <TeksKata teks={SAMBUTAN.salam} />
+                <TeksKata teks={sambutan.salam} />
               </p>
-              <p data-reveal-kata="28" style={{ "--d": 4 } as React.CSSProperties}>
-                <TeksKata teks={SAMBUTAN.paragraf[0]} mulai={jumlahKata(SAMBUTAN.salam)} />
-              </p>
+              {sambutan.paragraf[0] ? (
+                <p data-reveal-kata="28" style={{ "--d": 4 } as React.CSSProperties}>
+                  <TeksKata teks={sambutan.paragraf[0]} mulai={jumlahKata(sambutan.salam)} />
+                </p>
+              ) : null}
             </div>
             <div data-reveal style={{ "--d": 9 } as React.CSSProperties} className="mt-10 flex flex-wrap items-end justify-between gap-6">
               <div>
-                <p className="text-h3 text-ink">{SAMBUTAN.nama}</p>
-                <p className="mt-1 text-ink-2">{SAMBUTAN.jabatan}</p>
+                <p className="text-h3 text-ink">{sambutan.nama}</p>
+                <p className="mt-1 text-ink-2">{sambutan.jabatan}</p>
               </div>
               <Link href="/profil#sambutan" className="btn-pill">
                 Baca sambutan lengkap
@@ -163,7 +154,7 @@ export default function Beranda() {
           >
             <Foto src={u.gambar} alt={u.alt} posisi={"posisi" in u ? u.posisi : undefined} sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" penuh className="-z-20" label="tidak" />
             <span className="scrim-bottom absolute inset-0 -z-10 opacity-90 transition-opacity duration-500 group-hover:opacity-100" aria-hidden="true" />
-            {TAMPILKAN_LABEL_CONTOH && apakahIlustrasi(u.gambar) && <LabelIlustrasi posisi="kanan-atas" />}
+            {apakahIlustrasi(u.gambar) && <LabelIlustrasi posisi="kanan-atas" />}
             <span className="text-h3 text-white">{u.judul}</span>
             <span className="mt-2 text-sm text-white/80">{u.label}</span>
             <span className="btn-round mt-6 text-white group-hover:bg-white group-hover:text-brand-ink">
@@ -181,9 +172,9 @@ export default function Beranda() {
             judul="Sekolah negeri di jantung Brang Rea"
             teks={
               <p>
-                Berdiri sejak {SEKOLAH.pendirian.tanggal}, {SEKOLAH.nama} melayani pendidikan menengah atas bagi
+                Berdiri sejak {sekolah.pendirian.tanggal}, {sekolah.nama} melayani pendidikan menengah atas bagi
                 anak-anak Kecamatan Brang Rea dan sekitarnya di Kabupaten Sumbawa Barat. Sekolah ini terakreditasi{" "}
-                {SEKOLAH.akreditasi.nilai} dengan NPSN {SEKOLAH.npsn}.
+                {sekolah.akreditasi.nilai} dengan NPSN {sekolah.npsn}.
               </p>
             }
             aksi={{ label: "Profil sekolah", href: "/profil" }}
@@ -202,7 +193,7 @@ export default function Beranda() {
             </dl>
             <p className="mt-12 text-sm text-muted">
               Sumber:{" "}
-              <a href={SEKOLAH.sumber.dapodik} target="_blank" rel="noopener noreferrer" className="link-ink">
+              <a href={sekolah.sumber.dapodik} target="_blank" rel="noopener noreferrer" className="link-ink">
                 Data Pokok Pendidikan Kemendikdasmen
               </a>
               , semester {s.semesterData}.
@@ -242,7 +233,7 @@ export default function Beranda() {
           <SectionHead
             id="judul-kabar"
             judul="Kabar sekolah"
-            teks={<p>Berita kegiatan dari buletin Lensa Barema, pengumuman resmi, dan agenda terdekat. Pengumuman dan agenda masih contoh.</p>}
+            teks={<p>Berita kegiatan dari buletin Lensa Barema, pengumuman resmi, dan agenda terdekat.{catatanKabar}</p>}
             aksi={{ label: "Semua berita", href: "/berita" }}
           />
           <div className="mt-14">
@@ -257,11 +248,11 @@ export default function Beranda() {
           <SectionHead
             id="judul-kegiatan"
             judul="Kegiatan dan prestasi siswa"
-            teks={<p>Sepuluh ekstrakurikuler menjadi tempat siswa berlatih memimpin, berkarya, dan bertanding hingga tingkat provinsi dan nasional.</p>}
+            teks={<p>{angkaHuruf(ekskul.length, { kapital: true })} ekstrakurikuler menjadi tempat siswa berlatih memimpin, berkarya, dan bertanding hingga tingkat provinsi dan nasional.</p>}
             aksi={{ label: "Kesiswaan", href: "/kesiswaan" }}
           />
           <div className="mt-14">
-            <EkskulTabs ekskul={EKSKUL} prestasi={POSTER_PRESTASI.slice(0, 6)} />
+            <EkskulTabs ekskul={ekskul} prestasi={poster.filter((p) => p.beranda).slice(0, 6)} />
           </div>
         </div>
       </section>
@@ -276,28 +267,30 @@ export default function Beranda() {
             <ul data-reveal style={{ "--d": 1 } as React.CSSProperties} className="mt-8 flex flex-col gap-6 text-ink-2">
               <li className="flex gap-4">
                 <MapPin size={22} aria-hidden="true" className="mt-0.5 shrink-0 text-brand" />
-                <span>{SEKOLAH.alamat.lengkap}</span>
+                <span>{sekolah.alamat.lengkap}</span>
               </li>
-              <li className="flex gap-4">
-                <Clock size={22} aria-hidden="true" className="mt-0.5 shrink-0 text-brand" />
-                <span className="flex flex-col gap-1">
-                  <span>Senin–Kamis 07.00–14.30, Jumat 07.00–11.30, Sabtu 07.00–12.30 WITA</span>
-                  <Contoh className="self-start" />
-                </span>
-              </li>
+              {sekolah.jamLayanan.length > 0 && (
+                <li className="flex gap-4">
+                  <Clock size={22} aria-hidden="true" className="mt-0.5 shrink-0 text-brand" />
+                  <span className="flex flex-col gap-1">
+                    <span>{ringkasJamLayanan(sekolah.jamLayanan)}</span>
+                    <Contoh className="self-start" />
+                  </span>
+                </li>
+              )}
               <li className="flex gap-4">
                 <Mail size={22} aria-hidden="true" className="mt-0.5 shrink-0 text-brand" />
-                <a href={`mailto:${SEKOLAH.kontak.email}`} className="link-ink">
-                  {SEKOLAH.kontak.email}
+                <a href={`mailto:${sekolah.kontak.email}`} className="link-ink">
+                  {sekolah.kontak.email}
                 </a>
               </li>
             </ul>
             <div data-reveal style={{ "--d": 2 } as React.CSSProperties} className="mt-10 flex flex-wrap gap-3">
-              <a href={waLink("Halo SMAN 1 Brang Rea, saya ingin bertanya.")} target="_blank" rel="noopener noreferrer" className="btn-solid">
+              <a href={waLink("Halo SMAN 1 Brang Rea, saya ingin bertanya.", sekolah.kontak.whatsapp)} target="_blank" rel="noopener noreferrer" className="btn-solid">
                 <IkonWhatsApp size={18} />
                 Chat WhatsApp
               </a>
-              <a href={MAPS_LINK} target="_blank" rel="noopener noreferrer" className="btn-pill">
+              <a href={mapsLink(sekolah)} target="_blank" rel="noopener noreferrer" className="btn-pill">
                 <Navigation size={18} aria-hidden="true" />
                 Petunjuk arah
               </a>
@@ -305,8 +298,8 @@ export default function Beranda() {
           </div>
           <div data-reveal style={{ "--d": 1 } as React.CSSProperties} className="relative min-h-[360px] overflow-hidden rounded-[14px] border border-line bg-paper-3 lg:min-h-[440px]">
             <iframe
-              title={`Peta lokasi ${SEKOLAH.nama}`}
-              src={MAPS_EMBED}
+              title={`Peta lokasi ${sekolah.nama}`}
+              src={mapsEmbed(sekolah)}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               className="absolute inset-0 h-full w-full border-0"

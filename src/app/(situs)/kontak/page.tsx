@@ -5,7 +5,8 @@ import { SectionHead } from "@/components/ui/section-head";
 import { Contoh } from "@/components/ui/contoh";
 import { IkonFacebook, IkonWhatsApp } from "@/components/ui/icons";
 import { WaForm } from "@/components/kontak/wa-form";
-import { MAPS_EMBED, MAPS_LINK, SEKOLAH } from "@/data/sekolah";
+import { ambilSekolah } from "@/lib/konten/baca";
+import { mapsEmbed, mapsLink } from "@/lib/konten/util";
 import { waLink } from "@/lib/format";
 
 export const metadata: Metadata = {
@@ -13,37 +14,38 @@ export const metadata: Metadata = {
   description: "Alamat, WhatsApp, email, dan peta lokasi SMA Negeri 1 Brang Rea di Desa Beru, Brang Rea, Sumbawa Barat.",
 };
 
-export default function Kontak() {
+export default async function Kontak() {
+  const sekolah = await ambilSekolah();
   const kanal = [
     {
       ikon: <IkonWhatsApp size={22} />,
       judul: "WhatsApp",
-      isi: SEKOLAH.kontak.whatsappTampil,
-      href: waLink("Halo SMAN 1 Brang Rea, saya ingin bertanya."),
+      isi: sekolah.kontak.whatsappTampil,
+      href: waLink("Halo SMAN 1 Brang Rea, saya ingin bertanya.", sekolah.kontak.whatsapp),
       luar: true,
     },
     {
       ikon: <Mail size={22} aria-hidden="true" />,
       judul: "Email",
-      isi: SEKOLAH.kontak.email,
-      href: `mailto:${SEKOLAH.kontak.email}`,
+      isi: sekolah.kontak.email,
+      href: `mailto:${sekolah.kontak.email}`,
       luar: false,
     },
     {
       ikon: <IkonFacebook size={22} />,
       judul: "Facebook",
-      isi: SEKOLAH.kontak.facebook,
-      href: SEKOLAH.kontak.facebookUrl,
+      isi: sekolah.kontak.facebook,
+      href: sekolah.kontak.facebookUrl,
       luar: true,
     },
     {
       ikon: <Phone size={22} aria-hidden="true" />,
       judul: "Telepon (tercatat di Dapodik)",
-      isi: SEKOLAH.kontak.dapodikTelepon,
-      href: `tel:${SEKOLAH.kontak.dapodikTelepon}`,
+      isi: sekolah.kontak.dapodikTelepon,
+      href: `tel:${sekolah.kontak.dapodikTelepon}`,
       luar: false,
     },
-  ];
+  ].filter((k) => k.isi); // saluran yang datanya kosong di dashboard tidak ditampilkan
 
   return (
     <>
@@ -81,7 +83,8 @@ export default function Kontak() {
             ))}
           </ul>
           <p className="mt-6 text-sm text-muted">
-            Data Dapodik juga mencatat email {SEKOLAH.kontak.dapodikEmail}. Nomor WhatsApp dan email di atas diambil dari unggahan resmi sekolah.
+            {sekolah.kontak.dapodikEmail ? `Data Dapodik juga mencatat email ${sekolah.kontak.dapodikEmail}. ` : null}
+            Nomor WhatsApp dan email di atas diambil dari unggahan resmi sekolah.
           </p>
         </div>
       </section>
@@ -95,27 +98,29 @@ export default function Kontak() {
             <ul data-reveal className="mt-8 flex flex-col gap-6 text-ink-2">
               <li className="flex gap-4">
                 <MapPin size={22} aria-hidden="true" className="mt-0.5 shrink-0 text-brand" />
-                <span>{SEKOLAH.alamat.lengkap}</span>
+                <span>{sekolah.alamat.lengkap}</span>
               </li>
-              <li className="flex gap-4">
-                <Clock size={22} aria-hidden="true" className="mt-0.5 shrink-0 text-brand" />
-                <span className="flex flex-col gap-1">
-                  <span>Senin–Kamis 07.00–14.30 WITA</span>
-                  <span>Jumat 07.00–11.30 WITA</span>
-                  <span>Sabtu 07.00–12.30 WITA</span>
-                  <Contoh className="mt-1 self-start" />
-                </span>
-              </li>
+              {sekolah.jamLayanan.length > 0 && (
+                <li className="flex gap-4">
+                  <Clock size={22} aria-hidden="true" className="mt-0.5 shrink-0 text-brand" />
+                  <span className="flex flex-col gap-1">
+                    {sekolah.jamLayanan.map((j, i) => (
+                      <span key={i}>{`${j.hari} ${j.jam}`.trim()}</span>
+                    ))}
+                    <Contoh className="mt-1 self-start" />
+                  </span>
+                </li>
+              )}
             </ul>
-            <a href={MAPS_LINK} target="_blank" rel="noopener noreferrer" className="btn-pill mt-10" data-reveal>
+            <a href={mapsLink(sekolah)} target="_blank" rel="noopener noreferrer" className="btn-pill mt-10" data-reveal>
               <Navigation size={18} aria-hidden="true" />
               Buka di Google Maps
             </a>
           </div>
           <div data-reveal className="relative min-h-[380px] overflow-hidden rounded-[14px] border border-line bg-paper-3 lg:min-h-[480px]">
             <iframe
-              title={`Peta lokasi ${SEKOLAH.nama}`}
-              src={MAPS_EMBED}
+              title={`Peta lokasi ${sekolah.nama}`}
+              src={mapsEmbed(sekolah)}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               className="absolute inset-0 h-full w-full border-0"

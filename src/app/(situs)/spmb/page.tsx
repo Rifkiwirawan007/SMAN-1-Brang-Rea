@@ -6,13 +6,16 @@ import { SectionHead } from "@/components/ui/section-head";
 import { CatatanContoh, Contoh } from "@/components/ui/contoh";
 import { IkonWhatsApp } from "@/components/ui/icons";
 import { WaForm } from "@/components/kontak/wa-form";
-import { SPMB } from "@/data/spmb";
+import { ambilSekolah, ambilSpmb } from "@/lib/konten/baca";
 import { waLink } from "@/lib/format";
 
-export const metadata: Metadata = {
-  title: "SPMB 2027/2028",
-  description: "Jalur, jadwal, syarat, dan alur Sistem Penerimaan Murid Baru SMA Negeri 1 Brang Rea.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const spmb = await ambilSpmb();
+  return {
+    title: `SPMB ${spmb.tahunAjaran}`,
+    description: "Jalur, jadwal, syarat, dan alur Sistem Penerimaan Murid Baru SMA Negeri 1 Brang Rea.",
+  };
+}
 
 const BAGIAN = [
   { id: "jalur", label: "Jalur" },
@@ -23,11 +26,12 @@ const BAGIAN = [
   { id: "hubungi-panitia", label: "Hubungi panitia" },
 ];
 
-export default function Spmb() {
+export default async function Spmb() {
+  const [sekolah, spmb] = await Promise.all([ambilSekolah(), ambilSpmb()]);
   return (
     <>
       <PageHero
-        judul={`SPMB ${SPMB.tahunAjaran}`}
+        judul={`SPMB ${spmb.tahunAjaran}`}
         teks="Sistem Penerimaan Murid Baru SMA Negeri 1 Brang Rea."
         gambar="/images/sekolah/upacara-pemimpin.jpg"
         alt="Siswa pemimpin upacara berselempang hijau"
@@ -36,9 +40,9 @@ export default function Spmb() {
         tambahan={
           <>
             <span className="inline-flex items-center rounded-full border border-white/50 px-4 py-1.5 text-sm font-medium text-white">
-              Status: {SPMB.status}
+              Status: {spmb.status}
             </span>
-            {SPMB.contoh && <Contoh teks="Seluruh info contoh" />}
+            {spmb.contoh && <Contoh teks="Seluruh info contoh" />}
           </>
         }
       />
@@ -53,7 +57,7 @@ export default function Spmb() {
             teks={<p>Pilih jalur yang sesuai dengan kondisi calon murid. Kuota mengikuti aturan SPMB jenjang SMA dan petunjuk teknis Provinsi NTB.</p>}
           />
           <ul className="mt-14 grid gap-px overflow-hidden rounded-[14px] border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
-            {SPMB.jalur.map((j, i) => (
+            {spmb.jalur.map((j, i) => (
               <li key={j.nama} data-reveal style={{ "--d": i } as React.CSSProperties} className="flex flex-col bg-paper p-8">
                 <h3 className="text-h2">{j.nama}</h3>
                 <p className="mt-2 text-sm font-semibold text-brand">Kuota {j.kuota}</p>
@@ -69,9 +73,9 @@ export default function Spmb() {
       <section id="jadwal" aria-labelledby="judul-jadwal-spmb" className="section-y bg-paper-2">
         <div className="container-site">
           <SectionHead id="judul-jadwal-spmb" judul="Jadwal" teks={<p>Perkiraan tahapan SPMB. Tanggal pasti diumumkan setelah juknis resmi terbit.</p>} />
-          <CatatanContoh className="mt-8">Tanggal di bawah ini contoh.</CatatanContoh>
+          {spmb.contoh ? <CatatanContoh className="mt-8">Tanggal di bawah ini contoh.</CatatanContoh> : null}
           <ol className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
-            {SPMB.jadwal.map((j, i) => (
+            {spmb.jadwal.map((j, i) => (
               <li key={j.tahap} data-reveal style={{ "--d": i % 3 } as React.CSSProperties} className="flex flex-col rounded-[14px] border border-line bg-paper p-6">
                 <span className="text-[2.5rem] font-light leading-none tabular-nums text-brand">{String(i + 1).padStart(2, "0")}</span>
                 <span className="mt-6 font-semibold text-ink">{j.tahap}</span>
@@ -94,7 +98,7 @@ export default function Spmb() {
             </p>
           </div>
           <ul data-reveal className="flex flex-col divide-y divide-line rounded-[14px] border border-line">
-            {SPMB.syarat.map((s) => (
+            {spmb.syarat.map((s) => (
               <li key={s} className="flex gap-4 px-6 py-4 text-ink">
                 <CircleCheck size={20} aria-hidden="true" className="mt-0.5 shrink-0 text-brand" />
                 {s}
@@ -111,7 +115,7 @@ export default function Spmb() {
             Alur pendaftaran
           </h2>
           <ol className="mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-            {SPMB.alur.map((a, i) => (
+            {spmb.alur.map((a, i) => (
               <li key={a.judul} data-reveal style={{ "--d": i % 3 } as React.CSSProperties} className="border-t border-white/25 pt-6">
                 <h3 className="text-h3 text-white">
                   <span className="tabular-nums text-white/60">{i + 1}.</span> {a.judul}
@@ -131,7 +135,7 @@ export default function Spmb() {
               Pertanyaan yang sering diajukan
             </h2>
             <a
-              href={waLink("Halo panitia SPMB SMAN 1 Brang Rea, saya ingin bertanya tentang pendaftaran.")}
+              href={waLink("Halo panitia SPMB SMAN 1 Brang Rea, saya ingin bertanya tentang pendaftaran.", sekolah.kontak.whatsapp)}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-solid mt-8"
@@ -142,7 +146,7 @@ export default function Spmb() {
             </a>
           </div>
           <div data-reveal className="flex flex-col gap-3">
-            {SPMB.tanya.map((t) => (
+            {spmb.tanya.map((t) => (
               <details key={t.q} className="group rounded-[14px] border border-line bg-paper">
                 <summary className="flex cursor-pointer items-center justify-between gap-4 rounded-[14px] px-6 py-5 font-semibold text-ink hover:text-brand">
                   <span className="flex items-center gap-3">

@@ -1,0 +1,145 @@
+{
+  "visi": {
+    "teks": "Terwujudnya peserta didik yang beriman, berkarakter, berprestasi, dan peduli lingkungan.",
+    "contoh": true
+  },
+  "misi": {
+    "butir": [
+      "Menumbuhkan keimanan dan akhlak mulia melalui pembiasaan harian di sekolah.",
+      "Menyelenggarakan pembelajaran yang aktif, bermakna, dan berpusat pada murid.",
+      "Mengembangkan bakat siswa melalui ekstrakurikuler dan kompetisi.",
+      "Menguatkan budaya literasi, numerasi, dan kecakapan digital.",
+      "Mewujudkan lingkungan sekolah yang bersih, hijau, aman, dan nyaman.",
+      "Menjalin kerja sama dengan orang tua dan masyarakat Brang Rea."
+    ],
+    "contoh": true
+  },
+  "sejarah": [
+    {
+      "tahun": "2006",
+      "judul": "Sekolah berdiri",
+      "teks": "SMA Negeri 1 Brang Rea resmi berdiri pada 18 Oktober 2006 berdasarkan SK pendirian nomor 506.",
+      "contoh": false
+    },
+    {
+      "tahun": "2009",
+      "judul": "Lulusan angkatan pertama",
+      "teks": "Siswa angkatan pertama menyelesaikan pendidikan dan melanjutkan ke perguruan tinggi maupun dunia kerja.",
+      "contoh": true
+    },
+    {
+      "tahun": "2018",
+      "judul": "Terakreditasi B",
+      "teks": "Ditetapkan BAN-S/M Nusa Tenggara Barat melalui SK 239/BANSM-NTB/KP/XI/2018 tanggal 22 November 2018.",
+      "contoh": false
+    },
+    {
+      "tahun": "2026",
+      "judul": "Hari ini",
+      "teks": "508 peserta didik belajar dalam 14 rombongan belajar bersama 30 guru.",
+      "contoh": false
+    }
+  ],
+  "struktur": [
+    {
+      "jabatan": "Kepala sekolah",
+      "nama": "Mustaram, S.Pd.",
+      "foto": "/images/kepala-sekolah-avatar.webp",
+      "contoh": false
+    },
+    {
+      "jabatan": "Wakil kepala sekolah bidang kurikulum",
+      "nama": "Nama menyusul",
+      "contoh": true
+    },
+    {
+      "jabatan": "Wakil kepala sekolah bidang kesiswaan",
+      "nama": "Nama menyusul",
+      "contoh": true
+    },
+    {
+      "jabatan": "Wakil kepala sekolah bidang sarana prasarana",
+      "nama": "Nama menyusul",
+      "contoh": true
+    },
+    {
+      "jabatan": "Wakil kepala sekolah bidang humas",
+      "nama": "Nama menyusul",
+      "contoh": true
+    },
+    {
+      "jabatan": "Kepala tata usaha",
+      "nama": "Nama menyusul",
+      "contoh": true
+    },
+    {
+      "jabatan": "Operator Dapodik",
+      "nama": "Sudirman",
+      "contoh": false
+    },
+    {
+      "jabatan": "Koordinator bimbingan konseling",
+      "nama": "Nama menyusul",
+      "contoh": true
+    }
+  ],
+  "guru": [
+    {
+      "nama": "Nama Guru, S.Pd.",
+      "mapel": "Matematika"
+    },
+    {
+      "nama": "Nama Guru, S.Pd.",
+      "mapel": "Bahasa Indonesia"
+    },
+    {
+      "nama": "Nama Guru, S.Pd.",
+      "mapel": "Bahasa Inggris"
+    },
+    {
+      "nama": "Nama Guru, S.Pd.",
+      "mapel": "Biologi"
+    },
+    {
+      "nama": "Nama Guru, S.Pd.",
+      "mapel": "Fisika"
+    },
+    {
+      "nama": "Nama Guru, S.Pd.",
+      "mapel": "Kimia"
+    },
+    {
+      "nama": "Nama Guru, S.Pd.",
+      "mapel": "Sejarah"
+    },
+    {
+      "nama": "Nama Guru, S.Pd.",
+      "mapel": "PJOK"
+    }
+  ],
+  "sarana": [
+    {
+      "angka": 20,
+      "satuan": "ruang kelas",
+      "ket": "Ruang belajar untuk 14 rombongan belajar.",
+      "gambar": "/images/sekolah/tka-siswa.jpg"
+    },
+    {
+      "angka": 8,
+      "satuan": "laboratorium",
+      "ket": "Praktik sains dan komputer.",
+      "gambar": "/images/sekolah/tka-komputer.jpg"
+    },
+    {
+      "angka": 1,
+      "satuan": "perpustakaan",
+      "ket": "Koleksi buku pelajaran dan bacaan umum."
+    },
+    {
+      "angka": 13000,
+      "satuan": "m² luas lahan",
+      "ket": "Lapangan upacara dan olahraga.",
+      "gambar": "/images/sekolah/apel-guru-2.jpg"
+    }
+  ]
+}

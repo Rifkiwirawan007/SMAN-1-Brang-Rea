@@ -1,0 +1,59 @@
+[
+  {
+    "id": "f952177420",
+    "dibuat": "2026-11-12T14:51:12.699Z",
+    "diubah": "2026-11-12T14:51:12.699Z",
+    "oleh": "Sistem",
+    "tanggal": "2026-11-25",
+    "judul": "Peringatan Hari Guru Nasional",
+    "tempat": "Lapangan sekolah",
+    "waktu": "07.15 WITA",
+    "contoh": true
+  },
+  {
+    "id": "4ea499bc23",
+    "dibuat": "2026-11-12T14:51:12.699Z",
+    "diubah": "2026-11-12T14:51:12.699Z",
+    "oleh": "Sistem",
+    "tanggal": "2026-12-01",
+    "sampai": "2026-12-08",
+    "judul": "Sumatif Akhir Semester ganjil",
+    "tempat": "Ruang kelas",
+    "waktu": "07.00 WITA",
+    "contoh": true
+  },
+  {
+    "id": "cc0b3c4153",
+    "dibuat": "2026-11-12T14:51:12.699Z",
+    "diubah": "2026-11-12T14:51:12.699Z",
+    "oleh": "Sistem",
+    "tanggal": "2026-12-19",
+    "judul": "Pembagian rapor semester ganjil",
+    "tempat": "Ruang kelas masing-masing",
+    "waktu": "08.00 WITA",
+    "contoh": true
+  },
+  {
+    "id": "f46319af62",
+    "dibuat": "2026-11-12T14:51:12.699Z",
+    "diubah": "2026-11-12T14:51:12.699Z",
+    "oleh": "Sistem",
+    "tanggal": "2027-01-04",
+    "judul": "Hari pertama semester genap",
+    "tempat": "Lapangan sekolah",
+    "waktu": "07.15 WITA",
+    "contoh": true
+  },
+  {
+    "id": "56e1f09082",
+    "dibuat": "2026-11-12T14:51:12.699Z",
+    "diubah": "2026-11-12T14:51:12.699Z",
+    "oleh": "Sistem",
+    "tanggal": "2027-02-15",
+    "sampai": "2027-02-20",
+    "judul": "Pekan olahraga dan seni (Porseni)",
+    "tempat": "Lapangan dan aula",
+    "waktu": "07.30 WITA",
+    "contoh": true
+  }
+]

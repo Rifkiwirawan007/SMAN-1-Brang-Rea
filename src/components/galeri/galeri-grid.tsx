@@ -3,15 +3,16 @@
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, X, ZoomIn } from "lucide-react";
-import type { FotoGaleri, KategoriGaleri } from "@/data/galeri";
-import { apakahIlustrasi } from "@/data/foto";
-import { TAMPILKAN_LABEL_CONTOH } from "@/data/sekolah";
+import type { FotoGaleri } from "@/lib/konten/tipe";
+import { apakahIlustrasi } from "@/lib/konten/util";
+import { useLabelContoh } from "@/components/situs/konteks";
 
 const PER_HALAMAN = 12;
 
 /** Galeri: saring kategori, kisi bata, lightbox dengan keyboard. */
-export function GaleriGrid({ foto, kategori }: { foto: FotoGaleri[]; kategori: KategoriGaleri[] }) {
-  const [pilih, setPilih] = useState<KategoriGaleri | "Semua">("Semua");
+export function GaleriGrid({ foto, kategori }: { foto: FotoGaleri[]; kategori: string[] }) {
+  const labelContoh = useLabelContoh();
+  const [pilih, setPilih] = useState("Semua");
   const [jumlah, setJumlah] = useState(PER_HALAMAN);
   const [buka, setBuka] = useState<number | null>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -64,7 +65,7 @@ export function GaleriGrid({ foto, kategori }: { foto: FotoGaleri[]; kategori: K
 
       <ul className="mt-10 columns-1 gap-5 sm:columns-2 lg:columns-3">
         {tampil.map((f, i) => (
-          <li key={f.src} className="mb-5 break-inside-avoid">
+          <li key={f.id} className="mb-5 break-inside-avoid">
             <button
               type="button"
               onClick={() => setBuka(i)}
@@ -87,7 +88,7 @@ export function GaleriGrid({ foto, kategori }: { foto: FotoGaleri[]; kategori: K
                 </span>
                 <ZoomIn size={20} aria-hidden="true" className="shrink-0" />
               </span>
-              {TAMPILKAN_LABEL_CONTOH && apakahIlustrasi(f.src) && (
+              {labelContoh && apakahIlustrasi(f.src) && (
                 <span className="absolute right-3 top-3 rounded-full bg-scrim/60 px-2.5 py-0.5 text-[0.6875rem] leading-5 text-white">
                   Foto ilustrasi
                 </span>
@@ -132,7 +133,7 @@ export function GaleriGrid({ foto, kategori }: { foto: FotoGaleri[]; kategori: K
             </div>
             <div className="relative flex-1" onClick={(e) => e.target === e.currentTarget && setBuka(null)}>
               <Image src={aktif.src} alt={aktif.judul} fill sizes="100vw" className="object-contain p-4 md:p-10" />
-              {TAMPILKAN_LABEL_CONTOH && apakahIlustrasi(aktif.src) && (
+              {labelContoh && apakahIlustrasi(aktif.src) && (
                 <span className="absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full bg-scrim/70 px-3 py-1 text-xs text-white">
                   Foto ilustrasi
                 </span>

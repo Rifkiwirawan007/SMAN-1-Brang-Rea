@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { ArrowRight, ArrowUpRight, ChevronDown, Menu, X } from "lucide-react";
 import { MENU_ATAS, MENU_UTAMA, type MenuNav } from "@/data/navigasi";
-import { SEKOLAH } from "@/data/sekolah";
+import { useSekolah } from "@/components/situs/konteks";
 import { IkonWhatsApp } from "@/components/ui/icons";
 import { cx, waLink } from "@/lib/format";
 
@@ -21,6 +21,7 @@ function PathnameSync({ onChange }: { onChange: (p: string) => void }) {
 const idPanel = (m: MenuNav) => `menu-${m.href.replace(/\W/g, "")}`;
 
 export function SiteHeader() {
+  const sekolah = useSekolah();
   const [path, setPath] = useState("");
   const [adaHero, setAdaHero] = useState(true);
   const [digulir, setDigulir] = useState(false);
@@ -130,7 +131,7 @@ export function SiteHeader() {
           Lewati ke konten
         </a>
         <div className="container-site flex h-[76px] items-center justify-between gap-6 lg:h-[104px]">
-          <Link href="/" className="flex shrink-0 items-center gap-3 rounded-lg" aria-label={`${SEKOLAH.nama}, ke beranda`}>
+          <Link href="/" className="flex shrink-0 items-center gap-3 rounded-lg" aria-label={`${sekolah.nama}, ke beranda`}>
             <Image
               src="/images/logo-sman1brangrea.png"
               alt=""
@@ -140,9 +141,9 @@ export function SiteHeader() {
               className="h-11 w-11 lg:h-[52px] lg:w-[52px]"
             />
             <span className="leading-tight">
-              <span className="block text-[1.0625rem] font-bold tracking-[-0.015em]">{SEKOLAH.namaPendek}</span>
+              <span className="block text-[1.0625rem] font-bold tracking-[-0.015em]">{sekolah.namaPendek}</span>
               <span className={cx("block text-[0.8125rem]", transparan ? "text-white/80" : "text-muted")}>
-                {SEKOLAH.wilayah}, NTB
+                {sekolah.wilayah}, NTB
               </span>
             </span>
           </Link>
@@ -284,7 +285,7 @@ export function SiteHeader() {
         <div className="container-site flex h-[76px] shrink-0 items-center justify-between border-b border-line">
           <Link href="/" className="flex items-center gap-3" onClick={() => setLaci(false)}>
             <Image src="/images/logo-sman1brangrea.png" alt="" width={44} height={44} className="h-11 w-11" />
-            <span className="text-[1.0625rem] font-bold">{SEKOLAH.namaPendek}</span>
+            <span className="text-[1.0625rem] font-bold">{sekolah.namaPendek}</span>
           </Link>
           <button
             type="button"
@@ -347,13 +348,13 @@ export function SiteHeader() {
             <ArrowRight size={18} aria-hidden="true" />
           </Link>
           <a
-            href={waLink("Halo SMAN 1 Brang Rea, saya ingin bertanya.")}
+            href={waLink("Halo SMAN 1 Brang Rea, saya ingin bertanya.", sekolah.kontak.whatsapp)}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-pill w-full justify-center"
           >
             <IkonWhatsApp size={18} />
-            {SEKOLAH.kontak.whatsappTampil}
+            {sekolah.kontak.whatsappTampil}
           </a>
         </div>
       </div>

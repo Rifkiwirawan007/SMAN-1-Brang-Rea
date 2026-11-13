@@ -1,9 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
-import { SiteHeader } from "@/components/layout/site-header";
-import { SiteFooter } from "@/components/layout/site-footer";
-import { RevealObserver } from "@/components/layout/reveal-observer";
-import { SEKOLAH } from "@/data/sekolah";
+import { ambilSekolah } from "@/lib/konten/baca";
 import "./globals.css";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -13,20 +10,23 @@ const jakarta = Plus_Jakarta_Sans({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: {
-    default: `${SEKOLAH.nama} | Sumbawa Barat`,
-    template: `%s | ${SEKOLAH.namaPendek}`,
-  },
-  description:
-    "Laman resmi SMA Negeri 1 Brang Rea, Desa Beru, Kecamatan Brang Rea, Kabupaten Sumbawa Barat, Nusa Tenggara Barat: profil, akademik, kesiswaan, berita, galeri, dan SPMB.",
-  applicationName: SEKOLAH.namaPendek,
-  openGraph: {
-    type: "website",
-    locale: "id_ID",
-    siteName: SEKOLAH.nama,
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const sekolah = await ambilSekolah();
+  return {
+    title: {
+      default: `${sekolah.nama} | Sumbawa Barat`,
+      template: `%s | ${sekolah.namaPendek}`,
+    },
+    description:
+      "Laman resmi SMA Negeri 1 Brang Rea, Desa Beru, Kecamatan Brang Rea, Kabupaten Sumbawa Barat, Nusa Tenggara Barat: profil, akademik, kesiswaan, berita, galeri, dan SPMB.",
+    applicationName: sekolah.namaPendek,
+    openGraph: {
+      type: "website",
+      locale: "id_ID",
+      siteName: sekolah.nama,
+    },
+  };
+}
 
 export const viewport: Viewport = {
   themeColor: "#34724c",
@@ -36,20 +36,14 @@ export const viewport: Viewport = {
 // dan cabut lagi bila React gagal memuat, supaya konten tidak pernah tersembunyi.
 const skripAwal = `document.documentElement.classList.add('js');setTimeout(function(){if(!window.__revealReady){document.documentElement.classList.remove('js')}},3500);`;
 
+// Header/footer situs publik ada di app/(situs)/layout.tsx, sehingga halaman admin tidak ikut memakainya.
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="id" className={jakarta.variable} data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: skripAwal }} />
       </head>
-      <body className="flex min-h-svh flex-col">
-        <SiteHeader />
-        <main id="konten" className="flex-1">
-          {children}
-        </main>
-        <SiteFooter />
-        <RevealObserver />
-      </body>
+      <body className="flex min-h-svh flex-col">{children}</body>
     </html>
   );
 }

@@ -4,9 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { ArrowRight } from "lucide-react";
-import type { Ekskul, PosterPrestasi } from "@/data/kesiswaan";
-import { TAMPILKAN_LABEL_CONTOH } from "@/data/sekolah";
-import { apakahIlustrasi } from "@/data/foto";
+import type { Ekskul, PosterPrestasi } from "@/lib/konten/tipe";
+import { apakahIlustrasi } from "@/lib/konten/util";
+import { useLabelContoh } from "@/components/situs/konteks";
 import { Contoh } from "@/components/ui/contoh";
 import { IKON_EKSKUL } from "@/components/ui/icons";
 
@@ -15,6 +15,7 @@ const TAB = ["Ekstrakurikuler", "Prestasi"] as const;
 /** Kartu foto vertikal gaya "Our Group Businesses" Pertamina. */
 export function EkskulTabs({ ekskul, prestasi }: { ekskul: Ekskul[]; prestasi: PosterPrestasi[] }) {
   const [tab, setTab] = useState<(typeof TAB)[number]>("Ekstrakurikuler");
+  const labelContoh = useLabelContoh();
   // Yang punya foto tampil dulu; sisanya memakai panel hijau berikon sampai fotonya tersedia.
   const kartu = [...ekskul].sort((a, b) => Number(!!b.gambar) - Number(!!a.gambar)).slice(0, 5);
 
@@ -41,9 +42,9 @@ export function EkskulTabs({ ekskul, prestasi }: { ekskul: Ekskul[]; prestasi: P
         <div role="tabpanel" id="panel-Ekstrakurikuler" aria-labelledby="tab-Ekstrakurikuler" hidden={tab !== "Ekstrakurikuler"}>
           <ul className="rail -mx-[clamp(20px,5vw,64px)] flex gap-4 overflow-x-auto px-[clamp(20px,5vw,64px)] pb-2 lg:mx-0 lg:grid lg:grid-cols-5 lg:overflow-visible lg:px-0">
             {kartu.map((e) => {
-              const Ikon = IKON_EKSKUL[e.ikon];
+              const Ikon = IKON_EKSKUL[e.ikon] ?? IKON_EKSKUL.buku;
               return (
-              <li key={e.nama} className="w-[min(64vw,240px)] shrink-0 lg:w-auto">
+              <li key={e.id} className="w-[min(64vw,240px)] shrink-0 lg:w-auto">
                 <Link
                   href="/kesiswaan#ekstrakurikuler"
                   className="zoom-wrap group relative block aspect-[4/5] overflow-hidden rounded-[10px] bg-brand-ink text-white"
@@ -68,7 +69,7 @@ export function EkskulTabs({ ekskul, prestasi }: { ekskul: Ekskul[]; prestasi: P
                     <span className="text-[1.125rem] font-semibold leading-snug">{e.nama}</span>
                     <span className="text-[0.8125rem] text-white/80">{e.kategori}</span>
                   </span>
-                  {TAMPILKAN_LABEL_CONTOH && e.gambar && apakahIlustrasi(e.gambar) && (
+                  {labelContoh && e.gambar && apakahIlustrasi(e.gambar) && (
                     <span className="absolute bottom-3 right-3 rounded-full bg-scrim/60 px-2.5 py-0.5 text-[0.6875rem] leading-5">
                       Foto ilustrasi
                     </span>
@@ -78,15 +79,17 @@ export function EkskulTabs({ ekskul, prestasi }: { ekskul: Ekskul[]; prestasi: P
               );
             })}
           </ul>
-          <p className="mt-6 flex flex-wrap items-center gap-2 text-sm text-muted">
-            <Contoh /> Daftar ekstrakurikuler dan jadwalnya masih contoh.
-          </p>
+          {labelContoh && ekskul.some((e) => e.contoh) ? (
+            <p className="mt-6 flex flex-wrap items-center gap-2 text-sm text-muted">
+              <Contoh /> Daftar ekstrakurikuler dan jadwalnya masih contoh.
+            </p>
+          ) : null}
         </div>
 
         <div role="tabpanel" id="panel-Prestasi" aria-labelledby="tab-Prestasi" hidden={tab !== "Prestasi"}>
           <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {prestasi.map((p) => (
-              <li key={p.src}>
+              <li key={p.id}>
                 <Link href="/kesiswaan#prestasi" className="zoom-wrap group flex h-full flex-col overflow-hidden rounded-[10px] border border-line bg-paper">
                   <span className="relative block aspect-[4/3] overflow-hidden bg-paper-2">
                     <Image

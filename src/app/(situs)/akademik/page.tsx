@@ -5,8 +5,7 @@ import { SubNav } from "@/components/ui/sub-nav";
 import { SectionHead } from "@/components/ui/section-head";
 import { CountUp } from "@/components/ui/count-up";
 import { CatatanContoh, Contoh } from "@/components/ui/contoh";
-import { JADWAL, KALENDER, KURIKULUM, MAPEL } from "@/data/akademik";
-import { SEKOLAH } from "@/data/sekolah";
+import { ambilAkademik, ambilSekolah } from "@/lib/konten/baca";
 
 export const metadata: Metadata = {
   title: "Akademik",
@@ -23,8 +22,11 @@ const BAGIAN = [
 
 const IKON_KOMPONEN = [BookOpenCheck, Layers3, Sparkles];
 
-export default function Akademik() {
-  const s = SEKOLAH.statistik;
+export default async function Akademik() {
+  const [sekolah, akademik] = await Promise.all([ambilSekolah(), ambilAkademik()]);
+  const { kurikulum, mapel, jadwal, kalender } = akademik;
+  const s = sekolah.statistik;
+  const labelContoh = sekolah.tampilkanLabelContoh !== false;
   return (
     <>
       <PageHero
@@ -41,13 +43,13 @@ export default function Akademik() {
         <div className="container-site">
           <SectionHead
             id="judul-kurikulum"
-            judul={KURIKULUM.nama}
-            tambahan={KURIKULUM.contoh ? <Contoh className="self-start" /> : null}
-            teks={<p>{KURIKULUM.ringkas}</p>}
+            judul={kurikulum.nama}
+            tambahan={kurikulum.contoh ? <Contoh className="self-start" /> : null}
+            teks={<p>{kurikulum.ringkas}</p>}
           />
           <ul className="mt-14 grid gap-5 md:grid-cols-3">
-            {KURIKULUM.komponen.map((k, i) => {
-              const Ikon = IKON_KOMPONEN[i];
+            {kurikulum.komponen.map((k, i) => {
+              const Ikon = IKON_KOMPONEN[i % IKON_KOMPONEN.length];
               return (
                 <li key={k.nama} data-reveal style={{ "--d": i } as React.CSSProperties} className="flex flex-col rounded-[14px] border border-line bg-paper p-8">
                   <span className="grid h-12 w-12 place-items-center rounded-full bg-brand-soft text-brand">
@@ -96,13 +98,13 @@ export default function Akademik() {
           <SectionHead
             id="judul-mapel"
             judul="Mata pelajaran"
-            tambahan={MAPEL.contoh ? <Contoh className="self-start" /> : null}
+            tambahan={mapel.contoh ? <Contoh className="self-start" /> : null}
             teks={<p>Kelas X mempelajari mata pelajaran umum. Mulai kelas XI, siswa memilih mata pelajaran sesuai minat dan rencana studi lanjut.</p>}
           />
           <div className="mt-12 grid gap-5 lg:grid-cols-2">
             {[
-              { judul: "Mata pelajaran umum", ket: "Fase E, kelas X", daftar: MAPEL.umum },
-              { judul: "Mata pelajaran pilihan", ket: "Fase F, kelas XI dan XII", daftar: MAPEL.pilihan },
+              { judul: "Mata pelajaran umum", ket: "Fase E, kelas X", daftar: mapel.umum },
+              { judul: "Mata pelajaran pilihan", ket: "Fase F, kelas XI dan XII", daftar: mapel.pilihan },
             ].map((g, i) => (
               <div key={g.judul} data-reveal style={{ "--d": i } as React.CSSProperties} className="rounded-[14px] border border-line bg-paper p-8">
                 <h3 className="text-h3">{g.judul}</h3>
@@ -126,8 +128,8 @@ export default function Akademik() {
           <SectionHead
             id="judul-jadwal"
             judul="Jadwal dan jam pelajaran"
-            tambahan={JADWAL.contoh ? <Contoh className="self-start" /> : null}
-            teks={<p>Sekolah menyelenggarakan pembelajaran pagi selama enam hari, Senin sampai Sabtu (data Dapodik). Jam di bawah ini contoh.</p>}
+            tambahan={jadwal.contoh ? <Contoh className="self-start" /> : null}
+            teks={<p>Sekolah menyelenggarakan pembelajaran pagi selama enam hari, Senin sampai Sabtu (data Dapodik).{labelContoh && jadwal.contoh ? " Jam di bawah ini contoh." : null}</p>}
           />
           <div data-reveal className="mt-12 overflow-x-auto rounded-[14px] border border-line bg-paper">
             <table className="w-full min-w-[560px] text-left">
@@ -140,7 +142,7 @@ export default function Akademik() {
                 </tr>
               </thead>
               <tbody>
-                {JADWAL.hari.map((h) => (
+                {jadwal.hari.map((h) => (
                   <tr key={h.hari} className="border-b border-line last:border-0">
                     <th scope="row" className="px-6 py-4 font-semibold text-ink">{h.hari}</th>
                     <td className="px-6 py-4 tabular-nums text-ink">{h.jam}</td>
@@ -152,7 +154,7 @@ export default function Akademik() {
           </div>
           <p className="mt-6 flex flex-wrap items-center gap-3 text-ink-2">
             <Coffee size={18} aria-hidden="true" className="text-brand" />
-            Istirahat: {JADWAL.istirahat.join(" dan ")}
+            Istirahat: {jadwal.istirahat.join(" dan ")}
           </p>
         </div>
       </section>
@@ -165,17 +167,19 @@ export default function Akademik() {
             judul="Kalender akademik 2026/2027"
             teks={<p>Tanggal penting dua semester. Kalender resmi mengikuti ketetapan Dinas Pendidikan dan Kebudayaan Provinsi NTB.</p>}
           />
-          <CatatanContoh className="mt-8">Semua tanggal di kalender ini contoh dan perlu dicocokkan dengan kalender resmi.</CatatanContoh>
+          {akademik.kalenderContoh ? (
+            <CatatanContoh className="mt-8">Semua tanggal di kalender ini contoh dan perlu dicocokkan dengan kalender resmi.</CatatanContoh>
+          ) : null}
           <div className="mt-8 grid gap-6 lg:grid-cols-2">
-            {KALENDER.map((sem, i) => (
+            {kalender.map((sem, i) => (
               <div key={sem.semester} data-reveal style={{ "--d": i } as React.CSSProperties} className="rounded-[14px] border border-line bg-paper">
                 <div className="flex items-center justify-between gap-4 border-b border-line px-7 py-5">
                   <h3 className="text-h3">Semester {sem.semester.toLowerCase()}</h3>
                   <span className="text-sm text-muted">{sem.periode}</span>
                 </div>
                 <ol className="px-7 py-3">
-                  {sem.butir.map((b) => (
-                    <li key={b.kegiatan} className="grid gap-1 border-b border-line py-4 last:border-0 sm:grid-cols-[minmax(0,12rem)_minmax(0,1fr)] sm:gap-6">
+                  {sem.butir.map((b, j) => (
+                    <li key={`${j}-${b.kegiatan}`} className="grid gap-1 border-b border-line py-4 last:border-0 sm:grid-cols-[minmax(0,12rem)_minmax(0,1fr)] sm:gap-6">
                       <span className="flex items-center gap-2 text-sm font-semibold text-brand">
                         <CalendarDays size={15} aria-hidden="true" />
                         {b.tanggal}

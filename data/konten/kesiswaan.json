@@ -1,0 +1,78 @@
+{
+  "osis": {
+    "ringkas": "OSIS menjadi wadah siswa belajar berorganisasi: merencanakan kegiatan, memimpin rapat, dan melayani teman-temannya.",
+    "bidang": [
+      {
+        "nama": "Keimanan dan budi pekerti",
+        "teks": "Kegiatan keagamaan, peringatan hari besar, dan pembiasaan akhlak."
+      },
+      {
+        "nama": "Kepemimpinan dan organisasi",
+        "teks": "Latihan dasar kepemimpinan, rapat kerja, dan regenerasi pengurus."
+      },
+      {
+        "nama": "Seni, olahraga, dan kreativitas",
+        "teks": "Porseni, pentas seni, dan lomba antarkelas."
+      },
+      {
+        "nama": "Lingkungan dan kewirausahaan",
+        "teks": "Sekolah hijau, bank sampah, dan bazar siswa."
+      }
+    ],
+    "contoh": true
+  },
+  "tataTertib": {
+    "butir": [
+      {
+        "judul": "Kehadiran",
+        "isi": [
+          "Siswa hadir paling lambat pukul 07.10 WITA.",
+          "Izin tidak masuk disampaikan orang tua kepada wali kelas.",
+          "Siswa yang terlambat melapor ke guru piket."
+        ]
+      },
+      {
+        "judul": "Seragam dan penampilan",
+        "isi": [
+          "Seragam dipakai sesuai jadwal harian.",
+          "Rambut rapi dan sopan, atribut sekolah lengkap.",
+          "Sepatu hitam dan kaus kaki putih pada hari biasa."
+        ]
+      },
+      {
+        "judul": "Sikap dan pergaulan",
+        "isi": [
+          "Menghormati guru, tenaga kependidikan, dan sesama siswa.",
+          "Tidak melakukan perundungan dalam bentuk apa pun, termasuk di media sosial.",
+          "Menjaga kebersihan kelas dan lingkungan sekolah."
+        ]
+      },
+      {
+        "judul": "Telepon genggam",
+        "isi": [
+          "Telepon genggam hanya dipakai untuk pembelajaran atas izin guru.",
+          "Di luar itu, telepon disimpan dalam mode senyap."
+        ]
+      }
+    ],
+    "contoh": true
+  },
+  "layananBk": {
+    "ringkas": "Guru bimbingan konseling mendampingi siswa dalam urusan belajar, pribadi, sosial, dan perencanaan karier.",
+    "layanan": [
+      {
+        "nama": "Konseling pribadi",
+        "teks": "Ruang aman untuk bercerita dan mencari jalan keluar bersama."
+      },
+      {
+        "nama": "Bimbingan belajar",
+        "teks": "Cara belajar efektif dan pendampingan bagi yang tertinggal."
+      },
+      {
+        "nama": "Perencanaan karier",
+        "teks": "Info kuliah, beasiswa, dan dunia kerja untuk kelas XII."
+      }
+    ],
+    "contoh": true
+  }
+}

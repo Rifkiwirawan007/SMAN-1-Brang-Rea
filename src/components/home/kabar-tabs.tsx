@@ -4,13 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { ArrowUpRight, CalendarDays, Clock, MapPin } from "lucide-react";
-import type { Agenda, Berita } from "@/data/berita";
-import { apakahIlustrasi } from "@/data/foto";
-import { TAMPILKAN_LABEL_CONTOH } from "@/data/sekolah";
+import type { Agenda } from "@/lib/konten/tipe";
+import { apakahIlustrasi } from "@/lib/konten/util";
+import type { BeritaTampil } from "@/components/berita/tampil";
+import { useLabelContoh } from "@/components/situs/konteks";
 import { Contoh } from "@/components/ui/contoh";
 import { cx } from "@/lib/format";
 
-type BeritaTampil = Berita & { tanggalTampil: string };
 type AgendaTampil = Agenda & { hari: string; bulan: string; tahun: string; rentang: string };
 
 const TAB = ["Berita", "Pengumuman", "Agenda"] as const;
@@ -26,6 +26,7 @@ export function KabarTabs({
   agenda: AgendaTampil[];
 }) {
   const [tab, setTab] = useState<(typeof TAB)[number]>("Berita");
+  const labelContoh = useLabelContoh();
 
   return (
     <div>
@@ -70,7 +71,7 @@ export function KabarTabs({
                   )}
                   <span className="scrim-bottom absolute inset-0" aria-hidden="true" />
                   {b.halaman && <span className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-brand-ink from-45% to-transparent" aria-hidden="true" />}
-                  {TAMPILKAN_LABEL_CONTOH && b.gambar && apakahIlustrasi(b.gambar) && (
+                  {labelContoh && b.gambar && apakahIlustrasi(b.gambar) && (
                     <span className="absolute right-3 top-3 z-[2] rounded-full bg-scrim/60 px-2.5 py-0.5 text-[0.6875rem] leading-5 text-white">
                       Foto ilustrasi
                     </span>
@@ -135,7 +136,7 @@ export function KabarTabs({
         <div role="tabpanel" id="panel-Agenda" aria-labelledby="tab-Agenda" hidden={tab !== "Agenda"}>
           <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {agenda.slice(0, 4).map((a) => (
-              <li key={a.judul} className="flex flex-col rounded-[10px] border border-line bg-paper p-7">
+              <li key={a.id} className="flex flex-col rounded-[10px] border border-line bg-paper p-7">
                 <span className="flex items-baseline gap-2 text-brand">
                   <span className="text-[3rem] font-light leading-none tracking-[-0.04em]">{a.hari}</span>
                   <span className="text-sm font-semibold">

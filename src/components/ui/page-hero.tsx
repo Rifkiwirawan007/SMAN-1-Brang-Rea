@@ -1,8 +1,7 @@
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { Foto, LabelIlustrasi } from "@/components/ui/foto";
-import { apakahIlustrasi } from "@/data/foto";
-import { TAMPILKAN_LABEL_CONTOH } from "@/data/sekolah";
+import { apakahIlustrasi } from "@/lib/konten/util";
 import { cx } from "@/lib/format";
 
 type Jejak = { label: string; href?: string };
@@ -42,7 +41,7 @@ export function PageHero({
         style={{ "--pos": posisiGambar } as React.CSSProperties}
       />
       <div className="scrim-hero absolute inset-0 -z-10" aria-hidden="true" />
-      {TAMPILKAN_LABEL_CONTOH && apakahIlustrasi(gambar) && <LabelIlustrasi posisi="kanan-bawah" />}
+      {apakahIlustrasi(gambar) && <LabelIlustrasi posisi="kanan-bawah" />}
       <div className="container-site pb-14 pt-36 md:pb-20">
         <nav aria-label="Jejak halaman" className="mb-6">
           <ol className="flex flex-wrap items-center gap-1.5 text-sm text-white/85">

@@ -6,9 +6,10 @@ import { PageHero } from "@/components/ui/page-hero";
 import { SectionHead } from "@/components/ui/section-head";
 import { CatatanContoh, Contoh } from "@/components/ui/contoh";
 import { BeritaList } from "@/components/berita/berita-list";
-import { AGENDA, KATEGORI_BERITA, urutBerita } from "@/data/berita";
-import { apakahIlustrasi } from "@/data/foto";
-import { TAMPILKAN_LABEL_CONTOH } from "@/data/sekolah";
+import { beritaTampil } from "@/components/berita/tampil";
+import { ambilAgenda, ambilBerita, ambilSekolah } from "@/lib/konten/baca";
+import { KATEGORI_BERITA } from "@/lib/konten/tipe";
+import { apakahIlustrasi } from "@/lib/konten/util";
 import { bagianTanggal, formatTanggal } from "@/lib/format";
 
 export const metadata: Metadata = {
@@ -16,8 +17,10 @@ export const metadata: Metadata = {
   description: "Berita kegiatan, pengumuman resmi, prestasi, dan agenda SMA Negeri 1 Brang Rea.",
 };
 
-export default function HalamanBerita() {
-  const semua = urutBerita().map((b) => ({ ...b, tanggalTampil: formatTanggal(b.tanggal) }));
+export default async function HalamanBerita() {
+  const [sekolah, berita, agenda] = await Promise.all([ambilSekolah(), ambilBerita(), ambilAgenda()]);
+  const labelContoh = sekolah.tampilkanLabelContoh !== false;
+  const semua = berita.map(beritaTampil);
   const sorotan = semua.filter((b) => b.gambar).slice(0, 3);
   const pengumuman = semua.filter((b) => b.kategori === "Pengumuman");
 
@@ -49,7 +52,7 @@ export default function HalamanBerita() {
                   <Image src={b.gambar!} alt="" fill sizes={i === 0 ? "(min-width: 1024px) 60vw, 100vw" : "(min-width: 1024px) 40vw, 100vw"} className="object-cover" style={{ objectPosition: b.posisiGambar }} />
                   <span className="scrim-bottom absolute inset-0" aria-hidden="true" />
                   {b.halaman && <span className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-brand-ink from-45% to-transparent" aria-hidden="true" />}
-                  {TAMPILKAN_LABEL_CONTOH && apakahIlustrasi(b.gambar!) && (
+                  {labelContoh && apakahIlustrasi(b.gambar!) && (
                     <span className="absolute right-3 top-3 rounded-full bg-scrim/60 px-2.5 py-0.5 text-[0.6875rem] leading-5">Foto ilustrasi</span>
                   )}
                   <span className="relative flex flex-col gap-2">
@@ -118,12 +121,12 @@ export default function HalamanBerita() {
       <section id="agenda" aria-labelledby="judul-agenda" className="section-y bg-paper-2">
         <div className="container-site">
           <SectionHead id="judul-agenda" judul="Agenda sekolah" teks={<p>Kegiatan terdekat yang perlu dicatat siswa, guru, dan orang tua.</p>} />
-          <CatatanContoh className="mt-8">Agenda di bawah ini contoh.</CatatanContoh>
+          {agenda.some((a) => a.contoh) ? <CatatanContoh className="mt-8">Agenda di bawah ini contoh.</CatatanContoh> : null}
           <ol className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {AGENDA.map((a, i) => {
+            {agenda.map((a, i) => {
               const t = bagianTanggal(a.tanggal);
               return (
-                <li key={a.judul} data-reveal style={{ "--d": i % 3 } as React.CSSProperties} className="flex gap-6 rounded-[14px] border border-line bg-paper p-6">
+                <li key={a.id} data-reveal style={{ "--d": i % 3 } as React.CSSProperties} className="flex gap-6 rounded-[14px] border border-line bg-paper p-6">
                   <span className="flex w-16 shrink-0 flex-col items-center rounded-[10px] bg-brand py-3 text-white">
                     <span className="text-[1.75rem] font-light leading-none">{t.hari}</span>
                     <span className="mt-1 text-xs font-semibold">{t.bulan}</span>

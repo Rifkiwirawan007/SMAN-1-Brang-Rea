@@ -4,10 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { ArrowRight, Pause, Play } from "lucide-react";
-import { apakahIlustrasi } from "@/data/foto";
-import { TAMPILKAN_LABEL_CONTOH } from "@/data/sekolah";
-import { Contoh } from "@/components/ui/contoh";
-import { LabelIlustrasi } from "@/components/ui/foto";
+import { apakahIlustrasi } from "@/lib/konten/util";
+import { Contoh, LabelIlustrasi } from "@/components/ui/contoh";
 import { cx } from "@/lib/format";
 
 export type SlideHero = {
@@ -123,7 +121,7 @@ export function HeroSlider({ slides, durasi = 7000 }: { slides: SlideHero[]; dur
         const Judul = i === 0 ? "h1" : "h2";
         return (
           <div
-            key={s.judul}
+            key={`${i}-${s.judul}`}
             className="hero-slide absolute inset-0"
             data-active={on}
             aria-hidden={!on}
@@ -151,7 +149,7 @@ export function HeroSlider({ slides, durasi = 7000 }: { slides: SlideHero[]; dur
               ) : null}
             </div>
             <div className={cx(s.video || s.poster ? "scrim-video" : "scrim-hero", "absolute inset-0 -z-10")} aria-hidden="true" />
-            {TAMPILKAN_LABEL_CONTOH && apakahIlustrasi(s.gambar) && (
+            {apakahIlustrasi(s.gambar) && (
               <LabelIlustrasi posisi="kanan-atas" className="top-[96px] lg:top-[124px]" />
             )}
             {s.poster ? (
@@ -196,12 +194,17 @@ export function HeroSlider({ slides, durasi = 7000 }: { slides: SlideHero[]; dur
 
       <div className="absolute inset-x-0 bottom-0 z-10">
         <div className="container-site flex items-end gap-5 pb-7 md:pb-9">
-          <div role="tablist" aria-label="Pilih sorotan" className="grid flex-1 grid-cols-4 gap-3 md:gap-5">
+          <div
+            role="tablist"
+            aria-label="Pilih sorotan"
+            className="grid flex-1 gap-3 md:gap-5"
+            style={{ gridTemplateColumns: `repeat(${slides.length}, minmax(0, 1fr))` }}
+          >
             {slides.map((s, i) => {
               const on = i === aktif;
               return (
                 <button
-                  key={s.tab}
+                  key={`${i}-${s.tab}`}
                   type="button"
                   role="tab"
                   aria-selected={on}

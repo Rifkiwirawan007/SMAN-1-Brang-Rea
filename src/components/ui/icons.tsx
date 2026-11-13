@@ -11,7 +11,7 @@ import {
   Volleyball,
   type LucideIcon,
 } from "lucide-react";
-import type { Ekskul } from "@/data/kesiswaan";
+import type { IkonEkskul } from "@/lib/konten/tipe";
 
 type SvgProps = React.SVGProps<SVGSVGElement> & { size?: number };
 
@@ -41,7 +41,7 @@ export function IkonInstagram({ size = 20, ...p }: SvgProps) {
   );
 }
 
-export const IKON_EKSKUL: Record<Ekskul["ikon"], LucideIcon> = {
+export const IKON_EKSKUL: Record<IkonEkskul, LucideIcon> = {
   tenda: Tent,
   bendera: Flag,
   hati: HeartPulse,

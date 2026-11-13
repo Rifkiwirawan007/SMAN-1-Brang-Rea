@@ -4,17 +4,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { CalendarDays, Search } from "lucide-react";
-import type { Berita, KategoriBerita } from "@/data/berita";
-import { apakahIlustrasi } from "@/data/foto";
-import { TAMPILKAN_LABEL_CONTOH } from "@/data/sekolah";
+import type { KategoriBerita } from "@/lib/konten/tipe";
+import { apakahIlustrasi } from "@/lib/konten/util";
+import type { BeritaTampil } from "@/components/berita/tampil";
+import { useLabelContoh } from "@/components/situs/konteks";
 import { Contoh } from "@/components/ui/contoh";
-
-type BeritaTampil = Berita & { tanggalTampil: string };
 
 const PER_HALAMAN = 6;
 
 /** Daftar berita: saring kategori, cari judul, dan "Muat lebih banyak". */
-export function BeritaList({ daftar, kategori }: { daftar: BeritaTampil[]; kategori: KategoriBerita[] }) {
+export function BeritaList({ daftar, kategori }: { daftar: BeritaTampil[]; kategori: readonly KategoriBerita[] }) {
+  const labelContoh = useLabelContoh();
   const [pilih, setPilih] = useState<KategoriBerita | "Semua">("Semua");
   const [cari, setCari] = useState("");
   const [jumlah, setJumlah] = useState(PER_HALAMAN);
@@ -104,7 +104,7 @@ export function BeritaList({ daftar, kategori }: { daftar: BeritaTampil[]; kateg
                       <Image src="/images/logo-sman1brangrea.png" alt="" width={72} height={72} className="opacity-90" />
                     </span>
                   )}
-                  {TAMPILKAN_LABEL_CONTOH && b.gambar && apakahIlustrasi(b.gambar) && (
+                  {labelContoh && b.gambar && apakahIlustrasi(b.gambar) && (
                     <span className="absolute right-3 top-3 rounded-full bg-scrim/60 px-2.5 py-0.5 text-[0.6875rem] leading-5 text-white">
                       Foto ilustrasi
                     </span>

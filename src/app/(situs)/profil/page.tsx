@@ -7,8 +7,8 @@ import { SectionHead } from "@/components/ui/section-head";
 import { CountUp } from "@/components/ui/count-up";
 import { CatatanContoh, Contoh } from "@/components/ui/contoh";
 import { Foto } from "@/components/ui/foto";
-import { GURU_CONTOH, MISI, SAMBUTAN, SARANA, SEJARAH, STRUKTUR, VISI } from "@/data/profil";
-import { SEKOLAH } from "@/data/sekolah";
+import { ambilProfil, ambilSambutan, ambilSekolah } from "@/lib/konten/baca";
+import { formatAngka } from "@/lib/format";
 
 export const metadata: Metadata = {
   title: "Profil sekolah",
@@ -25,27 +25,28 @@ const BAGIAN = [
   { id: "sarana", label: "Sarana" },
 ];
 
-export default function Profil() {
-  const s = SEKOLAH.statistik;
+export default async function Profil() {
+  const [sekolah, sambutan, profil] = await Promise.all([ambilSekolah(), ambilSambutan(), ambilProfil()]);
+  const s = sekolah.statistik;
   const identitas: [string, React.ReactNode][] = [
-    ["Nama sekolah", SEKOLAH.nama],
-    ["NPSN", SEKOLAH.npsn],
-    ["Status", SEKOLAH.status],
-    ["Bentuk pendidikan", SEKOLAH.bentuk],
-    ["Akreditasi", `${SEKOLAH.akreditasi.nilai} (SK ${SEKOLAH.akreditasi.sk}, ${SEKOLAH.akreditasi.tanggal})`],
-    ["SK pendirian", `Nomor ${SEKOLAH.pendirian.sk}, ${SEKOLAH.pendirian.tanggal}`],
-    ["Kepala sekolah", SEKOLAH.kepalaSekolah],
-    ["Alamat", SEKOLAH.alamat.jalan],
-    ["Desa", SEKOLAH.alamat.desa.replace("Desa ", "")],
-    ["Kecamatan", "Brang Rea"],
-    ["Kabupaten", "Sumbawa Barat"],
-    ["Provinsi", SEKOLAH.alamat.provinsi],
-    ["Koordinat", `${SEKOLAH.koordinat.lat}, ${SEKOLAH.koordinat.lng}`],
-    ["Luas tanah", "13.000 m²"],
+    ["Nama sekolah", sekolah.nama],
+    ["NPSN", sekolah.npsn],
+    ["Status", sekolah.status],
+    ["Bentuk pendidikan", sekolah.bentuk],
+    ["Akreditasi", `${sekolah.akreditasi.nilai} (SK ${sekolah.akreditasi.sk}, ${sekolah.akreditasi.tanggal})`],
+    ["SK pendirian", `Nomor ${sekolah.pendirian.sk}, ${sekolah.pendirian.tanggal}`],
+    ["Kepala sekolah", sekolah.kepalaSekolah],
+    ["Alamat", sekolah.alamat.jalan],
+    ["Desa", sekolah.alamat.desa.replace("Desa ", "")],
+    ["Kecamatan", sekolah.alamat.kecamatan.replace(/^(Kecamatan|Kec\.)\s*/i, "")],
+    ["Kabupaten", sekolah.alamat.kabupaten.replace(/^(Kabupaten|Kab\.)\s*/i, "")],
+    ["Provinsi", sekolah.alamat.provinsi],
+    ["Koordinat", `${sekolah.koordinat.lat}, ${sekolah.koordinat.lng}`],
+    ["Luas tanah", `${formatAngka(s.luasTanah)} m²`],
     ["Daya listrik", s.listrik],
     ["Akses internet", s.internet],
     ["Waktu belajar", s.penyelenggaraan],
-    ["Email", SEKOLAH.kontak.email],
+    ["Email", sekolah.kontak.email],
   ];
 
   return (
@@ -66,7 +67,7 @@ export default function Profil() {
           {/* Potret berdiri di atas alas 3D tipis (diam, tanpa animasi). */}
           <div className="mx-auto w-full max-w-[460px]">
             <div className="relative aspect-[4/5]">
-              <Image src={SAMBUTAN.foto2} alt={`${SAMBUTAN.nama}, ${SAMBUTAN.jabatan}`} fill sizes="(min-width: 1024px) 460px, 90vw" className="object-contain object-bottom" />
+              <Image src={sambutan.foto2 ?? sambutan.foto} alt={`${sambutan.nama}, ${sambutan.jabatan}`} fill sizes="(min-width: 1024px) 460px, 90vw" className="object-contain object-bottom" />
             </div>
             <div className="potret-alas" aria-hidden="true" />
           </div>
@@ -75,18 +76,18 @@ export default function Profil() {
               <h2 id="judul-sambutan" className="text-h2">
                 Sambutan kepala sekolah
               </h2>
-              {SAMBUTAN.contoh && <Contoh teks="Teks contoh" />}
+              {sambutan.contoh && <Contoh teks="Teks contoh" />}
             </div>
             <div data-reveal style={{ "--d": 1 } as React.CSSProperties} className="prose-sekolah mt-8 max-w-[64ch] text-ink-2">
-              <p>{SAMBUTAN.salam}</p>
-              {SAMBUTAN.paragraf.map((p) => (
-                <p key={p.slice(0, 24)}>{p}</p>
+              <p>{sambutan.salam}</p>
+              {sambutan.paragraf.map((p, i) => (
+                <p key={i}>{p}</p>
               ))}
-              <p>{SAMBUTAN.penutup}</p>
+              <p>{sambutan.penutup}</p>
             </div>
             <div data-reveal style={{ "--d": 2 } as React.CSSProperties} className="mt-8 border-t border-line pt-6">
-              <p className="text-h3">{SAMBUTAN.nama}</p>
-              <p className="mt-1 text-ink-2">{SAMBUTAN.jabatan}</p>
+              <p className="text-h3">{sambutan.nama}</p>
+              <p className="mt-1 text-ink-2">{sambutan.jabatan}</p>
             </div>
           </div>
         </div>
@@ -110,7 +111,7 @@ export default function Profil() {
           </dl>
           <p className="mt-6 text-sm text-muted">
             Sumber:{" "}
-            <a href={SEKOLAH.sumber.dapodik} target="_blank" rel="noopener noreferrer" className="link-ink inline-flex items-center gap-1">
+            <a href={sekolah.sumber.dapodik} target="_blank" rel="noopener noreferrer" className="link-ink inline-flex items-center gap-1">
               profil sekolah di Kemendikdasmen
               <ExternalLink size={13} aria-hidden="true" />
             </a>
@@ -124,12 +125,12 @@ export default function Profil() {
         <div className="container-site">
           <SectionHead
             id="judul-sejarah"
-            judul="Perjalanan sejak 2006"
+            judul={`Perjalanan sejak ${sekolah.pendirian.tahun}`}
             teks={<p>Dua dekade melayani pendidikan menengah atas di Brang Rea, Sumbawa Barat.</p>}
           />
           <ol className="mt-14 grid gap-px overflow-hidden rounded-[14px] border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
-            {SEJARAH.map((p, i) => (
-              <li key={p.tahun} data-reveal style={{ "--d": i } as React.CSSProperties} className="flex flex-col bg-paper p-7 md:p-8">
+            {profil.sejarah.map((p, i) => (
+              <li key={`${i}-${p.tahun}`} data-reveal style={{ "--d": i } as React.CSSProperties} className="flex flex-col bg-paper p-7 md:p-8">
                 <span className="text-stat text-brand">{p.tahun}</span>
                 <span className="mt-6 text-h3 text-ink">{p.judul}</span>
                 <span className="mt-3 text-[0.9375rem] text-ink-2">{p.teks}</span>
@@ -148,17 +149,17 @@ export default function Profil() {
               <h2 id="judul-visi" className="text-h2 text-white">
                 Visi
               </h2>
-              {VISI.contoh && <Contoh />}
+              {profil.visi.contoh && <Contoh />}
             </div>
             <p className="mt-8 text-[clamp(1.5rem,1.1rem+1.4vw,2.25rem)] font-light leading-snug tracking-[-0.015em] text-white">
-              {VISI.teks}
+              {profil.visi.teks}
             </p>
           </div>
           <div data-reveal style={{ "--d": 1 } as React.CSSProperties}>
             <h2 className="text-h2 text-white">Misi</h2>
             <ol className="mt-8 flex flex-col divide-y divide-white/20 border-y border-white/20">
-              {MISI.butir.map((m, i) => (
-                <li key={m} className="flex gap-5 py-4">
+              {profil.misi.butir.map((m, i) => (
+                <li key={i} className="flex gap-5 py-4">
                   <span className="w-6 shrink-0 font-semibold tabular-nums text-white/70">{String(i + 1).padStart(2, "0")}</span>
                   <span className="text-white/90">{m}</span>
                 </li>
@@ -177,8 +178,8 @@ export default function Profil() {
             teks={<p>Pimpinan dan pengelola sekolah. Nama yang belum tersedia ditandai dan akan dilengkapi.</p>}
           />
           <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {STRUKTUR.map((p, i) => (
-              <li key={p.jabatan} data-reveal style={{ "--d": i % 4 } as React.CSSProperties} className="flex flex-col rounded-[14px] border border-line bg-paper p-6">
+            {profil.struktur.map((p, i) => (
+              <li key={`${i}-${p.jabatan}`} data-reveal style={{ "--d": i % 4 } as React.CSSProperties} className="flex flex-col rounded-[14px] border border-line bg-paper p-6">
                 <div className="relative grid h-20 w-20 place-items-center overflow-hidden rounded-full bg-brand-soft text-brand">
                   {p.foto ? (
                     <Image src={p.foto} alt={p.nama} fill sizes="80px" className="object-cover object-top" />
@@ -223,8 +224,8 @@ export default function Profil() {
           </dl>
           <CatatanContoh className="mt-10">Nama dan foto guru di bawah masih contoh, akan diisi dari data kepegawaian sekolah.</CatatanContoh>
           <ul className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-4">
-            {GURU_CONTOH.map((g) => (
-              <li key={g.mapel} className="flex flex-col items-start rounded-[14px] border border-line bg-paper p-5">
+            {profil.guru.map((g, i) => (
+              <li key={`${i}-${g.nama}`} className="flex flex-col items-start rounded-[14px] border border-line bg-paper p-5">
                 <span className="grid h-12 w-12 place-items-center rounded-full bg-brand-soft text-brand">
                   <UserRound size={22} aria-hidden="true" />
                 </span>
@@ -242,11 +243,11 @@ export default function Profil() {
           <SectionHead
             id="judul-sarana"
             judul="Sarana dan prasarana"
-            teks={<p>Ruang belajar dan fasilitas pendukung di atas lahan seluas 13.000 meter persegi.</p>}
+            teks={<p>Ruang belajar dan fasilitas pendukung di atas lahan seluas {formatAngka(s.luasTanah)} meter persegi.</p>}
           />
           <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {SARANA.map((r, i) => (
-              <li key={r.satuan} data-reveal style={{ "--d": i } as React.CSSProperties} className="zoom-wrap flex flex-col">
+            {profil.sarana.map((r, i) => (
+              <li key={`${i}-${r.satuan}`} data-reveal style={{ "--d": i } as React.CSSProperties} className="zoom-wrap flex flex-col">
                 {r.gambar ? (
                   <Foto src={r.gambar} alt={r.satuan} sizes="(min-width: 1024px) 300px, (min-width: 640px) 50vw, 100vw" className="aspect-[4/3] rounded-[14px]" />
                 ) : (
