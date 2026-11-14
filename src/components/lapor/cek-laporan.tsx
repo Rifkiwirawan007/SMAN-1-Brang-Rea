@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useId, useState } from "react";
-import { LoaderCircle, MessageSquareText, Search } from "lucide-react";
+import { ArrowLeft, ChevronRight, LoaderCircle, MessageSquareText, Search, Trash2 } from "lucide-react";
 import { cekLaporan, type HasilCekLaporan } from "@/app/(situs)/lapor/cek/aksi";
 import { KET_STATUS_PELAPOR, LABEL_JENIS, LABEL_STATUS_LAPORAN, type StatusLaporan } from "@/lib/laporan/tipe";
+import { bacaLaporanPerangkat, hapusLaporanPerangkat, simpanLaporanPerangkat, type LaporanTersimpan } from "@/lib/laporan/perangkat";
 
 const GAYA: Record<StatusLaporan, string> = {
   baru: "bg-[#fffaeb] text-[#b54708] border-[#fedf89]",
@@ -18,52 +19,67 @@ const waktu = (iso: string) =>
     new Date(iso),
   ) + " WITA";
 
+const tanggal = (iso: string) => new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Makassar" }).format(new Date(iso));
+
 export function CekLaporan() {
   const id = useId();
-  const [nomor, setNomor] = useState("");
+  const [tersimpan, setTersimpan] = useState<LaporanTersimpan[] | null>(null);
   const [kode, setKode] = useState("");
+  const [kodeAktif, setKodeAktif] = useState("");
   const [sibuk, setSibuk] = useState(false);
-  const [hasil, setHasil] = useState<HasilCekLaporan | null>(null);
+  const [galat, setGalat] = useState("");
+  const [hasil, setHasil] = useState<Extract<HasilCekLaporan, { ok: true }> | null>(null);
 
-  const cari = async (n: string, k: string) => {
+  const buka = async (k: string) => {
+    const bersih = k.toUpperCase().replace(/[^A-Z0-9]/g, "");
     setSibuk(true);
+    setGalat("");
     try {
-      setHasil(await cekLaporan({ nomor: n, kode: k }));
+      const h = await cekLaporan({ kode: bersih });
+      if (h.ok) {
+        setHasil(h);
+        setKodeAktif(bersih);
+        simpanLaporanPerangkat({ kode: bersih, nomor: h.nomor, jenis: h.jenis, dibuat: h.dibuat });
+      } else {
+        setGalat(h.pesan);
+        // Laporan yang sudah dihapus sekolah: buang juga dari daftar di perangkat.
+        if (h.pesan.startsWith("Kode tidak ditemukan")) hapusLaporanPerangkat(bersih);
+      }
+      setTersimpan(bacaLaporanPerangkat());
     } catch {
-      setHasil({ ok: false, pesan: "Koneksi gagal. Coba lagi." });
+      setGalat("Koneksi gagal. Coba lagi.");
     } finally {
       setSibuk(false);
     }
   };
 
-  // Dibuka dari tautan setelah mengirim laporan (?nomor=...&kode=...): langsung cek.
+  // Saat dibuka: ?kode=... di alamat, atau satu-satunya laporan di perangkat ini, langsung ditampilkan.
   useEffect(() => {
-    const q = new URLSearchParams(window.location.search);
-    const n = q.get("nomor");
-    const k = q.get("kode");
-    if (!n || !k) return;
-    window.history.replaceState(null, "", window.location.pathname); // kode tidak tertinggal di bilah alamat
     let batal = false;
     void Promise.resolve().then(() => {
       if (batal) return;
-      setNomor(n);
-      setKode(k);
-      void cari(n, k);
+      const daftar = bacaLaporanPerangkat();
+      setTersimpan(daftar);
+      const dariUrl = new URLSearchParams(window.location.search).get("kode");
+      if (dariUrl) window.history.replaceState(null, "", window.location.pathname);
+      const k = dariUrl ?? (daftar.length === 1 ? daftar[0].kode : null);
+      if (k) void buka(k);
     });
     return () => {
       batal = true;
     };
   }, []);
 
-  if (hasil?.ok) {
+  if (hasil) {
     return (
       <div className="mx-auto flex max-w-[760px] flex-col gap-6">
         <div className="rounded-[18px] border border-line bg-paper p-6 shadow-card md:p-8">
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div>
-              <p className="font-mono text-sm text-muted">{hasil.nomor}</p>
-              <p className="mt-1 text-xl font-semibold text-ink">{LABEL_JENIS[hasil.jenis]}</p>
-              <p className="text-sm text-muted">Dikirim {waktu(hasil.dibuat)}</p>
+              <p className="text-xl font-semibold text-ink">{LABEL_JENIS[hasil.jenis]}</p>
+              <p className="text-sm text-muted">
+                Dikirim {waktu(hasil.dibuat)} · kode <span className="font-mono">{kodeAktif}</span>
+              </p>
             </div>
             <span className={`rounded-full border px-4 py-1.5 font-semibold ${GAYA[hasil.status]}`}>{LABEL_STATUS_LAPORAN[hasil.status]}</span>
           </div>
@@ -101,9 +117,20 @@ export function CekLaporan() {
           </ol>
         </div>
 
-        <div>
+        <div className="flex flex-wrap items-center gap-3">
           <button type="button" className="btn-pill" onClick={() => setHasil(null)}>
-            <Search size={16} aria-hidden="true" /> Cek laporan lain
+            <ArrowLeft size={16} aria-hidden="true" /> {(tersimpan?.length ?? 0) > 1 ? "Laporan lain" : "Kembali"}
+          </button>
+          <button
+            type="button"
+            className="inline-flex items-center gap-2 text-sm text-muted hover:text-[#b42318]"
+            onClick={() => {
+              hapusLaporanPerangkat(kodeAktif);
+              setTersimpan(bacaLaporanPerangkat());
+              setHasil(null);
+            }}
+          >
+            <Trash2 size={15} aria-hidden="true" /> Hapus dari perangkat ini
           </button>
         </div>
       </div>
@@ -111,55 +138,65 @@ export function CekLaporan() {
   }
 
   return (
-    <form
-      className="mx-auto flex max-w-[640px] flex-col gap-5 rounded-[18px] border border-line bg-paper p-6 shadow-card md:p-10"
-      onSubmit={(e) => {
-        e.preventDefault();
-        void cari(nomor, kode);
-      }}
-    >
-      <div className="grid gap-5 sm:grid-cols-2">
-        <div className="flex flex-col gap-2">
-          <label htmlFor={`${id}-nomor`} className="text-sm font-semibold text-ink">
-            Nomor laporan
-          </label>
-          <input
-            id={`${id}-nomor`}
-            className="field font-mono uppercase"
-            value={nomor}
-            onChange={(e) => setNomor(e.target.value)}
-            placeholder="LP-2026-0001"
-            autoComplete="off"
-            required
-          />
+    <div className="mx-auto flex max-w-[640px] flex-col gap-6">
+      {tersimpan && tersimpan.length > 0 && (
+        <div className="rounded-[18px] border border-line bg-paper p-6 shadow-card md:p-8">
+          <p className="font-semibold text-ink">Laporan kamu di perangkat ini</p>
+          <ul className="mt-4 flex flex-col gap-2">
+            {tersimpan.map((l) => (
+              <li key={l.kode}>
+                <button
+                  type="button"
+                  onClick={() => void buka(l.kode)}
+                  disabled={sibuk}
+                  className="flex w-full items-center gap-3 rounded-[12px] border border-line p-4 text-left hover:border-brand hover:bg-brand-soft"
+                >
+                  <span className="min-w-0 flex-1">
+                    <span className="block font-semibold text-ink">{LABEL_JENIS[l.jenis]}</span>
+                    <span className="block text-sm text-muted">Dikirim {tanggal(l.dibuat)}</span>
+                  </span>
+                  <ChevronRight size={18} aria-hidden="true" className="shrink-0 text-muted" />
+                </button>
+              </li>
+            ))}
+          </ul>
         </div>
-        <div className="flex flex-col gap-2">
-          <label htmlFor={`${id}-kode`} className="text-sm font-semibold text-ink">
-            Kode cek
-          </label>
+      )}
+
+      <form
+        className="flex flex-col gap-4 rounded-[18px] border border-line bg-paper p-6 md:p-8"
+        onSubmit={(e) => {
+          e.preventDefault();
+          void buka(kode);
+        }}
+      >
+        <label htmlFor={`${id}-kode`} className="font-semibold text-ink">
+          {tersimpan?.length ? "Cek dengan kode dari HP lain" : "Masukkan kode laporan"}
+        </label>
+        <div className="flex flex-col gap-3 sm:flex-row">
           <input
             id={`${id}-kode`}
-            className="field font-mono uppercase tracking-[0.2em]"
+            className="field font-mono text-lg uppercase tracking-[0.25em] sm:max-w-[240px]"
             value={kode}
-            onChange={(e) => setKode(e.target.value)}
-            placeholder="6 karakter"
-            maxLength={6}
+            onChange={(e) => setKode(e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 6))}
+            placeholder="K7M2Q9"
             autoComplete="off"
-            required
+            autoCapitalize="characters"
+            spellCheck={false}
+            aria-invalid={galat ? true : undefined}
           />
+          <button type="submit" className="btn-solid" disabled={sibuk || kode.length !== 6}>
+            {sibuk ? <LoaderCircle size={18} className="animate-spin" aria-hidden="true" /> : <Search size={18} aria-hidden="true" />}
+            Cek status
+          </button>
         </div>
-      </div>
-      {hasil && !hasil.ok && (
-        <p role="alert" className="rounded-[10px] border border-[#fecdca] bg-[#fef3f2] px-4 py-3 text-sm text-[#912018]">
-          {hasil.pesan}
-        </p>
-      )}
-      <div>
-        <button type="submit" className="btn-solid" disabled={sibuk}>
-          {sibuk ? <LoaderCircle size={18} className="animate-spin" aria-hidden="true" /> : <Search size={18} aria-hidden="true" />}
-          Cek status
-        </button>
-      </div>
-    </form>
+        <p className="text-sm text-muted">Kode 6 huruf/angka muncul setelah kamu mengirim laporan.</p>
+        {galat && (
+          <p role="alert" className="rounded-[10px] border border-[#fecdca] bg-[#fef3f2] px-4 py-3 text-sm text-[#912018]">
+            {galat}
+          </p>
+        )}
+      </form>
+    </div>
   );
 }

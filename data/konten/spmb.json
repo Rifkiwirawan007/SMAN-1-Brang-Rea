@@ -1,7 +1,7 @@
 {
   "tahunAjaran": "2027/2028",
   "status": "Belum dibuka",
-  "contoh": true,
+  "contoh": false,
   "jalur": [
     {
       "nama": "Domisili",

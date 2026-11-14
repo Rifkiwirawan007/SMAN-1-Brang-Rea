@@ -46,10 +46,13 @@ export async function POST(request: Request) {
 
   const id = idBaru();
   const kini = new Date().toISOString();
-  const kode = kodeBaru();
   let nomor = "";
+  let kode = "";
   await ubahSemuaLaporan((semua) => {
     nomor = nomorBerikut(semua, tanggalIni().slice(0, 4));
+    // Kode dipakai sendirian untuk cek status, jadi harus unik.
+    do kode = kodeBaru();
+    while (semua.some((l) => l.kode === kode));
     const baru: Laporan = {
       id,
       nomor,

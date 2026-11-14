@@ -34,9 +34,9 @@ export default async function Spmb() {
       <PageHero
         judul={`SPMB ${spmb.tahunAjaran}`}
         teks="Sistem Penerimaan Murid Baru SMA Negeri 1 Brang Rea."
-        gambar="/images/sekolah/upacara-pemimpin.jpg"
-        alt="Siswa pemimpin upacara berselempang hijau"
-        posisiGambar="center 30%"
+        gambar="/images/sekolah/banner-gerbang.jpg"
+        alt="Gerbang SMAN 1 Brang Rea"
+        posisiGambar="center 35%"
         jejak={[{ label: "Beranda", href: "/" }, { label: "SPMB" }]}
         tambahan={
           <>

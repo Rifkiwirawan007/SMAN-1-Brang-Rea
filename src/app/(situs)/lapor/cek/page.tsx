@@ -13,9 +13,10 @@ export default function HalamanCekLaporan() {
     <>
       <PageHero
         judul="Cek status laporan"
-        teks="Masukkan nomor laporan dan kode cek yang kamu dapat saat mengirim laporan."
-        gambar="/images/sekolah/apel-guru-2.jpg"
-        alt="Guru SMAN 1 Brang Rea"
+        teks="Laporan yang kamu kirim dari HP ini langsung muncul di sini. Dari HP lain, cukup masukkan kode laporan."
+        gambar="/images/sekolah/banner-duduk.jpg"
+        alt="Seorang siswa duduk di pondok kayu memandangi hujan"
+        posisiGambar="center top"
         jejak={[{ label: "Beranda", href: "/" }, { label: "Lapor ke guru BK", href: "/lapor" }, { label: "Cek status" }]}
       />
       <section className="section-y" aria-label="Cek status laporan">

@@ -30,8 +30,8 @@ export default async function HalamanBerita() {
       <PageHero
         judul="Berita dan informasi"
         teks="Kabar kegiatan, pengumuman resmi, dan agenda SMA Negeri 1 Brang Rea."
-        gambar="/images/sekolah/karnaval-arak-arakan.jpg"
-        alt="Arak-arakan karnaval budaya siswa SMAN 1 Brang Rea"
+        gambar="/images/hero-sekolah.jpg"
+        alt="Siswi berkostum karnaval budaya di depan gedung SMAN 1 Brang Rea"
         jejak={[{ label: "Beranda", href: "/" }, { label: "Berita" }]}
       />
 

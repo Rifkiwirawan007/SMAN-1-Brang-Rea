@@ -22,18 +22,15 @@ export type HasilCekLaporan =
 
 const sama = (a: string, b: string) => a.length === b.length && timingSafeEqual(Buffer.from(a), Buffer.from(b));
 
-export async function cekLaporan(input: { nomor: string; kode: string }): Promise<HasilCekLaporan> {
+export async function cekLaporan(input: { kode: string }): Promise<HasilCekLaporan> {
   const h = await headers();
   const ip = (h.get("x-forwarded-for") ?? "").split(",")[0].trim() || h.get("x-real-ip") || "lokal";
   if (!bolehLanjut(`cek-lapor:${ip}`, 30, 10 * 60_000)) return { ok: false, pesan: "Terlalu banyak percobaan. Coba lagi dalam 10 menit." };
 
-  const nomor = String(input.nomor ?? "").trim().toUpperCase().replace(/\s+/g, "");
-  const kode = String(input.kode ?? "").trim().toUpperCase().replace(/\s+/g, "");
-  if (!/^LP-\d{4}-\d{4,}$/.test(nomor) || !/^[A-Z0-9]{6}$/.test(kode)) {
-    return { ok: false, pesan: "Tulis nomor laporan (mis. LP-2026-0001) dan kode 6 karakter dengan benar." };
-  }
-  const l = (await bacaSemuaLaporan()).find((x) => x.nomor === nomor);
-  if (!l || !sama(l.kode, kode)) return { ok: false, pesan: "Nomor laporan atau kode tidak cocok. Periksa lagi huruf dan angkanya." };
+  const kode = String(input.kode ?? "").toUpperCase().replace(/[^A-Z0-9]/g, "");
+  if (kode.length !== 6) return { ok: false, pesan: "Kode laporan terdiri dari 6 huruf/angka, mis. K7M2Q9." };
+  const l = (await bacaSemuaLaporan()).find((x) => sama(x.kode, kode));
+  if (!l) return { ok: false, pesan: "Kode tidak ditemukan. Periksa lagi huruf dan angkanya." };
 
   return {
     ok: true,

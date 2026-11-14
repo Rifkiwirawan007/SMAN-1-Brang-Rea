@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useId, useRef, useState } from "react";
 import { CircleCheck, Copy, LoaderCircle, Send, ShieldAlert } from "lucide-react";
 import { JENIS_LAPORAN, type JenisLaporan } from "@/lib/laporan/tipe";
+import { simpanLaporanPerangkat } from "@/lib/laporan/perangkat";
 
 function Galat({ id, pesan }: { id: string; pesan?: string }) {
   return pesan ? (
@@ -65,6 +66,7 @@ export function FormLapor() {
         return;
       }
       setHasil({ nomor: j.nomor, kode: j.kode });
+      if (jenis) simpanLaporanPerangkat({ kode: j.kode, nomor: j.nomor, jenis, dibuat: new Date().toISOString() });
       window.scrollTo({ top: document.getElementById("form-lapor")!.offsetTop - 100, behavior: "smooth" });
     } catch {
       setPesan("Koneksi terputus. Periksa internet lalu kirim lagi.");
@@ -74,39 +76,33 @@ export function FormLapor() {
   };
 
   if (hasil) {
-    const tautan = `/lapor/cek?nomor=${encodeURIComponent(hasil.nomor)}&kode=${encodeURIComponent(hasil.kode)}`;
     return (
       <div id="form-lapor" className="mx-auto max-w-[720px] rounded-[18px] border border-line bg-paper p-6 shadow-card md:p-10">
         <CircleCheck size={44} className="text-brand" aria-hidden="true" />
         <h2 className="mt-4 text-h3 text-ink">Laporan terkirim ke guru BK</h2>
         <p className="mt-2 text-ink-2">Terima kasih sudah berani melapor. Guru BK akan membaca laporanmu dan bisa memanggilmu untuk bicara.</p>
-        <div className="mt-6 rounded-[14px] border-2 border-dashed border-brand/40 bg-brand-soft p-5">
-          <p className="text-sm text-ink-2">Simpan nomor dan kode ini untuk cek status &amp; balasan guru BK (foto layar juga boleh):</p>
-          <dl className="mt-3 grid gap-3 sm:grid-cols-2">
-            <div>
-              <dt className="text-xs font-semibold uppercase tracking-wide text-muted">Nomor laporan</dt>
-              <dd className="font-mono text-2xl font-bold text-ink">{hasil.nomor}</dd>
-            </div>
-            <div>
-              <dt className="text-xs font-semibold uppercase tracking-wide text-muted">Kode cek</dt>
-              <dd className="font-mono text-2xl font-bold tracking-[0.2em] text-ink">{hasil.kode}</dd>
-            </div>
-          </dl>
+        <div className="mt-6 rounded-[14px] border-2 border-dashed border-brand/40 bg-brand-soft p-5 text-center">
+          <p className="text-sm text-ink-2">Kode laporan kamu</p>
+          <p className="mt-1 font-mono text-4xl font-bold tracking-[0.25em] text-ink">{hasil.kode}</p>
           <button
             type="button"
-            className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand hover:underline"
+            className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-brand hover:underline"
             onClick={() => {
-              void navigator.clipboard?.writeText(`Laporan BK SMAN 1 Brang Rea\nNomor: ${hasil.nomor}\nKode: ${hasil.kode}\n${location.origin}${tautan}`);
+              void navigator.clipboard?.writeText(hasil.kode);
               setTersalin(true);
             }}
           >
-            <Copy size={16} aria-hidden="true" /> {tersalin ? "Tersalin" : "Salin nomor, kode, dan tautan"}
+            <Copy size={16} aria-hidden="true" /> {tersalin ? "Tersalin" : "Salin kode"}
           </button>
         </div>
-        <p className="mt-4 text-sm text-muted">Jangan bagikan kode ini ke orang lain. Siapa pun yang punya nomor dan kode bisa melihat status dan balasan laporan.</p>
+        <p className="mt-4 text-sm text-ink-2">
+          Laporan ini sudah <b>tersimpan otomatis di perangkat ini</b>: buka <b>Cek status laporan</b> kapan saja untuk melihat balasan guru BK, tanpa mengetik
+          apa-apa. Kode di atas hanya perlu bila kamu cek dari HP lain.
+        </p>
+        <p className="mt-2 text-sm text-muted">Pakai HP/komputer milik orang lain? Setelah selesai, hapus laporan dari perangkat ini di halaman cek status.</p>
         <div className="mt-8 flex flex-wrap gap-3">
-          <Link href={tautan} className="btn-solid">
-            Lihat status laporan
+          <Link href="/lapor/cek" className="btn-solid">
+            Cek status laporan
           </Link>
           <Link href="/" className="btn-pill">
             Kembali ke beranda

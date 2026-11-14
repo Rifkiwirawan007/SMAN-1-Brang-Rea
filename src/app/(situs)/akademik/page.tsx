@@ -33,8 +33,8 @@ export default async function Akademik() {
       <PageHero
         judul="Akademik"
         teks="Kurikulum, rombongan belajar, jadwal, dan kalender pendidikan sekolah."
-        gambar="/images/sekolah/tka-komputer.jpg"
-        alt="Siswa mengerjakan tes di laboratorium komputer"
+        gambar="/images/sekolah/banner-kelas.jpg"
+        alt="Siswi SMAN 1 Brang Rea mengangkat tangan di kelas"
         jejak={[{ label: "Beranda", href: "/" }, { label: "Akademik" }]}
       />
       <SubNav items={BAGIAN} />

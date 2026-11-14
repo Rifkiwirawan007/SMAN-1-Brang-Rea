@@ -53,8 +53,8 @@ export default async function Kontak() {
       <PageHero
         judul="Hubungi kami"
         teks="Datang langsung, telepon, atau kirim pesan WhatsApp ke sekolah."
-        gambar="/images/sekolah/apel-guru.jpg"
-        alt="Guru dan tenaga kependidikan di depan gedung SMAN 1 Brang Rea"
+        gambar="/images/sekolah/banner-jalan.jpg"
+        alt="Siswi berjalan menuju SMAN 1 Brang Rea"
         jejak={[{ label: "Beranda", href: "/" }, { label: "Kontak" }]}
       />
 

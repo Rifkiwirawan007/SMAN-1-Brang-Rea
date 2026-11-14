@@ -9,6 +9,7 @@ import { BagikanBerita } from "@/components/berita/bagikan";
 import { GambarPerbesar } from "@/components/ui/gambar-perbesar";
 import { ambilBerita, cariBerita } from "@/lib/konten/baca";
 import { formatTanggal } from "@/lib/format";
+import { ukuranGambar } from "@/lib/server/media";
 
 // Semua slug sudah diprerender lewat generateStaticParams; izinkan navigasi menunggu
 // isi artikel tanpa peringatan validasi "instant" di mode dev.
@@ -51,12 +52,17 @@ export default async function DetailBerita({ params }: PageProps<"/berita/[slug]
     .sort((x, y) => Number(y.kategori === b.kategori) - Number(x.kategori === b.kategori))
     .slice(0, 3);
 
+  const u = b.gambar ? await ukuranGambar(b.gambar) : null;
+  const ukuranFoto = { width: u?.w ?? 1080, height: u?.h ?? 1080 };
+
   return (
     <>
       <PageHero
         judul={b.judul}
         teks={b.ringkasan}
-        gambar={b.halaman || !b.gambar ? "/images/hero-sekolah-baru.jpg" : b.gambar}
+        // Foto berita (dari Instagram, ±1080px) buram bila dibentangkan selebar layar: banner memakai foto sekolah beresolusi tinggi,
+        // foto beritanya ditampilkan utuh di dalam artikel.
+        gambar="/images/hero-sekolah-baru.jpg"
         alt=""
         jejak={[{ label: "Beranda", href: "/" }, { label: "Berita", href: "/berita" }, { label: b.kategori === "Berita" ? "Artikel" : b.kategori }]}
       />
@@ -74,6 +80,11 @@ export default async function DetailBerita({ params }: PageProps<"/berita/[slug]
               )}
               {b.contoh && <Contoh teks="Berita contoh" />}
             </p>
+            {b.gambar && !b.halaman && (
+              <figure className="mt-8 max-w-[720px]">
+                <GambarPerbesar src={b.gambar} alt={b.judul} {...ukuranFoto} sizes="(min-width: 768px) 720px, 100vw" />
+              </figure>
+            )}
             <div className="prose-sekolah mt-8 max-w-[68ch] text-ink-2">
               {b.isi.map((p, i) => (
                 <p key={i}>{p}</p>

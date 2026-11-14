@@ -23,8 +23,8 @@ export default function HalamanCekAbsen() {
       <PageHero
         judul="Cek absensi siswa"
         teks="Untuk orang tua dan wali murid: lihat catatan kehadiran anak setiap hari, langsung dari absensi QR di sekolah."
-        gambar="/images/sekolah/upacara-pemimpin.jpg"
-        alt="Siswa SMAN 1 Brang Rea mengikuti upacara di halaman sekolah"
+        gambar="/images/sekolah/banner-pagar.jpg"
+        alt="Sepeda siswa terparkir di depan pagar berbunga"
         jejak={[{ label: "Beranda", href: "/" }, { label: "Cek absensi" }]}
       />
       <section className="section-y" aria-label="Pencarian absensi">
