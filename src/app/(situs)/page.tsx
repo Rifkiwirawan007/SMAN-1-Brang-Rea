@@ -224,7 +224,7 @@ export default async function Beranda() {
             }
             aksi={{ label: "Profil sekolah", href: "/profil" }}
           />
-          <div className="mt-12 border-t border-line pt-12 md:mt-20 md:pt-16">
+          <div className="mt-12 md:mt-20">
             <dl className="grid grid-cols-2 gap-x-5 gap-y-10 sm:gap-x-8 sm:gap-y-12 lg:grid-cols-4">
               {statistik.map((st, i) => (
                 <div key={st.label} data-reveal style={{ "--d": i } as React.CSSProperties} className="flex flex-col">
@@ -236,13 +236,6 @@ export default async function Beranda() {
                 </div>
               ))}
             </dl>
-            <p className="mt-12 text-sm text-muted">
-              Sumber:{" "}
-              <a href={sekolah.sumber.dapodik} target="_blank" rel="noopener noreferrer" className="link-ink">
-                Data Pokok Pendidikan Kemendikdasmen
-              </a>
-              , semester {s.semesterData}.
-            </p>
           </div>
         </div>
       </section>

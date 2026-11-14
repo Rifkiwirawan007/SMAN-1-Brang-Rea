@@ -755,17 +755,8 @@ dialog.lightbox::backdrop {
 
 /* ---------- Timeline SPMB (pita berkelok) ---------- */
 .tl-kicker {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
   font-weight: 600;
   color: var(--color-brand);
-}
-.tl-kicker::before {
-  content: "";
-  width: 2.5rem;
-  height: 2px;
-  background: currentColor;
 }
 .tl-pita {
   --tl-label: 12rem;

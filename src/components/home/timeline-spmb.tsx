@@ -54,11 +54,11 @@ export function TimelineSpmb({ spmb }: { spmb: Spmb }) {
       style={{ paddingTop: "clamp(8px, 2vw, 32px)" }}
     >
       <div className="container-site">
-        <div data-reveal className="flex flex-wrap items-center gap-3">
+        <div data-reveal className="flex flex-wrap items-center justify-center gap-3 text-center">
           <p className="tl-kicker">Timeline SPMB {spmb.tahunAjaran}</p>
           {spmb.contoh && <Contoh teks="Jadwal contoh" />}
         </div>
-        <h2 id="judul-timeline-spmb" data-reveal style={{ "--d": 1 } as React.CSSProperties} className="text-h2 mt-4 max-w-[24ch]">
+        <h2 id="judul-timeline-spmb" data-reveal style={{ "--d": 1 } as React.CSSProperties} className="text-h2 mx-auto mt-4 max-w-[24ch] text-center">
           <span className="text-brand">Jadwal tercatat,</span> langkah jadi siswa Barema makin dekat
         </h2>
 
