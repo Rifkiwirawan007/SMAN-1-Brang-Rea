@@ -17,7 +17,7 @@ import { LABEL_PERAN, type Peran } from "@/lib/cms/peran";
 import type { HasilAksi } from "@/app/dashboard/aksi";
 
 const gagal = (pesan: string, galat?: Record<string, string>): HasilAksi => ({ ok: false, pesan, galat });
-const peranSah = (p: unknown): p is Peran => p === "admin" || p === "editor";
+const peranSah = (p: unknown): p is Peran => p === "admin" || p === "editor" || p === "guru";
 
 export async function keluar() {
   const p = await penggunaSaatIni();

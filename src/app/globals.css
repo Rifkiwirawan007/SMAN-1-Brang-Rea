@@ -532,6 +532,10 @@
     opacity: 1;
     transform: none;
   }
+  /* Cetak hasil cek absensi: hanya kartu hasil, tanpa header/hero/footer situs. */
+  body:has(#hasil-cek-absen) :is(.site-header, [data-hero], footer) {
+    display: none !important;
+  }
 }
 
 /* ---------- Header ---------- */

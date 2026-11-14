@@ -7,6 +7,8 @@ import { useEffect, useRef, useState } from "react";
 import {
   BarChart3,
   ChevronDown,
+  ClipboardCheck,
+  Contact,
   ExternalLink,
   FolderOpen,
   History,
@@ -34,6 +36,13 @@ function susunNav(peran: Peran, pesanBaru: number): { judul?: string; item: Item
 
   const grup: { judul?: string; item: ItemNav[] }[] = [
     { item: [{ href: "/dashboard", label: "Ringkasan", ikon: LayoutDashboard, kunci: "ringkasan" }] },
+    {
+      judul: "Absensi",
+      item: [
+        { href: "/dashboard/absensi", label: "Absensi siswa", ikon: ClipboardCheck, kunci: "absensi" },
+        { href: "/dashboard/siswa", label: "Data siswa", ikon: Contact, kunci: "siswa" },
+      ],
+    },
     { judul: "Konten", item: [...dariModul("Konten"), { href: "/dashboard/media", label: "Pustaka foto", ikon: FolderOpen, kunci: "media" }] },
     { judul: "Halaman situs", item: dariModul("Halaman situs") },
     {
@@ -106,7 +115,7 @@ export function ShellDasbor({
       <Image src="/images/logo-sman1brangrea.png" alt="" width={36} height={36} className="h-9 w-9 object-contain" />
       <span className="min-w-0 leading-tight">
         <span className="block truncate text-[0.9375rem] font-bold text-ink">{namaSekolah}</span>
-        <span className="block text-xs text-muted">Dashboard admin</span>
+        <span className="block text-xs text-muted">Dashboard {LABEL_PERAN[pengguna.peran].toLowerCase()}</span>
       </span>
     </Link>
   );
