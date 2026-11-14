@@ -24,21 +24,21 @@
   {
     "id": "561239d939",
     "dibuat": "2026-11-12T14:51:12.699Z",
-    "diubah": "2026-11-13T06:33:00.750Z",
+    "diubah": "2026-11-14T14:35:38.224Z",
     "oleh": "Sistem",
-    "tab": "Ekstrakurikuler",
-    "judul": "Ruang tumbuh di luar kelas",
-    "teks": "Pramuka, Paskibra, seni tari, olahraga, dan kegiatan keagamaan.",
-    "gambar": "/images/sekolah/video-sekolah-poster.jpg",
-    "alt": "Siswi SMAN 1 Brang Rea belajar bersama di kelas",
+    "tab": "Profil sekolah",
+    "judul": "Mengenal SMAN 1 Brang Rea",
+    "teks": "Upacara, kegiatan belajar, prestasi, dan kebersamaan warga sekolah di Sumbawa Barat.",
+    "gambar": "/images/sekolah/video-profil-poster.webp",
+    "alt": "Cuplikan video profil SMAN 1 Brang Rea: upacara, praktik di laboratorium, paskibra, piala, seni budaya, dan foto bersama",
     "video": {
-      "besar": "/video/sekolah-hd.mp4",
-      "kecil": "/video/sekolah-hp.mp4"
+      "besar": "/video/profil-hd.mp4",
+      "kecil": "/video/profil-hp.mp4"
     },
-    "durasi": 15,
+    "durasi": 20,
     "aksi": {
-      "label": "Lihat kesiswaan",
-      "href": "/kesiswaan"
+      "label": "Lihat profil sekolah",
+      "href": "/profil"
     },
     "aktif": true
   },

@@ -41,8 +41,8 @@ export default async function Kesiswaan() {
       <PageHero
         judul="Kesiswaan"
         teks="Organisasi siswa, ekstrakurikuler, prestasi, dan layanan pembinaan."
-        gambar="/images/sekolah/banner-hutan.jpg"
-        alt="Siswa menyusuri jalur hutan dalam kegiatan ekstrakurikuler"
+        gambar="/images/sekolah/banner-tim-olahraga.webp"
+        alt="Siswa berkaos kuning berfoto bersama guru di depan kelas"
         posisiGambar="center 22%"
         jejak={[{ label: "Beranda", href: "/" }, { label: "Kesiswaan" }]}
       />

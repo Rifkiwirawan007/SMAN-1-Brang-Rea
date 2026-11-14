@@ -21,9 +21,9 @@ export default async function Galeri() {
       <PageHero
         judul="Galeri kegiatan"
         teks="Potret kegiatan belajar, upacara, dan ekstrakurikuler siswa."
-        gambar="/images/sekolah/banner-air-terjun.jpg"
-        alt="Air terjun di sekitar Brang Rea"
-        posisiGambar="center 40%"
+        gambar="/images/sekolah/banner-kostum-budaya.webp"
+        alt="Siswi berbusana adat berfoto bersama di depan kelas"
+        posisiGambar="center 15%"
         jejak={[{ label: "Beranda", href: "/" }, { label: "Galeri" }]}
       />
       <section aria-labelledby="judul-galeri" className="section-y">
