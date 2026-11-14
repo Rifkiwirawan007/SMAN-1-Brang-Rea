@@ -16,6 +16,7 @@ import {
   LayoutDashboard,
   LogOut,
   Menu,
+  ShieldAlert,
   UserCog,
   UserRound,
   UsersRound,
@@ -28,7 +29,7 @@ import { keluar } from "@/app/dashboard/aksi-akun";
 
 type ItemNav = { href: string; label: string; ikon: LucideIcon; kunci: string; lencana?: number };
 
-function susunNav(peran: Peran, pesanBaru: number): { judul?: string; item: ItemNav[] }[] {
+function susunNav(peran: Peran, pesanBaru: number, laporanBaru: number): { judul?: string; item: ItemNav[] }[] {
   const dariModul = (grup: GrupNav): ItemNav[] =>
     [...Object.values(KOLEKSI), ...Object.values(DOKUMEN)]
       .filter((m) => m.grup === grup)
@@ -42,6 +43,10 @@ function susunNav(peran: Peran, pesanBaru: number): { judul?: string; item: Item
         { href: "/dashboard/absensi", label: "Absensi siswa", ikon: ClipboardCheck, kunci: "absensi" },
         { href: "/dashboard/siswa", label: "Data siswa", ikon: Contact, kunci: "siswa" },
       ],
+    },
+    {
+      judul: "Bimbingan konseling",
+      item: [{ href: "/dashboard/laporan", label: "Laporan siswa", ikon: ShieldAlert, kunci: "laporan", lencana: laporanBaru }],
     },
     { judul: "Konten", item: [...dariModul("Konten"), { href: "/dashboard/media", label: "Pustaka foto", ikon: FolderOpen, kunci: "media" }] },
     { judul: "Halaman situs", item: dariModul("Halaman situs") },
@@ -64,17 +69,19 @@ export type PenggunaShell = { nama: string; username: string; peran: Peran };
 export function ShellDasbor({
   pengguna,
   pesanBaru,
+  laporanBaru,
   namaSekolah,
   children,
 }: {
   pengguna: PenggunaShell;
   pesanBaru: number;
+  laporanBaru: number;
   namaSekolah: string;
   children: React.ReactNode;
 }) {
   const path = usePathname();
   const [laci, setLaci] = useState(false);
-  const nav = susunNav(pengguna.peran, pesanBaru);
+  const nav = susunNav(pengguna.peran, pesanBaru, laporanBaru);
 
   useEffect(() => {
     if (!laci) return;

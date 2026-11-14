@@ -55,7 +55,7 @@ function Isian({ label, galat, bantuan, children }: { label: string; galat?: str
 function PilihPeran({ nilai, ubah }: { nilai: Peran; ubah: (p: Peran) => void }) {
   return (
     <div className="grid gap-2">
-      {(["guru", "editor", "admin"] as Peran[]).map((p) => (
+      {(["guru", "bk", "editor", "admin"] as Peran[]).map((p) => (
         <label key={p} className={`flex cursor-pointer gap-3 rounded-xl border p-3 ${nilai === p ? "border-brand bg-brand-soft" : "border-line hover:bg-paper-2"}`}>
           <input type="radio" name="peran" className="d-kotak-centang mt-0.5" checked={nilai === p} onChange={() => ubah(p)} />
           <span>

@@ -127,6 +127,10 @@
 .d-input.pl-9 {
   padding-left: 2.25rem;
 }
+/* .d-input berada di luar @layer, jadi utilitas lebar Tailwind kalah: lebar otomatis ditulis eksplisit. */
+.d-input.w-auto {
+  width: auto;
+}
 .d-input:hover {
   border-color: var(--color-muted);
 }

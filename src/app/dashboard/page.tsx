@@ -53,8 +53,10 @@ function Tren({ kini, lalu }: { kini: number; lalu: number }) {
 export default async function Ringkasan({ searchParams }: PageProps<"/dashboard">) {
   await connection();
   const p = await wajibMasuk();
-  // Akun guru hanya mengurus absensi: langsung ke halaman absensi.
-  if (!boleh(p.peran, "ringkasan")) redirect(boleh(p.peran, "absensi") ? "/dashboard/absensi" : "/dashboard/akun");
+  // Akun guru / guru BK hanya mengurus satu bagian: langsung ke halamannya.
+  if (!boleh(p.peran, "ringkasan")) {
+    redirect(boleh(p.peran, "absensi") ? "/dashboard/absensi" : boleh(p.peran, "laporan") ? "/dashboard/laporan" : "/dashboard/akun");
+  }
   const admin = boleh(p.peran, "pesan");
   const sp = await searchParams;
 

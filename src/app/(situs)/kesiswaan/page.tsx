@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { PemicuLightbox } from "@/components/ui/gambar-perbesar";
-import { Award, CircleCheck, HeartHandshake, MessageCircle } from "lucide-react";
+import { Award, CircleCheck, HeartHandshake, MessageCircle, ShieldAlert } from "lucide-react";
 import { PageHero } from "@/components/ui/page-hero";
 import { SubNav } from "@/components/ui/sub-nav";
 import { SectionHead } from "@/components/ui/section-head";
@@ -234,7 +235,11 @@ export default async function Kesiswaan() {
               <IkonWhatsApp size={18} />
               Buat janji dengan guru BK
             </a>
-            <span className="text-sm text-muted">Pesan dibuka di WhatsApp Anda; kerahasiaan siswa dijaga.</span>
+            <Link href="/lapor" className="btn-pill">
+              <ShieldAlert size={18} aria-hidden="true" />
+              Lapor perundungan / masalah
+            </Link>
+            <span className="text-sm text-muted">Laporan langsung diterima guru BK; kerahasiaan siswa dijaga.</span>
           </div>
         </div>
       </section>

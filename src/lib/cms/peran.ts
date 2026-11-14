@@ -4,25 +4,29 @@
  * - editor: konten saja (berita, agenda, prestasi, ekskul, galeri, halaman), tanpa pengaturan sekolah,
  *   pesan masuk, statistik, akun pengguna, dan log aktivitas.
  */
-export type Peran = "admin" | "editor" | "guru";
+export type Peran = "admin" | "editor" | "guru" | "bk";
 
-export const LABEL_PERAN: Record<Peran, string> = { admin: "Admin", editor: "Editor", guru: "Guru" };
+export const LABEL_PERAN: Record<Peran, string> = { admin: "Admin", editor: "Editor", guru: "Guru", bk: "Guru BK" };
 export const KET_PERAN: Record<Peran, string> = {
   admin: "Semua fitur, termasuk info sekolah, pesan masuk, statistik, akun, dan log aktivitas.",
   editor: "Kelola konten: berita, agenda, prestasi, ekskul, galeri, dan isi halaman.",
   guru: "Absensi siswa saja: scan QR kartu siswa, ubah status (sakit/izin/alpa), dan kelola data siswa.",
+  bk: "Laporan siswa saja: membaca laporan perundungan/masalah, menindaklanjuti, dan membalas pelapor.",
 };
 
 /** Admin dan editor: pengelola konten situs. */
 const SEMUA: Peran[] = ["admin", "editor"];
 const ADMIN: Peran[] = ["admin"];
 const ABSENSI: Peran[] = ["admin", "guru"];
+/** Laporan siswa bersifat rahasia: hanya guru BK dan admin. */
+const LAPORAN: Peran[] = ["admin", "bk"];
 
 /** Kunci modul/halaman dashboard → peran yang boleh membuka. */
 export const AKSES: Record<string, Peran[]> = {
   ringkasan: SEMUA,
-  akun: ["admin", "editor", "guru"],
+  akun: ["admin", "editor", "guru", "bk"],
   absensi: ABSENSI,
+  laporan: LAPORAN,
   siswa: ABSENSI,
   media: SEMUA,
   berita: SEMUA,

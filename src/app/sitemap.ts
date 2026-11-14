@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { ambilBerita } from "@/lib/konten/baca";
 import { URL_SITUS } from "@/lib/situs-url";
 
-const HALAMAN = ["", "/profil", "/akademik", "/kesiswaan", "/berita", "/galeri", "/spmb", "/kontak", "/cek-absen"];
+const HALAMAN = ["", "/profil", "/akademik", "/kesiswaan", "/berita", "/galeri", "/spmb", "/kontak", "/cek-absen", "/lapor"];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const berita = await ambilBerita();

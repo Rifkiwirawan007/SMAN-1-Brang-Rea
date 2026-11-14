@@ -43,6 +43,7 @@ export const MENU_UTAMA: MenuNav[] = [
       { label: "Prestasi", href: "/kesiswaan#prestasi", ket: "Capaian siswa" },
       { label: "Tata tertib", href: "/kesiswaan#tata-tertib", ket: "Aturan dan pembiasaan" },
       { label: "Bimbingan konseling", href: "/kesiswaan#bk", ket: "Layanan BK" },
+      { label: "Lapor ke guru BK", href: "/lapor", ket: "Perundungan, kekerasan, masalah lain" },
     ],
   },
   { label: "Berita", href: "/berita", ringkas: "Berita, pengumuman, dan agenda sekolah." },
