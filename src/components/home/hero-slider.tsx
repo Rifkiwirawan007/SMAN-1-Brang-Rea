@@ -84,13 +84,10 @@ function langgananGerak(cb: () => void) {
 /** Hero layar penuh gaya pertamina.com: slide memudar, zoom pelan, tab progres di dasar. */
 export function HeroSlider({ slides, durasi = 7000 }: { slides: SlideHero[]; durasi?: number }) {
   const [aktif, setAktif] = useState(0);
-  // Slide hanya memuat gambar/video setelah slide sebelumnya aktif (slide 1 & 2 langsung).
-  const [jangkauan, setJangkauan] = useState(1);
-  const targetJangkauan = Math.min(aktif + 1, slides.length - 1);
-  if (targetJangkauan > jangkauan) setJangkauan(targetJangkauan);
   const [putaran, setPutaran] = useState(0);
   const [jedaPengguna, setJedaPengguna] = useState<boolean | null>(null);
   const [terlihat, setTerlihat] = useState(true);
+  const [siapMuatLain, setSiapMuatLain] = useState(false);
   const ref = useRef<HTMLElement>(null);
   const gerakDikurangi = useSyncExternalStore(
     langgananGerak,
@@ -99,6 +96,12 @@ export function HeroSlider({ slides, durasi = 7000 }: { slides: SlideHero[]; dur
   );
   // Gerak dikurangi = tidak berputar otomatis, kecuali pengguna menekan putar.
   const jeda = jedaPengguna ?? gerakDikurangi;
+
+  // Tunda pemuatan gambar slide ke-2 dst. sampai cat pertama (LCP) selesai agar tidak berebut bandwidth dengan slide pertama.
+  useEffect(() => {
+    const t = window.setTimeout(() => setSiapMuatLain(true), 1200);
+    return () => window.clearTimeout(t);
+  }, []);
 
   useEffect(() => {
     const el = ref.current;
@@ -109,10 +112,14 @@ export function HeroSlider({ slides, durasi = 7000 }: { slides: SlideHero[]; dur
   }, []);
 
   const pilih = (i: number) => {
+    setSiapMuatLain(true);
     setAktif(i);
     setPutaran((p) => p + 1);
   };
-  const lanjut = () => setAktif((i) => (i + 1) % slides.length);
+  const lanjut = () => {
+    setSiapMuatLain(true);
+    setAktif((i) => (i + 1) % slides.length);
+  };
 
   return (
     <section
@@ -121,10 +128,11 @@ export function HeroSlider({ slides, durasi = 7000 }: { slides: SlideHero[]; dur
       aria-roledescription="carousel"
       aria-label="Sorotan sekolah"
       data-paused={jeda || !terlihat}
-      className="on-dark relative isolate h-[100svh] min-h-[620px] overflow-hidden bg-brand-ink text-white"
+      className="on-dark relative isolate h-[100svh] min-h-[560px] overflow-hidden bg-brand-ink text-white sm:min-h-[620px]"
     >
       {slides.map((s, i) => {
         const on = i === aktif;
+        const muatMedia = i === 0 || on || (siapMuatLain && i === (aktif + 1) % slides.length);
         const Judul = i === 0 ? "h1" : "h2";
         return (
           <div
@@ -137,26 +145,23 @@ export function HeroSlider({ slides, durasi = 7000 }: { slides: SlideHero[]; dur
             aria-label={`${i + 1} dari ${slides.length}: ${s.tab}`}
           >
             <div className="absolute inset-0 -z-20 overflow-hidden">
-              {i <= jangkauan ? (
-              <>
-              {s.poster ? (
-                // Di HP poster ditampilkan utuh; latar diisi salinan buram poster yang sama.
-                <Image src={s.gambar} alt="" aria-hidden="true" fill sizes="20vw" quality={30} className="scale-110 object-cover blur-2xl brightness-75 md:hidden" />
+              {muatMedia && s.poster ? (
+                // Di HP poster ditampilkan utuh; latar diisi salinan buram beresolusi ringan dari poster yang sama.
+                <Image src={s.gambar} alt="" aria-hidden="true" fill sizes="25vw" className="scale-110 object-cover blur-2xl brightness-75 md:hidden" />
               ) : null}
-              <Image
-                src={s.gambar}
-                alt={s.alt}
-                fill
-                sizes="100vw"
-                loading={i === 0 ? "eager" : "lazy"}
-                fetchPriority={i === 0 ? "high" : "auto"}
-                className={cx("hero-media", s.poster ? "object-contain md:object-cover" : "object-cover")}
-                style={{ "--pos": s.posisi ?? "center", "--pos-hp": s.posisiHp ?? s.posisi ?? "center" } as React.CSSProperties}
-              />
-              {s.video ? (
+              {muatMedia ? (
+                <Image
+                  src={s.gambar}
+                  alt={s.alt}
+                  fill
+                  sizes="100vw"
+                  priority={i === 0}
+                  className={cx("hero-media", s.poster ? "object-contain md:object-cover" : "object-cover")}
+                  style={{ "--pos": s.posisi ?? "center", "--pos-hp": s.posisiHp ?? s.posisi ?? "center" } as React.CSSProperties}
+                />
+              ) : null}
+              {muatMedia && s.video ? (
                 <VideoHero video={s.video} poster={s.gambar} main={on && !jeda && terlihat && !gerakDikurangi} aktif={on} />
-              ) : null}
-              </>
               ) : null}
             </div>
             <div className={cx(s.video || s.poster ? "scrim-video" : "scrim-hero", "absolute inset-0 -z-10")} aria-hidden="true" />
@@ -180,7 +185,7 @@ export function HeroSlider({ slides, durasi = 7000 }: { slides: SlideHero[]; dur
                 </Link>
               </div>
             ) : (
-            <div className="container-site flex h-full flex-col justify-end pb-[128px] md:pb-[168px]">
+            <div className="container-site flex h-full flex-col justify-end pb-[112px] sm:pb-[128px] md:pb-[168px]">
               <div className="hero-copy max-w-[44rem]">
                 {s.contoh ? <Contoh className="mb-4" /> : null}
                 <Judul className="text-display max-w-[15ch] text-white">

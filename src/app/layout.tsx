@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { ambilSekolah } from "@/lib/konten/baca";
-import { URL_SITUS } from "@/lib/situs-url";
 import "./globals.css";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -14,7 +13,6 @@ const jakarta = Plus_Jakarta_Sans({
 export async function generateMetadata(): Promise<Metadata> {
   const sekolah = await ambilSekolah();
   return {
-    metadataBase: new URL(URL_SITUS),
     title: {
       default: `${sekolah.nama} | Sumbawa Barat`,
       template: `%s | ${sekolah.namaPendek}`,
@@ -26,7 +24,14 @@ export async function generateMetadata(): Promise<Metadata> {
       type: "website",
       locale: "id_ID",
       siteName: sekolah.nama,
-      images: [{ url: "/images/hero-sekolah-baru.jpg", width: 1672, height: 941, alt: sekolah.nama }],
+      images: [
+        {
+          url: "/images/hero-sekolah-baru.jpg",
+          width: 1200,
+          height: 630,
+          alt: sekolah.nama,
+        },
+      ],
     },
   };
 }

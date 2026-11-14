@@ -31,7 +31,13 @@ export async function generateMetadata({ params }: PageProps<"/berita/[slug]">):
   return {
     title: b.judul,
     description: b.ringkasan,
-    openGraph: { type: "article", title: b.judul, description: b.ringkasan, images: foto ? [{ url: foto, alt: b.judul }] : undefined },
+    openGraph: {
+      type: "article",
+      title: b.judul,
+      description: b.ringkasan,
+      publishedTime: b.tanggal || undefined,
+      images: foto ? [{ url: foto, alt: b.judul }] : undefined,
+    },
   };
 }
 

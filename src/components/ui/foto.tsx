@@ -32,8 +32,7 @@ export function Foto({ src, alt, sizes, className, imgClassName, preload, penuh,
         alt={alt}
         fill
         sizes={sizes}
-        loading={preload ? "eager" : undefined}
-        fetchPriority={preload ? "high" : undefined}
+        priority={preload}
         className={cx("object-cover", imgClassName)}
         style={posisi ? { objectPosition: posisi } : undefined}
       />
