@@ -1,18 +1,17 @@
 {
   "visi": {
-    "teks": "Terwujudnya peserta didik yang beriman, berkarakter, berprestasi, dan peduli lingkungan.",
-    "contoh": true
+    "teks": "Beriman dan  Bertakqwa, Unggul dalam IPTEK, Cerdas  Berprestasi, Sehat Kreatif, Berdaya Saing dan Cinta Lingkungan.",
+    "contoh": false
   },
   "misi": {
     "butir": [
-      "Menumbuhkan keimanan dan akhlak mulia melalui pembiasaan harian di sekolah.",
-      "Menyelenggarakan pembelajaran yang aktif, bermakna, dan berpusat pada murid.",
-      "Mengembangkan bakat siswa melalui ekstrakurikuler dan kompetisi.",
-      "Menguatkan budaya literasi, numerasi, dan kecakapan digital.",
-      "Mewujudkan lingkungan sekolah yang bersih, hijau, aman, dan nyaman.",
-      "Menjalin kerja sama dengan orang tua dan masyarakat Brang Rea."
+      "Mewujudkan lingkungan sekolah bernuansa religius, bersih, rapi, sejuk, indah, dan harmonis.",
+      "Melaksanakan pembelajaran yang aktif, kreatif, efektif, inovatif dan menyenangkan.",
+      "Membangun semangat kompetitif secara positif untuk meningkatkan kemampuan belajar dan kualitas daya saing.",
+      "Menjalin kemitraan dan jejaring (networking) secara horizontal dan vertikal untuk meningkatkan mutu sekolah.",
+      "Menghasilkan siswa yang mampu mengembangkan potensi diri, menjunjung tinggi tradisi berprestasi, memiliki iman dan taqwa serta berakhlak mulia."
     ],
-    "contoh": true
+    "contoh": false
   },
   "sejarah": [
     {
@@ -44,7 +43,7 @@
     {
       "jabatan": "Kepala sekolah",
       "nama": "Mustaram, S.Pd.",
-      "foto": "/images/kepala-sekolah-avatar.webp",
+      "foto": "/media/2026/11/img-5893-5ff335.webp",
       "contoh": false
     },
     {

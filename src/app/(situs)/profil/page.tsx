@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { ExternalLink, UserRound } from "lucide-react";
+import { Eye, Target, UserRound } from "lucide-react";
 import { PageHero } from "@/components/ui/page-hero";
 import { SubNav } from "@/components/ui/sub-nav";
 import { SectionHead } from "@/components/ui/section-head";
@@ -8,6 +8,8 @@ import { CarouselRail } from "@/components/ui/carousel-rail";
 import { CountUp } from "@/components/ui/count-up";
 import { CatatanContoh, Contoh } from "@/components/ui/contoh";
 import { Foto } from "@/components/ui/foto";
+import { TeksKata } from "@/components/ui/teks-kata";
+import { VideoYoutube } from "@/components/ui/video-youtube";
 import { ambilProfil, ambilSambutan, ambilSekolah } from "@/lib/konten/baca";
 import { formatAngka } from "@/lib/format";
 
@@ -18,6 +20,7 @@ export const metadata: Metadata = {
 
 const BAGIAN = [
   { id: "sambutan", label: "Sambutan" },
+  { id: "video", label: "Video profil" },
   { id: "identitas", label: "Identitas" },
   { id: "sejarah", label: "Sejarah" },
   { id: "visi-misi", label: "Visi dan misi" },
@@ -94,8 +97,30 @@ export default async function Profil() {
         </div>
       </section>
 
+      {/* Video profil */}
+      <section id="video" aria-labelledby="judul-video" className="section-y">
+        <div className="container-site">
+          <div data-reveal className="mx-auto max-w-3xl text-center">
+            <h2 id="judul-video" className="text-h2 text-brand-ink">Video profil sekolah</h2>
+            <p className="mt-4 text-lead text-ink-2">Mengenal lebih dekat suasana belajar, kegiatan, dan warga SMA Negeri 1 Brang Rea.</p>
+          </div>
+          <div data-reveal className="mx-auto mt-10 max-w-5xl md:mt-12">
+            {/* Bayangan di sekeliling video, terlihat timbul */}
+            <div
+              className="overflow-hidden rounded-[14px]"
+              style={{
+                boxShadow:
+                  "0 0 0 1px rgb(0 0 0 / 0.08), 0 0 12px 2px rgb(0 0 0 / 0.22), 0 0 40px 8px rgb(0 0 0 / 0.28), 0 0 80px 16px rgb(0 0 0 / 0.22)",
+              }}
+            >
+              <VideoYoutube id="1PU1U5qi0J4" judul="Video profil SMA Negeri 1 Brang Rea" />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Identitas */}
-      <section id="identitas" aria-labelledby="judul-identitas" className="section-y bg-paper-2">
+      <section id="identitas" aria-labelledby="judul-identitas" className="section-y">
         <div className="container-site">
           <SectionHead
             id="judul-identitas"
@@ -110,19 +135,11 @@ export default async function Profil() {
               </div>
             ))}
           </dl>
-          <p className="mt-6 text-sm text-muted">
-            Sumber:{" "}
-            <a href={sekolah.sumber.dapodik} target="_blank" rel="noopener noreferrer" className="link-ink inline-flex items-center gap-1">
-              profil sekolah di Kemendikdasmen
-              <ExternalLink size={13} aria-hidden="true" />
-            </a>
-            , semester {s.semesterData}.
-          </p>
         </div>
       </section>
 
       {/* Sejarah */}
-      <section id="sejarah" aria-labelledby="judul-sejarah" className="section-y">
+      <section id="sejarah" aria-labelledby="judul-sejarah" className="section-y bg-paper-2">
         <div className="container-site">
           <SectionHead
             id="judul-sejarah"
@@ -153,26 +170,51 @@ export default async function Profil() {
       </section>
 
       {/* Visi & misi */}
-      <section id="visi-misi" aria-labelledby="judul-visi" className="on-dark section-y bg-brand text-white">
-        <div className="container-site grid gap-14 lg:grid-cols-[minmax(0,6fr)_minmax(0,6fr)] lg:gap-20">
-          <div data-reveal>
-            <div className="flex flex-wrap items-center gap-3">
+      <section id="visi-misi" aria-labelledby="judul-visi" className="on-dark section-y relative overflow-hidden bg-brand-ink text-white">
+        {/* Hiasan cahaya lembut */}
+        <span aria-hidden="true" className="pointer-events-none absolute -left-40 -top-40 h-[480px] w-[480px] rounded-full bg-brand opacity-60 blur-[120px]" />
+        <span aria-hidden="true" className="pointer-events-none absolute -bottom-48 -right-32 h-[520px] w-[520px] rounded-full bg-brand opacity-50 blur-[130px]" />
+        <div className="container-site relative grid gap-14 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-20">
+          <div className="lg:sticky lg:top-32 lg:self-start">
+            <div data-reveal className="flex flex-wrap items-center gap-3">
+              <span className="grid h-12 w-12 place-items-center rounded-full bg-white/10 ring-1 ring-white/20">
+                <Eye size={22} aria-hidden="true" />
+              </span>
               <h2 id="judul-visi" className="text-h2 text-white">
                 Visi
               </h2>
               {profil.visi.contoh && <Contoh />}
             </div>
-            <p className="mt-8 text-[clamp(1.5rem,1.1rem+1.4vw,2.25rem)] font-light leading-snug tracking-[-0.015em] text-white">
-              {profil.visi.teks}
-            </p>
+            <div className="relative mt-8">
+              <span aria-hidden="true" className="absolute -left-2 -top-10 select-none font-serif text-[8rem] leading-none text-white/10">&ldquo;</span>
+              <p
+                data-reveal-kata="45"
+                className="relative text-[clamp(1.6rem,1.1rem+1.6vw,2.5rem)] font-semibold leading-snug tracking-[-0.015em] text-white"
+              >
+                <TeksKata teks={profil.visi.teks} />
+              </p>
+              <span data-reveal style={{ "--d": 3 } as React.CSSProperties} className="mt-8 block h-1 w-24 rounded-full bg-white/60" aria-hidden="true" />
+            </div>
           </div>
-          <div data-reveal style={{ "--d": 1 } as React.CSSProperties}>
-            <h2 className="text-h2 text-white">Misi</h2>
-            <ol className="mt-8 flex flex-col divide-y divide-white/20 border-y border-white/20">
+          <div>
+            <div data-reveal className="flex items-center gap-3">
+              <span className="grid h-12 w-12 place-items-center rounded-full bg-white/10 ring-1 ring-white/20">
+                <Target size={22} aria-hidden="true" />
+              </span>
+              <h2 className="text-h2 text-white">Misi</h2>
+            </div>
+            <ol className="mt-8 grid gap-4">
               {profil.misi.butir.map((m, i) => (
-                <li key={i} className="flex gap-5 py-4">
-                  <span className="w-6 shrink-0 font-semibold tabular-nums text-white/70">{String(i + 1).padStart(2, "0")}</span>
-                  <span className="text-white/90">{m}</span>
+                <li
+                  key={i}
+                  data-reveal
+                  style={{ "--d": i + 1 } as React.CSSProperties}
+                  className="group flex items-start gap-5 rounded-[14px] bg-white/[0.07] p-5 ring-1 ring-white/15 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:bg-white/[0.12] md:p-6"
+                >
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-white text-[0.9375rem] font-bold tabular-nums text-brand-ink transition-transform duration-300 group-hover:scale-110">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="pt-2 leading-relaxed text-white/90">{m}</span>
                 </li>
               ))}
             </ol>
@@ -198,18 +240,21 @@ export default async function Profil() {
                 key={`${i}-${p.jabatan}`}
                 data-reveal
                 style={{ "--d": i % 4 } as React.CSSProperties}
-                className="flex w-[min(76vw,260px)] shrink-0 flex-col rounded-[14px] border border-line bg-paper p-6 sm:w-[280px] lg:w-auto"
+                className="zoom-wrap group relative flex aspect-[4/5] w-[min(76vw,260px)] shrink-0 flex-col justify-end overflow-hidden rounded-[10px] bg-brand-ink p-5 text-white sm:w-[280px] lg:w-auto"
               >
-                <div className="relative grid h-20 w-20 place-items-center overflow-hidden rounded-full bg-brand-soft text-brand">
-                  {p.foto ? (
-                    <Image src={p.foto} alt={p.nama} fill sizes="80px" className="object-cover object-top" />
-                  ) : (
-                    <UserRound size={34} strokeWidth={1.5} aria-hidden="true" />
-                  )}
+                {p.foto ? (
+                  <Image src={p.foto} alt={p.nama} fill sizes="(min-width: 1024px) 300px, 280px" className="object-cover object-top" />
+                ) : (
+                  <span className="absolute inset-0 grid place-items-center bg-brand-soft pb-16 text-brand" aria-hidden="true">
+                    <UserRound size={64} strokeWidth={1.25} />
+                  </span>
+                )}
+                <span className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-brand-ink/95 via-brand-ink/60 to-transparent" aria-hidden="true" />
+                <div className="relative flex flex-col">
+                  <p className="text-sm text-white/80 first-letter:uppercase">{p.jabatan}</p>
+                  <p className="mt-1 text-[1.125rem] font-semibold leading-tight text-white">{p.nama}</p>
+                  {p.contoh && <Contoh className="mt-3 self-start" />}
                 </div>
-                <p className="mt-5 text-sm text-muted first-letter:uppercase">{p.jabatan}</p>
-                <p className="mt-1 font-semibold text-ink">{p.nama}</p>
-                {p.contoh && <Contoh className="mt-4 self-start" />}
               </li>
             ))}
           </CarouselRail>
@@ -251,13 +296,20 @@ export default async function Profil() {
             {profil.guru.map((g, i) => (
               <li
                 key={`${i}-${g.nama}`}
-                className="flex w-[min(72vw,240px)] shrink-0 flex-col items-start rounded-[14px] border border-line bg-paper p-5 sm:w-[260px] lg:w-auto"
+                className="zoom-wrap group relative flex aspect-[4/5] w-[min(72vw,240px)] shrink-0 flex-col justify-end overflow-hidden rounded-[10px] bg-brand-ink p-5 text-white sm:w-[260px] lg:w-auto"
               >
-                <span className="grid h-12 w-12 place-items-center rounded-full bg-brand-soft text-brand">
-                  <UserRound size={22} aria-hidden="true" />
+                {"foto" in g && g.foto ? (
+                  <Image src={g.foto as string} alt={g.nama} fill sizes="(min-width: 1024px) 300px, 260px" className="object-cover object-top" />
+                ) : (
+                  <span className="absolute inset-0 grid place-items-center bg-brand-soft pb-16 text-brand" aria-hidden="true">
+                    <UserRound size={56} strokeWidth={1.25} />
+                  </span>
+                )}
+                <span className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-brand-ink/95 via-brand-ink/60 to-transparent" aria-hidden="true" />
+                <span className="relative flex flex-col">
+                  <span className="text-[1.125rem] font-semibold leading-tight text-white">{g.nama}</span>
+                  <span className="mt-1 text-sm text-white/80">Guru {g.mapel}</span>
                 </span>
-                <span className="mt-4 font-semibold text-ink">{g.nama}</span>
-                <span className="text-sm text-ink-2">Guru {g.mapel}</span>
               </li>
             ))}
           </CarouselRail>
@@ -301,9 +353,6 @@ export default async function Profil() {
               </li>
             ))}
           </CarouselRail>
-          <p className="mt-10 text-sm text-muted">
-            Listrik {s.listrik}, internet {s.internet.toLowerCase()}. Sumber angka: Dapodik semester {s.semesterData}.
-          </p>
         </div>
       </section>
     </>

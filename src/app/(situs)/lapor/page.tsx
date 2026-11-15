@@ -15,9 +15,9 @@ export default function HalamanLapor() {
       <PageHero
         judul="Lapor ke guru BK"
         teks="Mengalami atau melihat perundungan, kekerasan, atau masalah lain di sekolah? Ceritakan di sini. Laporanmu langsung diterima guru bimbingan konseling."
-        gambar="/images/sekolah/banner-duduk.jpg"
+        gambar="/images/sekolah/banner-senam-pagi.webp"
         alt="Seorang siswa duduk di pondok kayu memandangi hujan"
-        posisiGambar="center top"
+        posisiGambar="center 70%"
         jejak={[{ label: "Beranda", href: "/" }, { label: "Kesiswaan", href: "/kesiswaan" }, { label: "Lapor ke guru BK" }]}
         tambahan={
           <Link href="/lapor/cek" className="btn-pill">
