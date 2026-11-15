@@ -536,6 +536,22 @@
   body:has(#hasil-cek-absen) :is(.site-header, [data-hero], footer) {
     display: none !important;
   }
+  /* Cetak SKL: hanya surat, bagian situs lain disembunyikan. */
+  body:has(#skl-cetak) * {
+    visibility: hidden;
+  }
+  body:has(#skl-cetak) #skl-cetak,
+  body:has(#skl-cetak) #skl-cetak * {
+    visibility: visible;
+  }
+  body:has(#skl-cetak) #skl-cetak {
+    position: absolute;
+    inset: 0 0 auto 0;
+    z-index: 9999;
+  }
+  @page {
+    margin: 12mm;
+  }
 }
 
 /* ---------- Header ---------- */

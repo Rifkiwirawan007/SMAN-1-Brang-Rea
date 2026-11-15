@@ -28,6 +28,7 @@ export const AKSES: Record<string, Peran[]> = {
   absensi: ABSENSI,
   laporan: LAPORAN,
   siswa: ABSENSI,
+  kelulusan: ADMIN,
   media: SEMUA,
   berita: SEMUA,
   agenda: SEMUA,

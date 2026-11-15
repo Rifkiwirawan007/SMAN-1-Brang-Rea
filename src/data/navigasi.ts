@@ -55,6 +55,7 @@ export const MENU_ATAS: TautanNav[] = [
   { label: "Kalender akademik", href: "/akademik#kalender" },
   { label: "Pengumuman", href: "/berita#pengumuman" },
   { label: "Cek absensi", href: "/cek-absen" },
+  { label: "Cek kelulusan", href: "/cek-kelulusan" },
   { label: "Lapor ke BK", href: "/lapor" },
   { label: "Kontak", href: "/kontak" },
 ];

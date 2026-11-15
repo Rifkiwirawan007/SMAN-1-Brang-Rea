@@ -11,6 +11,7 @@ import {
   Contact,
   ExternalLink,
   FolderOpen,
+  GraduationCap,
   History,
   Inbox,
   LayoutDashboard,
@@ -42,6 +43,7 @@ function susunNav(peran: Peran, pesanBaru: number, laporanBaru: number): { judul
       item: [
         { href: "/dashboard/absensi", label: "Absensi siswa", ikon: ClipboardCheck, kunci: "absensi" },
         { href: "/dashboard/siswa", label: "Data siswa", ikon: Contact, kunci: "siswa" },
+        { href: "/dashboard/kelulusan", label: "Kelulusan", ikon: GraduationCap, kunci: "kelulusan" },
       ],
     },
     {
