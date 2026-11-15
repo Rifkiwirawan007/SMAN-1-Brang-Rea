@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown, Mail, MapPin } from "lucide-react";
 import { MENU_UTAMA } from "@/data/navigasi";
-import { IkonFacebook, IkonWhatsApp } from "@/components/ui/icons";
+import { IkonFacebook, IkonInstagram, IkonWhatsApp } from "@/components/ui/icons";
 import { waLink } from "@/lib/format";
 import { mapsLink } from "@/lib/konten/util";
 import type { Sekolah } from "@/lib/konten/tipe";
@@ -95,8 +95,14 @@ export function SiteFooter({ sekolah }: { sekolah: Sekolah }) {
           </p>
           <p className="font-semibold text-brand">{sekolah.tagar}</p>
           <div className="flex items-center gap-5">
-            <a href={sekolah.kontak.instagramUrl || "https://www.instagram.com/sman1brangrea/"} target="_blank" rel="noopener noreferrer" className="hover:text-brand hover:underline">
-              Instagram
+            <a
+              href={sekolah.kontak.instagramUrl || "https://www.instagram.com/sman1brangrea/"}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram SMAN 1 Brang Rea"
+              className="grid h-9 w-9 place-items-center rounded-full border border-line-2 text-ink-2 transition-colors duration-200 hover:border-brand hover:bg-brand hover:text-white"
+            >
+              <IkonInstagram size={18} />
             </a>
             <a
               href={sekolah.kontak.facebookUrl}
