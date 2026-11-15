@@ -6,6 +6,7 @@ import { LayananRail, type KartuLayanan } from "@/components/home/layanan-rail";
 import { KabarTabs } from "@/components/home/kabar-tabs";
 import { EkskulTabs } from "@/components/home/ekskul-tabs";
 import { TimelineSpmb } from "@/components/home/timeline-spmb";
+import { RevealParagraf } from "@/components/home/reveal-paragraf";
 import { SectionHead } from "@/components/ui/section-head";
 import { CarouselRail } from "@/components/ui/carousel-rail";
 import { CountUp } from "@/components/ui/count-up";
@@ -127,6 +128,8 @@ export default async function Beranda() {
         }}
       />
       {slides.length > 0 ? <HeroSlider slides={slides} /> : null}
+      <RevealParagraf />
+      <div data-reveal-paragraf>
 
       {/* Sambutan kepala sekolah */}
       <section aria-labelledby="judul-sambutan" className="section-y">
@@ -345,6 +348,7 @@ export default async function Beranda() {
           </div>
         </div>
       </section>
+      </div>
     </>
   );
 }
