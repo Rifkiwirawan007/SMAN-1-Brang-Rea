@@ -6,6 +6,7 @@ import { IkonFacebook, IkonWhatsApp } from "@/components/ui/icons";
 import { waLink } from "@/lib/format";
 import { mapsLink } from "@/lib/konten/util";
 import type { Sekolah } from "@/lib/konten/tipe";
+import { FooterLipat } from "./footer-lipat";
 
 const KOLOM = [
   ...MENU_UTAMA.filter((m) => m.anak).map((m) => ({
@@ -30,6 +31,7 @@ export function SiteFooter({ sekolah }: { sekolah: Sekolah }) {
   const tahun = 2026;
   return (
     <footer className="border-t border-line bg-paper-2 text-ink-2">
+      <FooterLipat />
       <div className="container-site pt-16 md:pt-20">
         <div className="flex flex-col items-center text-center">
           <Link href="/" className="flex flex-col items-center gap-3 rounded-lg sm:flex-row sm:gap-4">
@@ -67,7 +69,7 @@ export function SiteFooter({ sekolah }: { sekolah: Sekolah }) {
 
         <div className="mt-14 grid gap-x-8 border-t border-line pt-6 md:grid-cols-2 md:pt-12 lg:grid-cols-4">
           {KOLOM.map((k) => (
-            <details key={k.judul} className="group border-b border-line md:border-0" open>
+            <details key={k.judul} data-footer-lipat className="group border-b border-line md:border-0" open>
               <summary className="flex cursor-pointer items-center justify-between py-4 font-semibold text-ink md:pointer-events-none md:py-0 md:pb-4">
                 {k.judul}
                 <ChevronDown size={18} aria-hidden="true" className="chev text-muted md:hidden" />
