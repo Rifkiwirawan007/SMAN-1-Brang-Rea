@@ -48,7 +48,6 @@ export const MENU_UTAMA: MenuNav[] = [
   },
   { label: "Berita", href: "/berita", ringkas: "Berita, pengumuman, dan agenda sekolah." },
   { label: "Galeri", href: "/galeri", ringkas: "Potret kegiatan sekolah." },
-  { label: "SPMB", href: "/spmb", ringkas: "Sistem Penerimaan Murid Baru." },
 ];
 
 export const MENU_ATAS: TautanNav[] = [
