@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { BookOpenCheck, CalendarDays, Coffee, Download, Layers3, Sparkles, UsersRound } from "lucide-react";
 import { PageHero } from "@/components/ui/page-hero";
 import { SubNav } from "@/components/ui/sub-nav";
@@ -7,6 +8,17 @@ import { CarouselRail } from "@/components/ui/carousel-rail";
 import { CountUp } from "@/components/ui/count-up";
 import { CatatanContoh, Contoh } from "@/components/ui/contoh";
 import { ambilAkademik, ambilSekolah } from "@/lib/konten/baca";
+import { cx } from "@/lib/format";
+
+/** Foto samar di belakang pita jadwal per hari (bergiliran). */
+const FOTO_JADWAL = [
+  "/images/sekolah/banner-paskibra.webp",
+  "/images/sekolah/banner-kelas.jpg",
+  "/images/sekolah/banner-apel-lapangan.webp",
+  "/images/sekolah/banner-senam-pagi.webp",
+  "/images/sekolah/banner-duduk.jpg",
+  "/images/sekolah/banner-tim-olahraga.webp",
+];
 
 export const metadata: Metadata = {
   title: "Akademik",
@@ -33,8 +45,9 @@ export default async function Akademik() {
       <PageHero
         judul="Akademik"
         teks="Kurikulum, rombongan belajar, jadwal, dan kalender pendidikan sekolah."
-        gambar="/images/sekolah/banner-kelas.jpg"
-        alt="Siswi SMAN 1 Brang Rea mengangkat tangan di kelas"
+        gambar="/images/sekolah/banner-paskibra.webp"
+        alt="Petugas Paskibra SMAN 1 Brang Rea mengibarkan bendera saat upacara di lapangan sekolah"
+        posisiGambar="center 35%"
         jejak={[{ label: "Beranda", href: "/" }, { label: "Akademik" }]}
       />
       <SubNav items={BAGIAN} />
@@ -75,27 +88,38 @@ export default async function Akademik() {
         </div>
       </section>
 
-      {/* Rombel (data asli) */}
-      <section id="rombel" aria-labelledby="judul-rombel" className="section-y bg-paper-2">
-        <div className="container-site">
-          <SectionHead
-            id="judul-rombel"
-            judul="Rombongan belajar tahun ini"
-            teks={<p>Angka resmi semester {s.semesterData} dari Data Pokok Pendidikan, bukan perkiraan.</p>}
-          />
-          <dl className="mt-10 grid grid-cols-2 gap-x-5 gap-y-8 border-t border-line pt-10 sm:gap-10 sm:pt-12 lg:mt-12 lg:grid-cols-4">
+      {/* Rombel (data asli): latar foto guru berbaju adat, tepi atas-bawah miring (bukan gelombang) */}
+      <section
+        id="rombel"
+        aria-labelledby="judul-rombel"
+        className="on-dark relative overflow-hidden bg-brand-ink py-32 text-white md:py-44"
+        style={{ clipPath: "polygon(0 0, 100% 7%, 100% 100%, 0 93%)" }}
+      >
+        <Image src="/images/sekolah/bg-guru-baju-adat.webp" alt="" fill sizes="100vw" quality={70} className="object-cover" style={{ objectPosition: "center 40%" }} />
+        <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-r from-brand-ink/95 via-brand-ink/85 to-brand-ink/70" />
+        <div className="container-site relative">
+          <div className="max-w-[60ch]">
+            <p data-reveal className="text-xs font-semibold uppercase tracking-[0.3em] text-aksen">Semester {s.semesterData}</p>
+            <h2 id="judul-rombel" data-reveal className="mt-4 text-h2 text-white">
+              Rombongan belajar tahun ini
+            </h2>
+            <p data-reveal className="mt-4 text-lead text-white/75">
+              Angka resmi dari Data Pokok Pendidikan, bukan perkiraan.
+            </p>
+          </div>
+          <dl className="mt-10 grid grid-cols-2 gap-x-5 gap-y-8 border-t border-white/20 pt-10 sm:gap-10 sm:pt-12 lg:mt-12 lg:grid-cols-4">
             {[
               { k: "Rombongan belajar", v: s.rombel, ket: "kelas X, XI, dan XII" },
               { k: "Peserta didik", v: s.siswa, ket: `${s.siswaLaki} laki-laki, ${s.siswaPerempuan} perempuan` },
               { k: "Siswa per rombel", v: s.rasioSiswaRombel, ket: "rata-rata tiap kelas" },
               { k: "Siswa per guru", v: s.rasioSiswaGuru, ket: `dengan ${s.guru} guru` },
             ].map((d, i) => (
-              <div key={d.k} data-reveal style={{ "--d": i } as React.CSSProperties}>
-                <dt className="text-sm font-semibold text-brand">{d.k}</dt>
-                <dd className="mt-4 text-stat text-ink">
+              <div key={d.k} data-reveal style={{ "--d": i } as React.CSSProperties} className="border-l border-white/20 pl-5">
+                <dt className="text-sm font-semibold text-aksen">{d.k}</dt>
+                <dd className="mt-4 text-stat font-extralight text-white">
                   <CountUp nilai={d.v} />
                 </dd>
-                <dd className="mt-3 text-[0.9375rem] text-ink-2">{d.ket}</dd>
+                <dd className="mt-3 text-[0.9375rem] text-white/70">{d.ket}</dd>
               </div>
             ))}
           </dl>
@@ -142,40 +166,65 @@ export default async function Akademik() {
         </div>
       </section>
 
-      {/* Jadwal */}
-      <section id="jadwal" aria-labelledby="judul-jadwal" className="section-y bg-paper-2">
-        <div className="container-site">
-          <SectionHead
-            id="judul-jadwal"
-            judul="Jadwal dan jam pelajaran"
-            tambahan={jadwal.contoh ? <Contoh className="self-start" /> : null}
-            teks={<p>Sekolah menyelenggarakan pembelajaran pagi selama enam hari, Senin sampai Sabtu (data Dapodik).{labelContoh && jadwal.contoh ? " Jam di bawah ini contoh." : null}</p>}
-          />
-          <p className="mt-10 flex items-center gap-2 text-sm text-muted md:hidden" aria-hidden="true">
-            Geser tabel ke samping <span className="geser-panah">→</span>
-          </p>
-          <div data-reveal className="mt-3 overflow-x-auto rounded-[14px] border border-line bg-paper md:mt-12">
-            <table className="w-full min-w-[560px] text-left">
-              <caption className="sr-only">Jam pelajaran per hari</caption>
-              <thead>
-                <tr className="border-b border-line text-sm text-muted">
-                  <th scope="col" className="px-6 py-4 font-medium">Hari</th>
-                  <th scope="col" className="px-6 py-4 font-medium">Jam belajar (WITA)</th>
-                  <th scope="col" className="px-6 py-4 font-medium">Kegiatan khusus</th>
-                </tr>
-              </thead>
-              <tbody>
-                {jadwal.hari.map((h) => (
-                  <tr key={h.hari} className="border-b border-line last:border-0">
-                    <th scope="row" className="px-6 py-4 font-semibold text-ink">{h.hari}</th>
-                    <td className="px-6 py-4 tabular-nums text-ink">{h.jam}</td>
-                    <td className="px-6 py-4 text-ink-2">{h.ket}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+      {/* Jadwal: gaya poster "program mingguan": judul miring tebal, satu pita hijau per hari
+          berlatar foto sekolah samar, susunan hari/jam bergantian kiri-kanan */}
+      <section id="jadwal" aria-labelledby="judul-jadwal" className="section-y relative overflow-hidden bg-paper-2">
+        {/* Hiasan lingkaran hijau di tepi, seperti poster */}
+        <span aria-hidden="true" className="pointer-events-none absolute -left-28 top-1/2 h-64 w-64 rounded-full bg-brand/90 md:h-80 md:w-80" />
+        <span aria-hidden="true" className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-brand/90" />
+        <div className="container-site relative">
+          <div data-reveal className="mx-auto max-w-3xl text-center">
+            <h2 id="judul-jadwal" className="inline-block -rotate-3 text-[clamp(2.2rem,1.4rem+3.6vw,4.4rem)] font-black uppercase leading-[0.95] tracking-[-0.02em]">
+              <span className="block text-brand">Jadwal &amp; jam</span>
+              <span className="block text-brand-ink">pelajaran</span>
+            </h2>
+            <p className="mt-8 text-sm font-bold uppercase tracking-[0.2em] text-brand">
+              Senin – Sabtu · pembelajaran pagi (WITA)
+            </p>
+            {labelContoh && jadwal.contoh ? (
+              <div className="mt-4 flex justify-center">
+                <Contoh teks="Jam contoh" />
+              </div>
+            ) : null}
           </div>
-          <p className="mt-6 flex flex-wrap items-center gap-3 text-ink-2">
+
+          <ol className="relative mx-auto mt-10 grid max-w-4xl gap-4 md:mt-12 md:gap-5">
+            {jadwal.hari.map((h, i) => {
+              const balik = i % 2 === 1;
+              const [mulai, selesai] = h.jam.split(/\s*[–-]\s*/);
+              const foto = FOTO_JADWAL[i % FOTO_JADWAL.length];
+              return (
+                <li
+                  key={h.hari}
+                  data-reveal
+                  style={{ "--d": i } as React.CSSProperties}
+                  className={cx(
+                    "on-dark relative flex min-h-[112px] items-stretch overflow-hidden rounded-[14px] bg-brand text-white shadow-[0_14px_30px_-16px_rgb(6_16_11/0.55)] md:min-h-[128px]",
+                    balik && "flex-row-reverse",
+                  )}
+                >
+                  <Image src={foto} alt="" fill sizes="(min-width: 1024px) 900px, 100vw" quality={60} className="object-cover opacity-30 mix-blend-luminosity" />
+                  <span aria-hidden="true" className={cx("absolute inset-0 from-brand via-brand/80 to-brand/40", balik ? "bg-gradient-to-l" : "bg-gradient-to-r")} />
+                  {/* Hari */}
+                  <div className={cx("relative flex w-[92px] shrink-0 flex-col justify-center px-4 sm:w-[124px] sm:px-6", balik && "text-right")}>
+                    <span className="text-[0.75rem] font-extrabold uppercase tracking-[0.06em] text-white/90 sm:text-sm">{h.hari}</span>
+                    <span className="text-[2rem] font-black leading-none tabular-nums sm:text-[2.6rem]">{String(i + 1).padStart(2, "0")}</span>
+                  </div>
+                  {/* Kegiatan */}
+                  <div className={cx("relative flex min-w-0 flex-1 items-center px-2 sm:px-4", balik && "justify-end text-right")}>
+                    <p className="text-[1.05rem] font-black uppercase leading-tight tracking-[-0.01em] sm:text-[1.6rem]">{h.ket}</p>
+                  </div>
+                  {/* Jam */}
+                  <div className={cx("relative my-4 flex w-[84px] shrink-0 flex-col justify-center border-white/70 px-3 text-[0.95rem] font-extrabold leading-tight tabular-nums sm:w-[112px] sm:px-5 sm:text-[1.15rem]", balik ? "border-r" : "border-l text-right")}>
+                    <span>{mulai}</span>
+                    {selesai && <span>{selesai}</span>}
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
+
+          <p className="mx-auto mt-8 flex max-w-4xl flex-wrap items-center justify-center gap-3 text-ink-2">
             <Coffee size={18} aria-hidden="true" className="text-brand" />
             Istirahat: {jadwal.istirahat.join(" dan ")}
           </p>
