@@ -1,78 +1,234 @@
 {
-  "tahunAjaran": "2027/2028",
-  "status": "Belum dibuka",
+  "tahunAjaran": "2026/2027",
+  "status": "Ditutup",
   "contoh": false,
-  "jalur": [
+  "portal": "https://spmb.ntbprov.go.id",
+  "tutorial": "https://www.youtube.com/@spmbntb",
+  "videoTutorial": "https://youtu.be/q3HT9ALu3sQ",
+  "kuota": [
     {
       "nama": "Domisili",
-      "kuota": "min. 30%",
-      "teks": "Calon murid yang berdomisili di wilayah yang ditetapkan pemerintah daerah, dibuktikan dengan Kartu Keluarga."
+      "jumlah": 63
     },
     {
       "nama": "Afirmasi",
-      "kuota": "min. 30%",
-      "teks": "Calon murid dari keluarga kurang mampu (KIP, PKH, atau program sejenis) dan penyandang disabilitas."
-    },
-    {
-      "nama": "Prestasi",
-      "kuota": "min. 30%",
-      "teks": "Calon murid dengan nilai rapor atau prestasi lomba akademik maupun non-akademik."
+      "jumlah": 54
     },
     {
       "nama": "Mutasi",
-      "kuota": "maks. 5%",
-      "teks": "Calon murid yang pindah mengikuti tugas orang tua atau anak guru di sekolah tujuan."
+      "jumlah": 9
+    },
+    {
+      "nama": "Prestasi akademik",
+      "jumlah": 20
+    },
+    {
+      "nama": "Prestasi non-akademik",
+      "jumlah": 16
+    },
+    {
+      "nama": "Prestasi keagamaan",
+      "jumlah": 13
+    },
+    {
+      "nama": "Prestasi organisasi",
+      "jumlah": 5
+    }
+  ],
+  "jalur": [
+    {
+      "nama": "Afirmasi",
+      "kuota": "30% · 54 kursi",
+      "teks": "Untuk calon murid dari keluarga ekonomi tidak mampu yang terdaftar dalam program penanganan keluarga tidak mampu, KIP, atau PKH.",
+      "jadwal": [
+        {
+          "tahap": "Pendaftaran & verifikasi",
+          "waktu": "2 – 4 Juni 2026"
+        },
+        {
+          "tahap": "Seleksi (by system)",
+          "waktu": "5 – 6 Juni 2026"
+        },
+        {
+          "tahap": "Pengumuman",
+          "waktu": "8 Juni 2026"
+        },
+        {
+          "tahap": "Pendaftaran ulang",
+          "waktu": "8 – 10 Juni 2026"
+        }
+      ],
+      "syarat": [
+        "Memiliki kartu keikutsertaan dalam program penanganan keluarga ekonomi tidak mampu dari Pemerintah Pusat dan/atau Pemerintah Daerah berdasarkan data terpadu Pemerintah Pusat atau Pemerintah Daerah.",
+        "Kartu keikutsertaan sebagaimana dimaksud pada angka 1 tidak dapat berupa kartu keikutsertaan program jaminan kesehatan nasional dan/atau surat keterangan tidak mampu.",
+        "Memiliki Kartu Indonesia Pintar (KIP), atau",
+        "Peserta Program Keluarga Harapan (PKH), atau",
+        "Memiliki surat keterangan hasil verifikasi dari lembaga/instansi/sekolah tempat terdaftar."
+      ],
+      "kriteria": [
+        "Jarak terdekat dalam wilayah domisili",
+        "Usia calon murid",
+        "Pendaftar lebih awal yang tercatat pada sistem"
+      ]
+    },
+    {
+      "nama": "Mutasi",
+      "kuota": "5% · 9 kursi",
+      "teks": "Untuk calon murid yang pindah mengikuti tugas orang tua/wali, serta anak guru dan tenaga administrasi yang bertugas di SMAN 1 Brang Rea.",
+      "jadwal": [
+        {
+          "tahap": "Pendaftaran & verifikasi",
+          "waktu": "2 – 4 Juni 2026"
+        },
+        {
+          "tahap": "Seleksi (by system)",
+          "waktu": "5 – 6 Juni 2026"
+        },
+        {
+          "tahap": "Pengumuman",
+          "waktu": "8 Juni 2026"
+        },
+        {
+          "tahap": "Pendaftaran ulang",
+          "waktu": "8 – 10 Juni 2026"
+        }
+      ],
+      "syarat": [
+        "Memiliki SK mutasi orang tua dari PNS/TNI/Polri/BUMN/swasta.",
+        "Perpindahan tugas orang tua dari luar NTB ke dalam NTB, atau antar kabupaten/kota dalam NTB, yang diikuti perpindahan domisili orang tua/wali, dibuktikan dengan perpindahan Kartu Keluarga dan surat penugasan dari instansi.",
+        "Memiliki Kartu Keluarga asli.",
+        "Memiliki akta kelahiran asli.",
+        "Memiliki keterangan domisili.",
+        "Memiliki surat rekomendasi dari Cabang Dinas Dikbud Sumbawa Barat.",
+        "Perpindahan tugas orang tua/wali paling lama 1 (satu) tahun terakhir.",
+        "Anak guru dan tenaga administrasi sekolah yang ditugaskan pada sekolah yang bersangkutan."
+      ],
+      "kriteria": [
+        "Jarak terdekat dalam wilayah domisili (mengacu pada surat keterangan domisili orang tua/wali di Provinsi NTB)",
+        "Usia calon murid",
+        "Pendaftar lebih awal yang tercatat pada sistem"
+      ]
+    },
+    {
+      "nama": "Prestasi",
+      "kuota": "30% · 54 kursi",
+      "teks": "Untuk calon murid berprestasi: akademik, non-akademik, keagamaan (tahfidz), dan organisasi.",
+      "jadwal": [
+        {
+          "tahap": "Pendaftaran & verifikasi",
+          "waktu": "11 – 13 Juni 2026"
+        },
+        {
+          "tahap": "Seleksi (by system)",
+          "waktu": "15 – 16 Juni 2026"
+        },
+        {
+          "tahap": "Pengumuman",
+          "waktu": "17 Juni 2026"
+        },
+        {
+          "tahap": "Pendaftaran ulang",
+          "waktu": "18 – 19 Juni 2026"
+        }
+      ],
+      "syarat": [
+        "Prestasi akademik: jumlah total nilai minimal 1.700 pada mata pelajaran Bahasa Indonesia, Matematika, Bahasa Inggris, dan IPA dari semester 1 s.d. 5, dengan nilai minimal 75 tiap mata pelajaran.",
+        "Prestasi non-akademik: piagam/sertifikat kejuaraan berjenjang minimal tingkat kabupaten yang diselenggarakan lembaga pemerintah/induk organisasi yang memiliki legalitas. Khusus piagam nasional dan internasional wajib telah terkurasi oleh PUSPRESNAS.",
+        "Prestasi organisasi: SK kepala sekolah sebagai ketua organisasi intra sekolah (OSIS), atau pernah menjabat sebagai ketua organisasi kepanduan (Pramuka) di sekolah.",
+        "Prestasi tahfidz: hafal Al-Qur'an minimal 3 juz."
+      ],
+      "kriteria": [
+        "Memperhatikan rapor semester 1 s.d. semester 5",
+        "Bobot prestasi piagam/sertifikat",
+        "Jarak tempat tinggal terdekat ke satuan pendidikan",
+        "Usia calon murid",
+        "Pendaftar lebih awal yang tercatat pada sistem"
+      ]
+    },
+    {
+      "nama": "Domisili",
+      "kuota": "35% · 63 kursi",
+      "teks": "Untuk calon murid yang asal sekolahnya (SMP/MTs) berada dalam rayon domisili SMAN 1 Brang Rea.",
+      "jadwal": [
+        {
+          "tahap": "Pendaftaran & verifikasi",
+          "waktu": "20, 22, dan 23 Juni 2026"
+        },
+        {
+          "tahap": "Seleksi (by system)",
+          "waktu": "24 – 25 Juni 2026"
+        },
+        {
+          "tahap": "Pengumuman",
+          "waktu": "26 Juni 2026"
+        },
+        {
+          "tahap": "Pendaftaran ulang",
+          "waktu": "27, 29, dan 30 Juni 2026"
+        }
+      ],
+      "syarat": [
+        "Memperhatikan asal sekolah SMP/MTs yang berada dalam rayon domisili SMAN 1 Brang Rea.",
+        "Memiliki Kartu Keluarga asli.",
+        "Umur Kartu Keluarga minimal 1 tahun.",
+        "Memiliki akta kelahiran."
+      ],
+      "kriteria": [
+        "Asal sekolah (SMP/MTs)",
+        "Status hubungan keluarga yang tercantum dalam KK (anak kandung, cucu, famili lain)",
+        "Jarak terdekat dalam rayon domisili",
+        "Usia calon murid"
+      ]
     }
   ],
   "jadwal": [
     {
-      "tahap": "Sosialisasi",
-      "waktu": "Mei 2027",
-      "keterangan": "Informasi jalur, kuota, dan syarat disampaikan ke SMP dan masyarakat sekitar."
+      "tahap": "Finalisasi juknis",
+      "waktu": "13 – 15 April 2026",
+      "keterangan": "Petunjuk teknis SPMB Provinsi NTB difinalkan."
     },
     {
-      "tahap": "Pendaftaran",
-      "waktu": "2 – 6 Juni 2027",
-      "keterangan": "Daftar secara daring di portal SPMB Provinsi NTB, pilih SMAN 1 Brang Rea."
+      "tahap": "Sosialisasi juknis",
+      "waktu": "16 April – 5 Mei 2026",
+      "keterangan": "Jalur, kuota, dan syarat disampaikan ke SMP/MTs dan masyarakat."
     },
     {
-      "tahap": "Verifikasi berkas",
-      "waktu": "7 – 9 Juni 2027",
-      "keterangan": "Panitia memeriksa dokumen. Pantau status verifikasi di akun pendaftaran."
+      "tahap": "Jalur afirmasi & mutasi",
+      "waktu": "2 – 10 Juni 2026",
+      "keterangan": "Daftar 2–4 Juni, pengumuman 8 Juni, daftar ulang 8–10 Juni."
     },
     {
-      "tahap": "Pengumuman hasil",
-      "waktu": "12 Juni 2027",
-      "keterangan": "Hasil seleksi diumumkan di portal dan papan pengumuman sekolah."
+      "tahap": "Jalur prestasi",
+      "waktu": "11 – 19 Juni 2026",
+      "keterangan": "Daftar 11–13 Juni, pengumuman 17 Juni, daftar ulang 18–19 Juni."
     },
     {
-      "tahap": "Daftar ulang",
-      "waktu": "14 – 16 Juni 2027",
-      "keterangan": "Calon murid yang diterima datang ke sekolah membawa berkas asli."
-    },
-    {
-      "tahap": "MPLS",
-      "waktu": "Juli 2027",
-      "keterangan": "Masa Pengenalan Lingkungan Sekolah, hari pertama sebagai siswa Barema."
+      "tahap": "Jalur domisili",
+      "waktu": "20 – 30 Juni 2026",
+      "keterangan": "Daftar 20, 22, 23 Juni, pengumuman 26 Juni, daftar ulang 27–30 Juni."
     }
   ],
   "syarat": [
-    "Ijazah SMP/sederajat atau surat keterangan lulus",
-    "Akta kelahiran (usia paling tinggi 21 tahun pada 1 Juli 2027)",
-    "Kartu Keluarga yang diterbitkan paling singkat 1 tahun sebelum pendaftaran",
-    "Rapor semester 1–5 untuk jalur prestasi",
-    "Sertifikat lomba (bila mendaftar jalur prestasi non-akademik)",
-    "Bukti KIP, PKH, atau program sejenis untuk jalur afirmasi",
-    "Surat penugasan orang tua untuk jalur mutasi"
+    "Telah lulus dari SMP/SMPLB/MTs atau bentuk lain yang sederajat.",
+    "Memiliki ijazah atau dokumen lain yang menjelaskan telah menyelesaikan kelas 9 (sembilan) SMP/SMPLB/MTs atau bentuk lain yang sederajat.",
+    "Berusia setinggi-tingginya 21 tahun pada tanggal 1 Juli tahun berjalan.",
+    "Memiliki akta kelahiran atau surat keterangan lahir yang dikeluarkan pihak berwenang dan dilegalisir oleh lurah/kepala desa setempat sesuai domisili calon peserta didik.",
+    "Memiliki Kartu Keluarga.",
+    "Mengisi Surat Pernyataan “Bebas Narkoba” di laman spmb.ntbprov.go.id setelah login, kemudian dicetak dan ditandatangani calon siswa dan orang tua/wali di atas meterai Rp10.000."
+  ],
+  "syaratKhusus": [
+    "Nama orang tua/wali calon murid yang tercantum pada Kartu Keluarga harus sama dengan nama orang tua/wali pada rapor/ijazah jenjang sebelumnya, akta kelahiran, dan/atau Kartu Keluarga sebelumnya.",
+    "Bila nama orang tua/wali pada huruf a berbeda, Kartu Keluarga terbaru dapat digunakan jika orang tua/wali calon murid meninggal dunia, bercerai, atau kondisi lain yang ditetapkan Pemerintah Daerah, sebelum tanggal penerbitan Kartu Keluarga terbaru.",
+    "Orang tua/wali calon murid yang meninggal dunia atau bercerai sebagaimana dimaksud pada huruf b dibuktikan dengan akta kematian atau akta cerai yang diterbitkan instansi berwenang."
   ],
   "alur": [
     {
       "judul": "Siapkan dokumen",
-      "teks": "Pindai dokumen persyaratan sesuai jalur yang dipilih."
+      "teks": "Siapkan dokumen persyaratan umum, khusus, dan sesuai jalur yang dipilih."
     },
     {
       "judul": "Daftar akun",
-      "teks": "Buat akun di portal SPMB resmi Provinsi Nusa Tenggara Barat."
+      "teks": "Buat akun di portal SPMB resmi Provinsi NTB, spmb.ntbprov.go.id."
     },
     {
       "judul": "Pilih jalur dan sekolah",
@@ -94,7 +250,7 @@
   "tanya": [
     {
       "q": "Kapan pendaftaran SPMB dibuka?",
-      "a": "Jadwal resmi mengikuti petunjuk teknis Dinas Pendidikan dan Kebudayaan Provinsi NTB. Pengumuman akan dimuat di halaman berita sekolah."
+      "a": "Untuk tahun ajaran 2026/2027, pendaftaran dibuka bertahap per jalur pada 2–30 Juni 2026. Lihat jadwal lengkap tiap jalur di halaman ini."
     },
     {
       "q": "Apakah pendaftaran dipungut biaya?",

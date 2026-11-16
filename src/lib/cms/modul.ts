@@ -136,6 +136,19 @@ const berita: ModulKoleksi<Berita & Item> = {
     { jenis: "tanggal", nama: "tanggal", label: "Tanggal", sisi: true, bantuan: "Kosongkan bila belum diketahui." },
     { jenis: "gambar", nama: "gambar", label: "Foto utama", sisi: true, rasio: "16/10" },
     { jenis: "fokus", nama: "posisiGambar", label: "Titik fokus foto", gambar: "gambar", sisi: true },
+    {
+      jenis: "pilihan",
+      nama: "beranda",
+      label: "Kartu di beranda",
+      opsi: [
+        { nilai: "1", label: "Kartu 1 (kiri atas, lebar)" },
+        { nilai: "2", label: "Kartu 2 (kanan atas)" },
+        { nilai: "3", label: "Kartu 3 (kiri bawah)" },
+        { nilai: "4", label: "Kartu 4 (kanan bawah, lebar)" },
+      ],
+      sisi: true,
+      bantuan: "Pasang berita ini di bagian Kabar sekolah beranda. Kartu yang tidak dipasang terisi otomatis oleh berita terbaru.",
+    },
     bidContoh,
   ],
   judul: (x) => x.judul,
@@ -144,6 +157,7 @@ const berita: ModulKoleksi<Berita & Item> = {
   kolom: [
     { label: "Kategori", isi: (x) => x.kategori },
     { label: "Tanggal", isi: (x) => tgl(x.tanggal) },
+    { label: "Beranda", isi: (x) => (x.beranda ? `Kartu ${x.beranda}` : "—") },
   ],
   filter: [{ kunci: "kategori", label: "Kategori", opsi: KATEGORI_BERITA, ambil: (x) => x.kategori }],
   publik: (x) => (x.status === "draf" ? null : `/berita/${x.slug}`),
@@ -711,7 +725,33 @@ const spmb: ModulDokumen = {
       bidang: [
         { jenis: "teks", nama: "tahunAjaran", label: "Tahun ajaran", wajib: true, placeholder: "2027/2028", lebar: "setengah" },
         { jenis: "pilihan", nama: "status", label: "Status pendaftaran", wajib: true, opsi: ["Belum dibuka", "Dibuka", "Ditutup", "Pengumuman hasil"], lebar: "setengah" },
+        { jenis: "teks", nama: "portal", label: "Alamat portal SPMB", format: "url", placeholder: "https://spmb.ntbprov.go.id", bantuan: "Tombol \"Daftar sekarang\" hanya aktif saat status pendaftaran = Dibuka." },
+        {
+          jenis: "teks",
+          nama: "videoTutorial",
+          label: "Video tutorial pendaftaran (YouTube)",
+          format: "url",
+          placeholder: "https://youtu.be/…",
+          bantuan: "Diputar di bagian Pendaftaran halaman SPMB. Tempel tautan video YouTube.",
+        },
+        { jenis: "teks", nama: "tutorial", label: "Kanal tutorial lainnya", format: "url", placeholder: "https://www.youtube.com/@spmbntb" },
         { ...bidContoh, sisi: false },
+      ],
+    },
+    {
+      judul: "Kuota",
+      bidang: [
+        {
+          jenis: "daftar",
+          nama: "kuota",
+          label: "Daya tampung",
+          labelItem: "Kuota",
+          judulItem: "nama",
+          bidang: [
+            { jenis: "teks", nama: "nama", label: "Jalur", wajib: true, lebar: "setengah", placeholder: "Prestasi akademik" },
+            { jenis: "angka", nama: "jumlah", label: "Jumlah kursi", wajib: true, min: 0, lebar: "setengah" },
+          ],
+        },
       ],
     },
     {
@@ -725,8 +765,21 @@ const spmb: ModulDokumen = {
           judulItem: "nama",
           bidang: [
             { jenis: "teks", nama: "nama", label: "Nama jalur", wajib: true, lebar: "setengah" },
-            { jenis: "teks", nama: "kuota", label: "Kuota", wajib: true, placeholder: "min. 30%", lebar: "setengah" },
+            { jenis: "teks", nama: "kuota", label: "Kuota", wajib: true, placeholder: "30% · 54 kursi", lebar: "setengah" },
             { jenis: "teksPanjang", nama: "teks", label: "Keterangan", wajib: true, baris: 2 },
+            {
+              jenis: "daftar",
+              nama: "jadwal",
+              label: "Jadwal jalur ini",
+              labelItem: "Tahap",
+              judulItem: "tahap",
+              bidang: [
+                { jenis: "teks", nama: "tahap", label: "Tahap", wajib: true, lebar: "setengah", placeholder: "Pendaftaran & verifikasi" },
+                { jenis: "teks", nama: "waktu", label: "Waktu", wajib: true, lebar: "setengah", placeholder: "2 – 4 Juni 2026" },
+              ],
+            },
+            { jenis: "daftarTeks", nama: "syarat", label: "Persyaratan jalur", labelItem: "syarat" },
+            { jenis: "daftarTeks", nama: "kriteria", label: "Urutan kriteria seleksi", labelItem: "kriteria" },
           ],
         },
       ],
@@ -755,7 +808,13 @@ const spmb: ModulDokumen = {
         },
       ],
     },
-    { judul: "Syarat", bidang: [{ jenis: "daftarTeks", nama: "syarat", label: "Syarat pendaftaran", labelItem: "syarat" }] },
+    {
+      judul: "Syarat",
+      bidang: [
+        { jenis: "daftarTeks", nama: "syarat", label: "Persyaratan umum", labelItem: "syarat" },
+        { jenis: "daftarTeks", nama: "syaratKhusus", label: "Persyaratan khusus", labelItem: "syarat" },
+      ],
+    },
     {
       judul: "Alur pendaftaran",
       bidang: [

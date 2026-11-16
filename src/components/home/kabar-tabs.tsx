@@ -50,66 +50,48 @@ export function KabarTabs({
 
       <div className="mt-8 lg:mt-10">
         <div role="tabpanel" id="panel-Berita" aria-labelledby="tab-Berita" hidden={tab !== "Berita"}>
-          <CarouselRail
-            ariaLabel="Daftar berita terbaru"
-            className="lg:grid lg:grid-cols-4 lg:grid-rows-[repeat(2,minmax(0,250px))] lg:gap-4"
-          >
-            {berita.slice(0, 5).map((b, i) => (
-              <li
-                key={b.slug}
-                className={cx(
-                  "w-[min(82vw,320px)] shrink-0 sm:w-[340px] lg:w-auto",
-                  i === 0 && "lg:col-span-2 lg:row-span-2",
-                )}
-              >
-                <Link
-                  href={`/berita/${b.slug}`}
-                  className={cx(
-                    "zoom-wrap group relative flex h-full min-h-[300px] flex-col justify-end overflow-hidden rounded-[10px] bg-brand-ink p-6 text-white sm:min-h-[320px]",
-                    i === 0 ? "lg:min-h-[380px] lg:p-8" : "lg:min-h-[250px]",
-                  )}
-                >
-                  {b.gambar && (
-                    <Image
-                      src={b.gambar}
-                      alt=""
-                      fill
-                      sizes={i === 0 ? "(min-width: 1024px) 50vw, 85vw" : "(min-width: 1024px) 25vw, 85vw"}
-                      className="-z-0 object-cover"
-                      style={{ objectPosition: b.posisiGambar }}
-                    />
-                  )}
-                  <span className="scrim-bottom absolute inset-0" aria-hidden="true" />
-                  {b.halaman && <span className="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-brand-ink from-45% to-transparent" aria-hidden="true" />}
-                  {labelContoh && b.gambar && apakahIlustrasi(b.gambar) && (
-                    <span className="absolute right-3 top-3 z-[2] rounded-full bg-scrim/60 px-2.5 py-0.5 text-[0.6875rem] leading-5 text-white">
-                      Foto ilustrasi
+          <CarouselRail ariaLabel="Daftar berita terbaru" className="lg:grid lg:grid-cols-20 lg:gap-6">
+            {berita.slice(0, 4).map((b, i) => {
+              // Baris 1: lebar-sempit, baris 2: sempit-lebar.
+              const lebar = i % 4 === 0 || i % 4 === 3;
+              return (
+                <li key={b.slug} className={cx("w-[min(86vw,360px)] shrink-0 sm:w-[440px] lg:w-auto", lebar ? "lg:col-span-11" : "lg:col-span-9")}>
+                  <Link
+                    href={`/berita/${b.slug}`}
+                    className="zoom-wrap group relative flex h-[340px] flex-col justify-end overflow-hidden rounded-[22px] rounded-br-none bg-brand-ink p-6 pr-[104px] text-white md:p-8 md:pr-[112px] lg:h-[380px]"
+                  >
+                    {b.gambar && (
+                      <Image
+                        src={b.gambar}
+                        alt=""
+                        fill
+                        sizes={lebar ? "(min-width: 1024px) 55vw, 86vw" : "(min-width: 1024px) 45vw, 86vw"}
+                        className="object-cover"
+                        style={{ objectPosition: b.posisiGambar }}
+                      />
+                    )}
+                    <span className="absolute inset-0 bg-gradient-to-t from-brand-ink/95 via-brand-ink/45 via-55% to-transparent" aria-hidden="true" />
+                    {labelContoh && b.gambar && apakahIlustrasi(b.gambar) && (
+                      <span className="absolute right-3 top-3 z-[2] rounded-full bg-scrim/60 px-2.5 py-0.5 text-[0.6875rem] leading-5 text-white">Foto ilustrasi</span>
+                    )}
+                    <span className="relative flex flex-col gap-3">
+                      <span className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-sm text-white/85">
+                        <span className="rounded-full bg-white/15 px-3.5 py-1 text-xs font-bold uppercase tracking-[0.08em] text-white backdrop-blur-sm">{b.kategori}</span>
+                        {b.tanggalTampil}
+                        {b.contoh && <Contoh />}
+                      </span>
+                      <span className="line-clamp-4 text-[1.25rem] font-extrabold leading-snug text-white lg:text-[1.5rem]">{b.judul}</span>
                     </span>
-                  )}
-                  <span className="relative flex flex-col gap-2">
-                    <span
-                      className={cx(
-                        "font-semibold leading-snug text-white group-hover:underline group-hover:decoration-1 group-hover:underline-offset-4",
-                        i === 0 ? "text-h3 lg:text-[1.75rem] lg:leading-tight" : "text-[1.0625rem]",
-                      )}
-                    >
-                      {b.judul}
+                    {/* Sudut kanan bawah "digigit": lekukan warna latar + tombol panah bulat. */}
+                    <span className="kartu-sorotan-takik" aria-hidden="true">
+                      <span className="flex h-[68px] w-[68px] items-center justify-center rounded-full bg-brand text-white transition-colors duration-200 group-hover:bg-brand-deep">
+                        <ArrowUpRight size={28} strokeWidth={2.25} className="transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                      </span>
                     </span>
-                    <span className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[0.8125rem] text-white/80">
-                      {b.tanggalTampil && (
-                        <>
-                          <CalendarDays size={15} aria-hidden="true" />
-                          {b.tanggalTampil}
-                          <span aria-hidden="true">·</span>
-                        </>
-                      )}
-                      {b.kategori}
-                      {b.contoh && <Contoh className="ml-1" />}
-                    </span>
-                  </span>
-                </Link>
-              </li>
-            ))}
+                  </Link>
+                </li>
+              );
+            })}
           </CarouselRail>
         </div>
 

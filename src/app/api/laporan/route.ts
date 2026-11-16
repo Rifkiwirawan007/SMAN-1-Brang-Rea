@@ -8,7 +8,8 @@ const gagal = (pesan: string, status = 400, galat?: Record<string, string>) => R
 
 /**
  * Siswa mengirim laporan ke guru BK (halaman /lapor). Body: multipart/form-data.
- * Kolom: nama, kelas, telepon?, jenis, terlibat?, isi, setuju, situs (jebakan bot).
+ * Kolom: anonim? ("ya"), nama, kelas, telepon?, jenis, terlibat?, isi, setuju, situs (jebakan bot).
+ * Bila anonim, nama/kelas/telepon diabaikan dan tidak disimpan.
  */
 export async function POST(request: Request) {
   // Hanya dari situs ini sendiri.
@@ -24,16 +25,17 @@ export async function POST(request: Request) {
   }
   if (teks(fd, "situs", 100)) return Response.json({ nomor: "LP-0000-0000", kode: "XXXXXX" }); // bot: abaikan diam-diam
 
-  const nama = teks(fd, "nama", 80).replace(/\s+/g, " ");
-  const kelas = teks(fd, "kelas", 20).replace(/\s+/g, " ").toUpperCase();
-  const telepon = teks(fd, "telepon", 20).replace(/[^\d+]/g, "");
+  const anonim = fd.get("anonim") === "ya";
+  const nama = anonim ? "" : teks(fd, "nama", 80).replace(/\s+/g, " ");
+  const kelas = anonim ? "" : teks(fd, "kelas", 20).replace(/\s+/g, " ").toUpperCase();
+  const telepon = anonim ? "" : teks(fd, "telepon", 20).replace(/[^\d+]/g, "");
   const jenis = teks(fd, "jenis", 20) as JenisLaporan;
   const terlibat = teks(fd, "terlibat", 300);
   const isi = teks(fd, "isi", 4000);
 
   const galat: Record<string, string> = {};
-  if (nama.length < 3) galat.nama = "Tulis nama lengkap kamu.";
-  if (!kelas) galat.kelas = "Tulis kelas kamu, mis. XI-2.";
+  if (!anonim && nama.length < 3) galat.nama = "Tulis nama lengkap kamu.";
+  if (!anonim && !kelas) galat.kelas = "Tulis kelas kamu, mis. XI-2.";
   if (telepon && (telepon.replace(/\D/g, "").length < 9 || telepon.replace(/\D/g, "").length > 15)) galat.telepon = "Nomor HP tidak sah.";
   if (!JENIS_LAPORAN.some((j) => j.kunci === jenis)) galat.jenis = "Pilih jenis laporan.";
   if (isi.length < 20) galat.isi = "Ceritakan kejadiannya minimal satu-dua kalimat (20 huruf).";
@@ -58,6 +60,7 @@ export async function POST(request: Request) {
       nomor,
       kode,
       dibuat: kini,
+      anonim: anonim || undefined,
       nama,
       kelas,
       telepon: telepon || undefined,
@@ -65,7 +68,7 @@ export async function POST(request: Request) {
       terlibat: terlibat || undefined,
       isi,
       status: "baru",
-      riwayat: [{ waktu: kini, oleh: nama, status: "baru" }],
+      riwayat: [{ waktu: kini, oleh: anonim ? "Anonim" : nama, status: "baru" }],
       catatan: [],
     };
     return [baru, ...semua];

@@ -1,5 +1,58 @@
 [
   {
+    "id": "038593a7e1",
+    "dibuat": "2026-11-16T04:58:09.000Z",
+    "diubah": "2026-11-16T04:58:09.000Z",
+    "oleh": "Sistem",
+    "slug": "mardiana-juara-1-o2sn-atletik-provinsi-ntb-2026",
+    "judul": "Mardiana raih Juara 1 O2SN cabang atletik tingkat Provinsi NTB",
+    "kategori": "Prestasi",
+    "tanggal": "",
+    "gambar": "/images/prestasi/o2sn-mardiana-atletik-provinsi.jpg",
+    "posisiGambar": "center 30%",
+    "ringkasan": "Selamat kepada Mardiana, siswi SMAN 1 Brang Rea, atas prestasi Juara 1 Olimpiade Olahraga Siswa Nasional (O2SN) cabang atletik tingkat Provinsi NTB.",
+    "isi": [
+      "Selamat dan sukses kepada Mardiana, siswi SMA Negeri 1 Brang Rea, yang meraih Juara 1 Olimpiade Olahraga Siswa Nasional (O2SN) cabang atletik tingkat Provinsi Nusa Tenggara Barat.",
+      "Prestasi ini membanggakan keluarga besar SMAN 1 Brang Rea. Semoga menjadi penyemangat bagi siswa lain untuk terus berlatih dan berprestasi."
+    ],
+    "halaman": "/images/prestasi/o2sn-mardiana-atletik-provinsi.jpg",
+    "keteranganHalaman": "Poster dari Instagram resmi sekolah. Ketuk gambar untuk membuka ukuran penuh.",
+    "sumber": "Instagram resmi SMAN 1 Brang Rea",
+    "contoh": false,
+    "status": "terbit",
+    "beranda": "1"
+  },
+  {
+    "id": "c8d047d396",
+    "dibuat": "2026-11-16T04:30:08.000Z",
+    "diubah": "2026-11-16T04:30:08.000Z",
+    "oleh": "Sistem",
+    "slug": "upacara-penghargaan-siswa-berprestasi-21-juli-2025",
+    "judul": "Upacara bendera dan pemberian penghargaan siswa-siswi berprestasi, 21 Juli 2025",
+    "kategori": "Prestasi",
+    "tanggal": "2025-07-21",
+    "gambar": "/images/berita/upacara-penghargaan-21-juli-2025-1.jpg",
+    "posisiGambar": "center 40%",
+    "ringkasan": "Upacara bendera Senin, 21 Juli 2025 dirangkai dengan pemberian penghargaan kepada siswa-siswi berprestasi SMAN 1 Brang Rea.",
+    "isi": [
+      "Pada Senin, 21 Juli 2025, SMA Negeri 1 Brang Rea melaksanakan upacara bendera di lapangan sekolah. Upacara ini dirangkai dengan pemberian penghargaan kepada siswa-siswi berprestasi.",
+      "Para penerima penghargaan mengenakan selempang dan menerima penghargaan secara langsung dari bapak dan ibu guru. Semoga penghargaan ini menjadi penyemangat bagi seluruh siswa untuk terus berprestasi."
+    ],
+    "halaman": "/images/berita/upacara-penghargaan-21-juli-2025-1.jpg",
+    "fotoLain": [
+      "/images/berita/upacara-penghargaan-21-juli-2025-2.jpg",
+      "/images/berita/upacara-penghargaan-21-juli-2025-3.jpg",
+      "/images/berita/upacara-penghargaan-21-juli-2025-4.jpg",
+      "/images/berita/upacara-penghargaan-21-juli-2025-5.jpg",
+      "/images/berita/upacara-penghargaan-21-juli-2025-6.jpg",
+      "/images/berita/upacara-penghargaan-21-juli-2025-7.jpg"
+    ],
+    "keteranganHalaman": "Foto dari Instagram resmi sekolah. Ketuk gambar untuk membuka ukuran penuh.",
+    "sumber": "Instagram resmi SMAN 1 Brang Rea",
+    "contoh": false,
+    "status": "terbit"
+  },
+  {
     "id": "2cd85beddf",
     "dibuat": "2026-11-12T14:51:12.699Z",
     "diubah": "2026-11-12T14:51:12.699Z",
@@ -208,7 +261,8 @@
     "keteranganHalaman": "Foto dari Instagram resmi sekolah. Ketuk gambar untuk membuka ukuran penuh.",
     "sumber": "Instagram resmi SMAN 1 Brang Rea",
     "contoh": false,
-    "status": "terbit"
+    "status": "terbit",
+    "beranda": "4"
   },
   {
     "id": "e2cac254cd",
@@ -301,7 +355,8 @@
     "keteranganHalaman": "Foto dari Instagram resmi sekolah. Ketuk gambar untuk membuka ukuran penuh.",
     "sumber": "Instagram resmi SMAN 1 Brang Rea",
     "contoh": false,
-    "status": "terbit"
+    "status": "terbit",
+    "beranda": "3"
   },
   {
     "id": "c54947c372",
@@ -368,7 +423,8 @@
     "keteranganHalaman": "Poster dari Instagram resmi sekolah. Ketuk gambar untuk membuka ukuran penuh.",
     "sumber": "Instagram resmi SMAN 1 Brang Rea",
     "contoh": false,
-    "status": "terbit"
+    "status": "terbit",
+    "beranda": "2"
   },
   {
     "id": "c3e3a55ddc",

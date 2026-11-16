@@ -59,6 +59,8 @@ export type Laporan = {
   /** Kode rahasia untuk cek status (diberikan ke pelapor sekali saat mengirim). */
   kode: string;
   dibuat: string;
+  /** true = pelapor memilih "Kirim tanpa nama": nama/kelas kosong, tanpa telepon. */
+  anonim?: boolean;
   nama: string;
   kelas: string;
   telepon?: string;

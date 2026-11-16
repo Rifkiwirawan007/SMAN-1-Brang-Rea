@@ -42,9 +42,7 @@ function Label({ no, t, w, jeda }: { no: number; t: Tahap; w: string; jeda: numb
  * Di HP berubah jadi daftar vertikal.
  */
 export function TimelineSpmb({ spmb }: { spmb: Spmb }) {
-  const jadwal = spmb.jadwal;
-  if (jadwal.length === 0) return null;
-  const baris = bagi(jadwal, PER_BARIS);
+  if (spmb.jadwal.length === 0) return null;
 
   return (
     <section
@@ -62,69 +60,7 @@ export function TimelineSpmb({ spmb }: { spmb: Spmb }) {
           <span className="text-brand">Jadwal tercatat,</span> langkah jadi siswa Barema makin dekat
         </h2>
 
-        {/* Desktop: pita berkelok */}
-        <PitaJalan className={`tl-pita mt-14 hidden lg:block ${baris.length > 2 ? "ada-kiri" : ""}`}>
-          {baris.map((isi, b) => {
-            const balik = b % 2 === 1;
-            const adaBerikut = b < baris.length - 1;
-            const iTerakhir = b * PER_BARIS + isi.length - 1;
-            return (
-              <div key={b} className="tl-baris">
-                <ol start={b * PER_BARIS + 1} className="tl-grid" aria-label={b === 0 ? `Tahapan SPMB ${spmb.tahunAjaran}` : undefined}>
-                  {isi.map((t, j) => {
-                    const i = b * PER_BARIS + j;
-                    // Ujung baris yang tersambung ke belokan dibuat rata; selain itu runcing.
-                    const rata = j === isi.length - 1 && adaBerikut;
-                    return (
-                      <li key={i} className="tl-sel" style={{ gridColumn: balik ? PER_BARIS - j : j + 1 }}>
-                        <Label no={i + 1} t={t} w={warna(i)} jeda={jedaSeg(i) + 0.3} />
-                        <div
-                          className={`tl-seg ${balik ? "kiri" : "kanan"} ${rata ? "" : "panah"} ${j > 0 ? "takik" : ""}`}
-                          style={{ background: warna(i), "--jeda": `${jedaSeg(i)}s` } as React.CSSProperties}
-                        >
-                          <span>{t.waktu}</span>
-                        </div>
-                      </li>
-                    );
-                  })}
-                </ol>
-                {adaBerikut ? (
-                  <div className={`tl-belok ${balik ? "kiri" : "kanan"}`} style={{ borderColor: warna(iTerakhir), "--jeda": `${jedaSeg(iTerakhir) + LANGKAH}s` } as React.CSSProperties} aria-hidden="true" />
-                ) : null}
-              </div>
-            );
-          })}
-        </PitaJalan>
-
-        {/* HP & tablet: carousel horizontal tahapan */}
-        <CarouselRail
-          sebagai="ol"
-          ariaLabel={`Tahapan SPMB ${spmb.tahunAjaran}`}
-          wrapClassName="mt-8 lg:hidden"
-          batas="selalu"
-        >
-          {jadwal.map((t, i) => (
-            <li
-              key={i}
-              data-reveal
-              style={{ "--d": i } as React.CSSProperties}
-              className="w-[min(80vw,300px)] shrink-0 sm:w-[320px]"
-            >
-              <div className="flex h-full flex-col rounded-[14px] border border-line bg-paper p-5 shadow-card">
-                <div className="flex items-center gap-3">
-                  <span className="tl-nomor shrink-0" style={{ background: warna(i) }}>
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span className="rounded-full bg-brand-soft px-3 py-1 text-xs font-semibold text-brand-ink">
-                    {t.waktu}
-                  </span>
-                </div>
-                <p className="mt-4 text-lg font-semibold leading-snug text-ink">{t.tahap}</p>
-                {t.keterangan ? <p className="mt-2 text-sm leading-relaxed text-ink-2">{t.keterangan}</p> : null}
-              </div>
-            </li>
-          ))}
-        </CarouselRail>
+        <PitaSpmb spmb={spmb} className="mt-14" />
 
         <div data-reveal className="mt-10 flex flex-wrap justify-center gap-3 lg:mt-14">
           <Link href="/spmb" className="btn-pill">
@@ -134,5 +70,83 @@ export function TimelineSpmb({ spmb }: { spmb: Spmb }) {
         </div>
       </div>
     </section>
+  );
+}
+
+/**
+ * Pita jadwal SPMB beranimasi (desktop) + carousel kartu (HP/tablet).
+ * Dipakai di beranda dan di halaman /spmb bagian Jadwal.
+ */
+export function PitaSpmb({ spmb, className = "" }: { spmb: Spmb; className?: string }) {
+  const jadwal = spmb.jadwal;
+  if (jadwal.length === 0) return null;
+  const baris = bagi(jadwal, PER_BARIS);
+
+  return (
+    <>
+      {/* Desktop: pita berkelok */}
+      <PitaJalan className={`tl-pita ${className} hidden lg:block ${baris.length > 2 ? "ada-kiri" : ""}`}>
+        {baris.map((isi, b) => {
+          const balik = b % 2 === 1;
+          const adaBerikut = b < baris.length - 1;
+          const iTerakhir = b * PER_BARIS + isi.length - 1;
+          return (
+            <div key={b} className="tl-baris">
+              <ol start={b * PER_BARIS + 1} className="tl-grid" aria-label={b === 0 ? `Tahapan SPMB ${spmb.tahunAjaran}` : undefined}>
+                {isi.map((t, j) => {
+                  const i = b * PER_BARIS + j;
+                  // Ujung baris yang tersambung ke belokan dibuat rata; selain itu runcing.
+                  const rata = j === isi.length - 1 && adaBerikut;
+                  return (
+                    <li key={i} className="tl-sel" style={{ gridColumn: balik ? PER_BARIS - j : j + 1 }}>
+                      <Label no={i + 1} t={t} w={warna(i)} jeda={jedaSeg(i) + 0.3} />
+                      <div
+                        className={`tl-seg ${balik ? "kiri" : "kanan"} ${rata ? "" : "panah"} ${j > 0 ? "takik" : ""}`}
+                        style={{ background: warna(i), "--jeda": `${jedaSeg(i)}s` } as React.CSSProperties}
+                      >
+                        <span>{t.waktu}</span>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ol>
+              {adaBerikut ? (
+                <div className={`tl-belok ${balik ? "kiri" : "kanan"}`} style={{ borderColor: warna(iTerakhir), "--jeda": `${jedaSeg(iTerakhir) + LANGKAH}s` } as React.CSSProperties} aria-hidden="true" />
+              ) : null}
+            </div>
+          );
+        })}
+      </PitaJalan>
+
+      {/* HP & tablet: carousel horizontal tahapan */}
+      <CarouselRail
+        sebagai="ol"
+        ariaLabel={`Tahapan SPMB ${spmb.tahunAjaran}`}
+        wrapClassName={`${className ? "mt-8" : ""} lg:hidden`}
+        batas="selalu"
+      >
+        {jadwal.map((t, i) => (
+          <li
+            key={i}
+            data-reveal
+            style={{ "--d": i } as React.CSSProperties}
+            className="w-[min(80vw,300px)] shrink-0 sm:w-[320px]"
+          >
+            <div className="flex h-full flex-col rounded-[14px] border border-line bg-paper p-5 shadow-card">
+              <div className="flex items-center gap-3">
+                <span className="tl-nomor shrink-0" style={{ background: warna(i) }}>
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className="rounded-full bg-brand-soft px-3 py-1 text-xs font-semibold text-brand-ink">
+                  {t.waktu}
+                </span>
+              </div>
+              <p className="mt-4 text-lg font-semibold leading-snug text-ink">{t.tahap}</p>
+              {t.keterangan ? <p className="mt-2 text-sm leading-relaxed text-ink-2">{t.keterangan}</p> : null}
+            </div>
+          </li>
+        ))}
+      </CarouselRail>
+    </>
   );
 }

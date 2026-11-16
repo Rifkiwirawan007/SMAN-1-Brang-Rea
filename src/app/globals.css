@@ -27,6 +27,10 @@
   --color-black: #000000;
   --color-scrim: #06100b;
   --color-focus: #0069ca;
+  /* Aksen hijau muda untuk halaman SPMB (garis, titik, label di atas hijau tua brand-ink). */
+  --color-aksen: #7cc49a;
+  --color-aksen-terang: #d4ecdd;
+  --color-aksen-ink: #285c3c;
 
   --ease-out-soft: cubic-bezier(0.16, 0.84, 0.24, 1);
   --radius-card: 14px;
@@ -425,6 +429,114 @@
   /* Gambar: zoom halus saat hover pada kartu */
   .zoom-wrap img {
     transition: transform 900ms var(--ease-out-soft);
+  }
+
+  /* Tombol "Daftar sekarang" SPMB: bingkai cahaya hijau berputar mengelilingi pil gelap. */
+  .tombol-daftar {
+    position: relative;
+    display: inline-flex;
+    padding: 3px;
+    border-radius: 999px;
+    overflow: hidden;
+    isolation: isolate;
+    box-shadow: 0 24px 48px -20px color-mix(in oklab, var(--color-brand) 70%, transparent);
+    transition: transform 300ms var(--ease-out-soft), box-shadow 300ms var(--ease-out-soft);
+  }
+  .tombol-daftar::before {
+    content: "";
+    position: absolute;
+    inset: -150%;
+    z-index: -1;
+    background: conic-gradient(from 0deg, transparent 0 55%, var(--color-aksen-terang) 70%, var(--color-white) 75%, var(--color-aksen) 82%, transparent 92%);
+    animation: tombol-daftar-putar 3.2s linear infinite;
+  }
+  .tombol-daftar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 30px 60px -20px color-mix(in oklab, var(--color-brand) 85%, transparent);
+  }
+  .tombol-daftar-isi {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    border-radius: 999px;
+    padding: 0.75rem 0.75rem 0.75rem 2rem;
+    background:
+      radial-gradient(120% 140% at 0% 0%, color-mix(in oklab, var(--color-brand) 55%, transparent), transparent 60%),
+      var(--color-brand-ink);
+  }
+  .tombol-daftar-kunci {
+    box-shadow: none;
+    cursor: not-allowed;
+    border: 1px dashed var(--color-line-2);
+    padding: 0;
+  }
+  .tombol-daftar-kunci::before {
+    display: none;
+  }
+  .tombol-daftar-kunci:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  .tombol-daftar-kunci .tombol-daftar-isi {
+    background: var(--color-paper-2);
+  }
+  .tombol-daftar-denyut {
+    animation: tombol-daftar-denyut 1.6s var(--ease-out-soft) infinite;
+  }
+  @keyframes tombol-daftar-putar {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes tombol-daftar-denyut {
+    0% {
+      transform: scale(1);
+      opacity: 0.7;
+    }
+    100% {
+      transform: scale(2.8);
+      opacity: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tombol-daftar::before,
+    .tombol-daftar-denyut {
+      animation: none;
+    }
+  }
+
+  /* Kartu sorotan berita: sudut kanan bawah "digigit" oleh tombol panah bulat.
+     Takik = kotak warna latar dengan sudut kiri atas membulat; dua lengkung kecil
+     (::before/::after) menyambung takik ke tepi kartu supaya mulus. */
+  .kartu-sorotan-takik {
+    --takik: 84px;
+    --lengkung: 22px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: var(--takik);
+    height: var(--takik);
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    background: var(--color-paper);
+    border-top-left-radius: 28px;
+  }
+  .kartu-sorotan-takik::before,
+  .kartu-sorotan-takik::after {
+    content: "";
+    position: absolute;
+    width: var(--lengkung);
+    height: var(--lengkung);
+    background: radial-gradient(circle at 0 0, transparent calc(var(--lengkung) - 0.5px), var(--color-paper) var(--lengkung));
+  }
+  .kartu-sorotan-takik::before {
+    right: 0;
+    bottom: 100%;
+  }
+  .kartu-sorotan-takik::after {
+    right: 100%;
+    bottom: 0;
   }
   .zoom-wrap:hover img,
   .zoom-wrap:focus-within img {

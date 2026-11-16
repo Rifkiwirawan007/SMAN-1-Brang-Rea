@@ -13,17 +13,32 @@
     "contoh": true
   },
   {
-    "id": "0e5e2a5a16",
+    "id": "acbd3d9fb4",
     "dibuat": "2026-11-12T14:51:12.699Z",
-    "diubah": "2026-11-12T14:51:12.699Z",
-    "oleh": "Sistem",
-    "nama": "Seni tari",
-    "kategori": "Seni",
-    "deskripsi": "Tari daerah Samawa dan tari kreasi untuk pentas sekolah dan festival.",
-    "jadwal": "Rabu, 15.00 WITA",
-    "gambar": "/images/sekolah/karnaval-kostum-emas.jpg",
-    "ikon": "musik",
-    "contoh": true
+    "diubah": "2026-11-16T05:05:48.868Z",
+    "oleh": "Rifki Wirawan",
+    "nama": "osis",
+    "kategori": "Organisasi",
+    "deskripsi": "Pertolongan pertama, kesehatan remaja, dan kegiatan kemanusiaan.",
+    "jadwal": "Sabtu, 13.00 WITA",
+    "gambar": "/media/2026/11/tangkapan-layar-2026-11-16-pukul-12-05-17-8bc568.webp",
+    "ikon": "hati",
+    "contoh": true,
+    "wajib": false
+  },
+  {
+    "id": "a1ece756c6",
+    "dibuat": "2026-11-12T14:51:12.699Z",
+    "diubah": "2026-11-16T05:01:32.104Z",
+    "oleh": "Rifki Wirawan",
+    "nama": "Sepak bola",
+    "kategori": "Olahraga",
+    "deskripsi": "Pembinaan tim putra dan putri untuk turnamen antarsekolah dan O2SN.",
+    "jadwal": "Senin dan Rabu, 15.30 WITA",
+    "ikon": "bola",
+    "contoh": false,
+    "gambar": "/images/sekolah/banner-tim-olahraga.webp",
+    "wajib": false
   },
   {
     "id": "215e1732d3",
@@ -40,15 +55,16 @@
     "wajib": false
   },
   {
-    "id": "a1ece756c6",
+    "id": "0e5e2a5a16",
     "dibuat": "2026-11-12T14:51:12.699Z",
     "diubah": "2026-11-12T14:51:12.699Z",
     "oleh": "Sistem",
-    "nama": "Bola voli",
-    "kategori": "Olahraga",
-    "deskripsi": "Pembinaan tim putra dan putri untuk turnamen antarsekolah dan O2SN.",
-    "jadwal": "Senin dan Rabu, 15.30 WITA",
-    "ikon": "voli",
+    "nama": "Seni tari",
+    "kategori": "Seni",
+    "deskripsi": "Tari daerah Samawa dan tari kreasi untuk pentas sekolah dan festival.",
+    "jadwal": "Rabu, 15.00 WITA",
+    "gambar": "/images/sekolah/karnaval-kostum-emas.jpg",
+    "ikon": "musik",
     "contoh": true
   },
   {
@@ -61,19 +77,6 @@
     "deskripsi": "Latihan teknik dasar, taktik, dan kebugaran.",
     "jadwal": "Kamis, 15.30 WITA",
     "ikon": "bola",
-    "contoh": true
-  },
-  {
-    "id": "acbd3d9fb4",
-    "dibuat": "2026-11-12T14:51:12.699Z",
-    "diubah": "2026-11-12T14:51:12.699Z",
-    "oleh": "Sistem",
-    "nama": "Palang Merah Remaja",
-    "kategori": "Organisasi",
-    "deskripsi": "Pertolongan pertama, kesehatan remaja, dan kegiatan kemanusiaan.",
-    "jadwal": "Sabtu, 13.00 WITA",
-    "gambar": "/images/ekskul/pmr-aksi-bergizi.jpg",
-    "ikon": "hati",
     "contoh": true
   },
   {

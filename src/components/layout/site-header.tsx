@@ -171,7 +171,7 @@ export function SiteHeader() {
                     : "border-brand text-brand hover:bg-brand hover:text-white",
                 )}
               >
-                Info SPMB {"2027"}
+                Info SPMB
               </Link>
             </div>
             <nav aria-label="Menu utama">
@@ -344,7 +344,7 @@ export function SiteHeader() {
         </nav>
         <div className="container-site flex flex-col gap-3 border-t border-line py-6">
           <Link href="/spmb" onClick={() => setLaci(false)} className="btn-solid w-full">
-            Info SPMB 2027
+            Info SPMB
             <ArrowRight size={18} aria-hidden="true" />
           </Link>
           <a

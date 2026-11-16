@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useId, useRef, useState } from "react";
-import { CircleCheck, Copy, LoaderCircle, Send, ShieldAlert } from "lucide-react";
+import { CircleCheck, Copy, EyeOff, LoaderCircle, Send, ShieldAlert } from "lucide-react";
 import { JENIS_LAPORAN, type JenisLaporan } from "@/lib/laporan/tipe";
 import { simpanLaporanPerangkat } from "@/lib/laporan/perangkat";
 
@@ -24,6 +24,7 @@ function Label({ htmlFor, children, opsional }: { htmlFor: string; children: Rea
 
 export function FormLapor() {
   const id = useId();
+  const [anonim, setAnonim] = useState(false);
   const [nama, setNama] = useState("");
   const [kelas, setKelas] = useState("");
   const [telepon, setTelepon] = useState("");
@@ -41,8 +42,8 @@ export function FormLapor() {
   const kirim = async (e: React.FormEvent) => {
     e.preventDefault();
     const g: Record<string, string> = {};
-    if (nama.trim().length < 3) g.nama = "Tulis nama lengkap kamu.";
-    if (!kelas.trim()) g.kelas = "Tulis kelas kamu, mis. XI-2.";
+    if (!anonim && nama.trim().length < 3) g.nama = "Tulis nama lengkap kamu.";
+    if (!anonim && !kelas.trim()) g.kelas = "Tulis kelas kamu, mis. XI-2.";
     if (!jenis) g.jenis = "Pilih jenis laporan.";
     if (isi.trim().length < 20) g.isi = "Ceritakan kejadiannya minimal satu-dua kalimat.";
     if (!setuju) g.setuju = "Centang pernyataan ini untuk mengirim.";
@@ -54,7 +55,7 @@ export function FormLapor() {
     }
 
     const fd = new FormData();
-    Object.entries({ nama, kelas, telepon, jenis, terlibat, isi, setuju: "ya", situs: refSitus.current?.value ?? "" }).forEach(([k, v]) => fd.set(k, v));
+    Object.entries({ anonim: anonim ? "ya" : "", nama: anonim ? "" : nama, kelas: anonim ? "" : kelas, telepon: anonim ? "" : telepon, jenis, terlibat, isi, setuju: "ya", situs: refSitus.current?.value ?? "" }).forEach(([k, v]) => fd.set(k, v));
     setSibuk(true);
     setPesan("");
     try {
@@ -80,7 +81,11 @@ export function FormLapor() {
       <div id="form-lapor" className="mx-auto max-w-[720px] rounded-[18px] border border-line bg-paper p-6 shadow-card md:p-10">
         <CircleCheck size={44} className="text-brand" aria-hidden="true" />
         <h2 className="mt-4 text-h3 text-ink">Laporan terkirim ke guru BK</h2>
-        <p className="mt-2 text-ink-2">Terima kasih sudah berani melapor. Guru BK akan membaca laporanmu dan bisa memanggilmu untuk bicara.</p>
+        <p className="mt-2 text-ink-2">
+          {anonim
+            ? "Terima kasih sudah berani melapor. Laporanmu dikirim tanpa nama, jadi guru BK hanya bisa membalas lewat halaman cek status. Simpan kode di bawah baik-baik."
+            : "Terima kasih sudah berani melapor. Guru BK akan membaca laporanmu dan bisa memanggilmu untuk bicara."}
+        </p>
         <div className="mt-6 rounded-[14px] border-2 border-dashed border-brand/40 bg-brand-soft p-5 text-center">
           <p className="text-sm text-ink-2">Kode laporan kamu</p>
           <p className="mt-1 font-mono text-4xl font-bold tracking-[0.25em] text-ink">{hasil.kode}</p>
@@ -125,6 +130,22 @@ export function FormLapor() {
 
       <fieldset className="flex flex-col gap-5">
         <legend className="mb-4 text-lg font-semibold text-ink">1. Identitas pelapor</legend>
+        <label className={`flex cursor-pointer items-start gap-3 rounded-[12px] border p-3.5 transition-colors ${anonim ? "border-brand bg-brand-soft" : "border-line hover:bg-paper-2"}`}>
+          <input type="checkbox" className="mt-1 h-4 w-4 shrink-0 accent-[var(--color-brand)]" checked={anonim} onChange={(e) => setAnonim(e.target.checked)} />
+          <span>
+            <span className="flex items-center gap-2 font-semibold text-ink">
+              <EyeOff size={16} aria-hidden="true" /> Kirim tanpa nama
+            </span>
+            <span className="block text-sm text-muted">Nama, kelas, dan nomor HP tidak dikirim. Guru BK membalas lewat halaman cek status memakai kode laporan.</span>
+          </span>
+        </label>
+        {anonim ? (
+          <p className="text-sm text-ink-2">
+            Boleh saja. Tapi kalau kamu mencantumkan nama, laporan biasanya bisa ditindaklanjuti lebih cepat karena guru BK bisa memanggilmu langsung. Nama pelapor
+            tetap dirahasiakan dan hanya terlihat oleh guru BK.
+          </p>
+        ) : (
+          <>
         <div className="grid gap-5 sm:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
           <div className="flex flex-col gap-2">
             <Label htmlFor={`${id}-nama`}>Nama lengkap</Label>
@@ -154,6 +175,8 @@ export function FormLapor() {
           />
           {galat.telepon ? <Galat id={`${id}-telepon-g`} pesan={galat.telepon} /> : <p className="text-sm text-muted">Supaya guru BK bisa menghubungi kamu bila perlu.</p>}
         </div>
+          </>
+        )}
       </fieldset>
 
       <fieldset className="flex flex-col gap-5">
@@ -225,7 +248,7 @@ export function FormLapor() {
           {sibuk ? <LoaderCircle size={18} className="animate-spin" aria-hidden="true" /> : <Send size={18} aria-hidden="true" />}
           {sibuk ? "Mengirim…" : "Kirim laporan ke guru BK"}
         </button>
-        <span className="text-sm text-muted">Nama kamu hanya terlihat oleh guru BK.</span>
+        <span className="text-sm text-muted">{anonim ? "Laporan dikirim tanpa nama." : "Nama kamu hanya terlihat oleh guru BK."}</span>
       </div>
     </form>
   );

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { CircleCheck, FileText, MessageCircleQuestion } from "lucide-react";
+import Image from "next/image";
+import { ArrowUpRight, FileText, MessageCircleQuestion } from "lucide-react";
 import { PageHero } from "@/components/ui/page-hero";
 import { SubNav } from "@/components/ui/sub-nav";
 import { SectionHead } from "@/components/ui/section-head";
@@ -7,6 +8,11 @@ import { CarouselRail } from "@/components/ui/carousel-rail";
 import { CatatanContoh, Contoh } from "@/components/ui/contoh";
 import { IkonWhatsApp } from "@/components/ui/icons";
 import { WaForm } from "@/components/kontak/wa-form";
+import { KuotaSpmb } from "@/components/spmb/kuota-spmb";
+import { JalurTabs } from "@/components/spmb/jalur-tabs";
+import { GarisJadwal } from "@/components/spmb/garis-jadwal";
+import { TombolDaftar } from "@/components/spmb/tombol-daftar";
+import { VideoYoutube } from "@/components/ui/video-youtube";
 import { ambilSekolah, ambilSpmb } from "@/lib/konten/baca";
 import { waLink } from "@/lib/format";
 
@@ -18,9 +24,17 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+/** Ambil ID video dari tautan YouTube (youtu.be/ID, watch?v=ID, embed/ID, shorts/ID). */
+function idYoutube(url?: string) {
+  const m = url?.match(/(?:youtu\.be\/|[?&]v=|\/embed\/|\/shorts\/)([\w-]{11})/);
+  return m?.[1];
+}
+
 const BAGIAN = [
-  { id: "jalur", label: "Jalur" },
+  { id: "daftar", label: "Pendaftaran" },
+  { id: "kuota", label: "Kuota" },
   { id: "jadwal", label: "Jadwal" },
+  { id: "jalur", label: "Jalur" },
   { id: "syarat", label: "Syarat" },
   { id: "alur", label: "Alur" },
   { id: "tanya", label: "Tanya jawab" },
@@ -29,109 +43,224 @@ const BAGIAN = [
 
 export default async function Spmb() {
   const [sekolah, spmb] = await Promise.all([ambilSekolah(), ambilSpmb()]);
+  const portal = spmb.portal?.trim();
+  const idVideo = idYoutube(spmb.videoTutorial);
+  const portalTeks = portal?.replace(/^https?:\/\//, "").replace(/\/$/, "");
+  // Matriks jadwal: baris = tahap (dari jalur pertama yang punya jadwal), kolom = jalur.
+  const tahapJalur = spmb.jalur.find((j) => j.jadwal?.length)?.jadwal?.map((t) => t.tahap) ?? [];
   return (
     <>
       <PageHero
         judul={`SPMB ${spmb.tahunAjaran}`}
         teks="Sistem Penerimaan Murid Baru SMA Negeri 1 Brang Rea."
-        gambar="/images/sekolah/banner-gerbang.jpg"
-        alt="Gerbang SMAN 1 Brang Rea"
-        posisiGambar="center 35%"
+        gambar="/images/sekolah/banner-kostum-budaya.webp"
+        alt="Siswa SMAN 1 Brang Rea berbusana adat berfoto bersama di depan kelas"
+        posisiGambar="center 15%"
         jejak={[{ label: "Beranda", href: "/" }, { label: "SPMB" }]}
         tambahan={
           <>
-            <span className="inline-flex items-center rounded-full border border-white/50 px-4 py-1.5 text-sm font-medium text-white">
+            <span className="inline-flex items-center rounded-full border border-aksen/70 bg-brand-ink/40 px-4 py-1.5 text-sm font-medium text-aksen-terang backdrop-blur-sm">
               Status: {spmb.status}
             </span>
+            {portal && (
+              <a href={portal} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full bg-aksen px-4 py-1.5 text-sm font-semibold text-brand-ink hover:bg-aksen-terang">
+                Portal SPMB NTB <ArrowUpRight size={16} aria-hidden="true" />
+              </a>
+            )}
             {spmb.contoh && <Contoh teks="Seluruh info contoh" />}
           </>
         }
       />
       <SubNav items={BAGIAN} />
 
-      {/* Jalur */}
-      <section id="jalur" aria-labelledby="judul-jalur" className="section-y">
+      {/* Pendaftaran: poster link + tombol daftar (gaya seksi Video profil) */}
+      <section id="daftar" aria-labelledby="judul-daftar" className="section-y">
         <div className="container-site">
-          <SectionHead
-            id="judul-jalur"
-            judul="Empat jalur pendaftaran"
-            teks={<p>Pilih jalur yang sesuai dengan kondisi calon murid. Kuota mengikuti aturan SPMB jenjang SMA dan petunjuk teknis Provinsi NTB.</p>}
-          />
-          <CarouselRail
-            ariaLabel="Jalur pendaftaran SPMB"
-            wrapClassName="mt-10 lg:mt-14"
-            className="lg:grid lg:grid-cols-4 lg:gap-px lg:overflow-hidden lg:rounded-[14px] lg:border lg:border-line lg:bg-line"
-          >
-            {spmb.jalur.map((j, i) => (
-              <li
-                key={j.nama}
-                data-reveal
-                style={{ "--d": i } as React.CSSProperties}
-                className="flex w-[min(80vw,300px)] shrink-0 flex-col rounded-[14px] border border-line bg-paper p-6 sm:w-[320px] sm:p-8 lg:w-auto lg:rounded-none lg:border-0"
+          <div data-reveal className="mx-auto max-w-3xl text-center">
+            <h2 id="judul-daftar" className="text-h2 text-brand-ink">
+              Link pendaftaran SPMB {spmb.tahunAjaran}
+            </h2>
+            <p className="mt-4 text-lead text-ink-2">Pendaftaran dilakukan secara daring di portal SPMB Provinsi Nusa Tenggara Barat. Tonton tutorialnya dulu, petunjuk teknis lengkap dapat diunduh di halaman pendaftaran.</p>
+          </div>
+          {idVideo && (
+            <div data-reveal className="mx-auto mt-10 max-w-5xl md:mt-12">
+              {/* Bayangan di sekeliling video, terlihat timbul (sama seperti video profil) */}
+              <div
+                className="overflow-hidden rounded-[14px]"
+                style={{
+                  boxShadow:
+                    "0 0 0 1px rgb(0 0 0 / 0.08), 0 0 12px 2px rgb(0 0 0 / 0.22), 0 0 40px 8px rgb(0 0 0 / 0.28), 0 0 80px 16px rgb(0 0 0 / 0.22)",
+                }}
               >
-                <h3 className="text-h2">{j.nama}</h3>
-                <p className="mt-2 text-sm font-semibold text-brand">Kuota {j.kuota}</p>
-                <span aria-hidden="true" className="mt-5 block h-1 w-10 rounded-full bg-sun" />
-                <p className="mt-5 text-[0.9375rem] text-ink-2">{j.teks}</p>
-              </li>
-            ))}
-          </CarouselRail>
+                <VideoYoutube id={idVideo} judul={`Tutorial pendaftaran SPMB Provinsi NTB ${spmb.tahunAjaran}`} />
+              </div>
+            </div>
+          )}
+          <div data-reveal className="mt-12 flex flex-col items-center gap-6 md:mt-16">
+            <TombolDaftar portal={portal} status={spmb.status} />
+          </div>
+        </div>
+      </section>
+
+      {/* Kuota + Jadwal: satu latar foto lapangan sekolah dengan gradasi hijau tua yang menyambung */}
+      <div className="on-dark relative overflow-hidden bg-brand-ink text-white">
+        <Image src="/images/sekolah/banner-senam-pagi.webp" alt="" fill sizes="100vw" quality={70} className="object-cover" style={{ objectPosition: "center 35%" }} />
+        <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-b from-brand-ink/95 via-brand-ink/80 to-brand-ink/90" />
+        {/* Batas atas berombak: diisi warna latar seksi sebelumnya (putih) */}
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 1440 120"
+          preserveAspectRatio="none"
+          className="pointer-events-none absolute inset-x-0 top-[-1px] z-[1] h-[48px] w-full text-paper md:h-[90px]"
+        >
+          <path
+            fill="currentColor"
+            d="M0 0H1440V46C1360 78 1290 98 1200 92C1090 84 1020 34 900 30C780 26 720 86 600 96C480 106 420 52 300 44C190 37 110 70 0 92Z"
+          />
+        </svg>
+
+      {/* Kuota */}
+      <section id="kuota" aria-labelledby="judul-kuota" className="section-y relative">
+        <div className="container-site relative">
+          <div className="max-w-[60ch]">
+            <p data-reveal className="text-xs font-semibold uppercase tracking-[0.3em] text-aksen">Tahun pelajaran {spmb.tahunAjaran}</p>
+            <h2 id="judul-kuota" data-reveal className="mt-4 text-h2 text-white">
+              Kuota pendaftaran murid baru
+            </h2>
+            <p data-reveal className="mt-4 text-lead text-white/75">
+              Pembagian kursi per jalur sesuai petunjuk teknis SPMB Provinsi Nusa Tenggara Barat.
+            </p>
+          </div>
+          <div className="mt-12 lg:mt-16">
+            <KuotaSpmb spmb={spmb} />
+          </div>
         </div>
       </section>
 
       {/* Jadwal */}
-      <section id="jadwal" aria-labelledby="judul-jadwal-spmb" className="section-y bg-paper-2">
-        <div className="container-site">
-          <SectionHead id="judul-jadwal-spmb" judul="Jadwal" teks={<p>Perkiraan tahapan SPMB. Tanggal pasti diumumkan setelah juknis resmi terbit.</p>} />
+      <section id="jadwal" aria-labelledby="judul-jadwal-spmb" className="section-y relative">
+        <div className="container-site relative">
+          <div className="grid gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,5fr)] lg:gap-10">
+            <div>
+              <p data-reveal className="text-xs font-semibold uppercase tracking-[0.3em] text-aksen">Jadwal kegiatan</p>
+              <h2 id="judul-jadwal-spmb" data-reveal className="mt-4 max-w-[18ch] text-h2 text-white">
+                Jadwal kegiatan SPMB {spmb.tahunAjaran}
+              </h2>
+            </div>
+            <p data-reveal style={{ "--d": 1 } as React.CSSProperties} className="max-w-[62ch] text-lead text-white/80 lg:pt-8">
+              Dari finalisasi petunjuk teknis sampai pendaftaran ulang tiap jalur.
+            </p>
+          </div>
           {spmb.contoh ? <CatatanContoh className="mt-8">Tanggal di bawah ini contoh.</CatatanContoh> : null}
-          <CarouselRail
-            sebagai="ol"
-            ariaLabel="Jadwal tahapan SPMB"
-            wrapClassName="mt-8 lg:mt-10"
-            className="lg:grid lg:grid-cols-6 lg:gap-4"
-          >
-            {spmb.jadwal.map((j, i) => (
-              <li
-                key={j.tahap}
-                data-reveal
-                style={{ "--d": i % 3 } as React.CSSProperties}
-                className="flex w-[min(76vw,260px)] shrink-0 flex-col rounded-[14px] border border-line bg-paper p-6 sm:w-[280px] lg:w-auto"
-              >
-                <span className="text-[2.5rem] font-light leading-none tabular-nums text-brand">{String(i + 1).padStart(2, "0")}</span>
-                <span className="mt-6 font-semibold text-ink">{j.tahap}</span>
-                <span className="mt-1 text-sm text-ink-2">{j.waktu}</span>
-                {j.keterangan ? <span className="mt-2 text-xs leading-relaxed text-muted">{j.keterangan}</span> : null}
-              </li>
-            ))}
-          </CarouselRail>
+
+          {/* Linimasa umum: garis hijau yang tumbuh saat digulir */}
+          <div className="mt-12 lg:mt-16">
+            <GarisJadwal jadwal={spmb.jadwal} />
+          </div>
+
+          {/* Matriks per jalur */}
+          {tahapJalur.length > 0 && (
+            <div data-reveal className="mt-16 overflow-x-auto rounded-[22px] border border-line shadow-card">
+              <table className="w-full min-w-[760px] border-collapse text-left">
+                <caption className="sr-only">Jadwal tiap jalur SPMB {spmb.tahunAjaran}</caption>
+                <thead>
+                  <tr className="bg-brand-ink text-white">
+                    <th scope="col" className="px-6 py-5 text-xs font-semibold uppercase tracking-[0.2em] text-aksen">Kegiatan</th>
+                    {spmb.jalur.map((j, i) => (
+                      <th key={j.nama} scope="col" className="px-6 py-5">
+                        <span className="block text-[0.6875rem] font-semibold tracking-[0.2em] text-aksen/80">JALUR {String(i + 1).padStart(2, "0")}</span>
+                        <span className="text-lg font-bold">{j.nama}</span>
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {tahapJalur.map((tahap, r) => (
+                    <tr key={tahap} className={r % 2 ? "bg-paper-2" : "bg-paper"}>
+                      <th scope="row" className="border-t border-line px-6 py-5 font-semibold text-ink">{tahap}</th>
+                      {spmb.jalur.map((j) => (
+                        <td key={j.nama} className="border-t border-line px-6 py-5 text-ink-2">
+                          {j.jadwal?.find((t) => t.tahap === tahap)?.waktu ?? "—"}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      </section>
+        {/* Batas bawah berombak: diisi warna latar seksi Jalur (paper-2) */}
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 1440 120"
+          preserveAspectRatio="none"
+          className="pointer-events-none absolute inset-x-0 bottom-[-1px] z-[1] h-[48px] w-full text-paper-2 md:h-[90px]"
+        >
+          <path
+            fill="currentColor"
+            d="M0 120H1440V70C1330 34 1240 22 1130 32C1010 43 950 96 820 98C690 100 640 40 520 30C400 20 330 74 210 84C130 90 60 76 0 58Z"
+          />
+        </svg>
+      </div>
+
+      {/* Jalur */}
+      <section id="jalur" aria-labelledby="judul-jalur" className="section-y bg-paper-2">
+        <div className="container-site">
+          <SectionHead
+            id="judul-jalur"
+            judul="Empat jalur pendaftaran"
+            teks={<p>Pilih jalur untuk melihat jadwal, persyaratan, dan urutan kriteria seleksinya.</p>}
+          />
+          <div className="mt-10 lg:mt-14">
+            <JalurTabs jalur={spmb.jalur} />
+          </div>
         </div>
       </section>
 
       {/* Syarat */}
       <section id="syarat" aria-labelledby="judul-syarat" className="section-y">
-        <div className="container-site grid gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
-          <div>
-            <h2 id="judul-syarat" data-reveal className="text-h2">
-              Dokumen yang disiapkan
-            </h2>
-            <p data-reveal className="mt-6 max-w-[42ch] text-lead text-ink-2">
-              Siapkan pindaian dokumen dalam format PDF atau JPG sebelum mendaftar agar proses unggah lancar.
-            </p>
+        <div className="container-site">
+          <SectionHead
+            id="judul-syarat"
+            judul="Persyaratan pendaftaran"
+            teks={<p>Berlaku untuk semua jalur. Siapkan dokumennya sebelum mendaftar di portal SPMB.</p>}
+          />
+          <div className="mt-12 grid gap-6 lg:grid-cols-2">
+            {[
+              { judul: "Persyaratan umum", isi: spmb.syarat },
+              { judul: "Persyaratan khusus", isi: spmb.syaratKhusus ?? [] },
+            ]
+              .filter((g) => g.isi.length > 0)
+              .map((g) => (
+                <div key={g.judul} data-reveal className="relative overflow-hidden rounded-[22px] border border-line bg-paper p-6 shadow-card md:p-10">
+                  <span aria-hidden="true" className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-aksen via-aksen-terang to-aksen" />
+                  <h3 className="text-xs font-semibold uppercase tracking-[0.24em] text-aksen-ink">{g.judul}</h3>
+                  <ol className="mt-6 flex flex-col gap-5">
+                    {g.isi.map((x, i) => (
+                      <li key={x} className="grid grid-cols-[2rem_minmax(0,1fr)] gap-3 text-ink-2">
+                        <span className="font-serif text-lg italic leading-6 text-aksen-ink">{String.fromCharCode(97 + i)}.</span>
+                        <span>{x}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              ))}
           </div>
-          <ul data-reveal className="flex flex-col divide-y divide-line rounded-[14px] border border-line">
-            {spmb.syarat.map((s) => (
-              <li key={s} className="flex gap-4 px-6 py-4 text-ink">
-                <CircleCheck size={20} aria-hidden="true" className="mt-0.5 shrink-0 text-brand" />
-                {s}
-              </li>
-            ))}
-          </ul>
         </div>
       </section>
 
       {/* Alur */}
-      <section id="alur" aria-labelledby="judul-alur" className="on-dark section-y bg-brand text-white">
-        <div className="container-site">
+      <section id="alur" aria-labelledby="judul-alur" className="on-dark section-y relative overflow-hidden bg-brand-ink text-white">
+        {/* Batas atas & bawah melengkung besar (busur, beda dari ombak di Kuota/Jadwal): diisi putih seksi tetangga */}
+        <svg aria-hidden="true" viewBox="0 0 1440 100" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 top-[-1px] h-[36px] w-full text-paper md:h-[72px]">
+          <path fill="currentColor" d="M0 0H1440V100C1080 -8 360 -8 0 100Z" />
+        </svg>
+        <svg aria-hidden="true" viewBox="0 0 1440 100" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 bottom-[-1px] h-[36px] w-full text-paper md:h-[72px]">
+          <path fill="currentColor" d="M0 0C360 108 1080 108 1440 0V100H0Z" />
+        </svg>
+        <div className="container-site relative">
           <h2 id="judul-alur" data-reveal className="text-h2 text-white">
             Alur pendaftaran
           </h2>
@@ -147,10 +276,10 @@ export default async function Spmb() {
                 key={a.judul}
                 data-reveal
                 style={{ "--d": i % 3 } as React.CSSProperties}
-                className="w-[min(80vw,300px)] shrink-0 rounded-[14px] border border-white/25 bg-white/10 p-6 sm:w-[320px] lg:w-auto lg:rounded-none lg:border-0 lg:border-t lg:border-white/25 lg:bg-transparent lg:p-0 lg:pt-6"
+                className="w-[min(80vw,300px)] shrink-0 rounded-[14px] border border-white/25 bg-white/10 p-6 sm:w-[320px] lg:w-auto lg:rounded-none lg:border-0 lg:border-t lg:border-aksen/40 lg:bg-transparent lg:p-0 lg:pt-6"
               >
                 <h3 className="text-h3 text-white">
-                  <span className="tabular-nums text-white/60">{i + 1}.</span> {a.judul}
+                  <span className="tabular-nums text-aksen">{String(i + 1).padStart(2, "0")}</span> {a.judul}
                 </h3>
                 <p className="mt-2 text-white/85">{a.teks}</p>
               </li>
@@ -209,7 +338,16 @@ export default async function Spmb() {
           </div>
           <p className="mt-6 flex items-center gap-2 text-sm text-muted">
             <FileText size={16} aria-hidden="true" />
-            Tautan portal SPMB resmi Provinsi NTB akan dicantumkan di sini setelah diumumkan.
+            {portal ? (
+              <>
+                Portal SPMB resmi Provinsi NTB:{" "}
+                <a href={portal} target="_blank" rel="noopener noreferrer" className="font-semibold text-brand underline underline-offset-4">
+                  {portalTeks}
+                </a>
+              </>
+            ) : (
+              "Tautan portal SPMB resmi Provinsi NTB akan dicantumkan di sini setelah diumumkan."
+            )}
           </p>
         </div>
       </section>

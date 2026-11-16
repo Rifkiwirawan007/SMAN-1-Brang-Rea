@@ -15,6 +15,7 @@ import { TeksKata } from "@/components/ui/teks-kata";
 import { Foto, LabelIlustrasi } from "@/components/ui/foto";
 import { IkonWhatsApp } from "@/components/ui/icons";
 import { beritaTampil } from "@/components/berita/tampil";
+import type { Berita } from "@/lib/konten/tipe";
 import {
   ambilAgenda,
   ambilBerita,
@@ -45,6 +46,22 @@ const UBIN = [
   { label: "Murid baru", judul: "SPMB 2027/2028", href: "/spmb", gambar: "/images/sekolah/upacara-pemimpin.jpg", alt: "Siswa pemimpin upacara berselempang hijau" },
 ];
 
+/**
+ * 4 kartu "Kabar sekolah": berita yang dipasang ke kartu 1–4 lewat dashboard (bidang "Kartu di beranda")
+ * menempati posisinya; kartu kosong diisi berita terbaru lainnya. `daftar` sudah urut terbaru.
+ */
+function kartuBeranda(daftar: Berita[]) {
+  const slot: (Berita | undefined)[] = [undefined, undefined, undefined, undefined];
+  // Bila dua berita memilih kartu yang sama, yang terakhir diubah menang.
+  const terpasang = daftar.filter((b) => b.beranda).sort((a, b) => (b.diubah ?? "").localeCompare(a.diubah ?? ""));
+  for (const b of terpasang) {
+    const i = Number(b.beranda) - 1;
+    if (i >= 0 && i < 4 && !slot[i]) slot[i] = b;
+  }
+  const sisa = daftar.filter((b) => !slot.includes(b));
+  return slot.map((b) => b ?? sisa.shift()).filter((b): b is Berita => !!b);
+}
+
 export default async function Beranda() {
   const [sekolah, sambutan, hero, semuaBerita, semuaAgenda, ekskul, poster, spmb] = await Promise.all([
     ambilSekolah(),
@@ -72,7 +89,7 @@ export default async function Beranda() {
     contoh: h.contoh,
     durasi: h.durasi ? h.durasi * 1000 : undefined,
   }));
-  const berita = semuaBerita.filter((b) => b.kategori !== "Pengumuman").slice(0, 5).map(beritaTampil);
+  const berita = kartuBeranda(semuaBerita.filter((b) => b.kategori !== "Pengumuman")).map(beritaTampil);
   const pengumuman = semuaBerita.filter((b) => b.kategori === "Pengumuman").map(beritaTampil);
   const agenda = semuaAgenda.map((a) => {
     const t = bagianTanggal(a.tanggal);
@@ -202,7 +219,7 @@ export default async function Beranda() {
               <Foto src={u.gambar} alt={u.alt} posisi={"posisi" in u ? u.posisi : undefined} sizes="(min-width: 1024px) 25vw, 80vw" penuh className="-z-20" label="tidak" />
               <span className="scrim-bottom absolute inset-0 -z-10 opacity-90 transition-opacity duration-500 group-hover:opacity-100" aria-hidden="true" />
               {apakahIlustrasi(u.gambar) && <LabelIlustrasi posisi="kanan-atas" />}
-              <span className="text-h3 text-white">{u.judul}</span>
+              <span className="text-h3 text-white">{u.href === "/spmb" ? `SPMB ${spmb.tahunAjaran}` : u.judul}</span>
               <span className="mt-2 text-sm text-white/80">{u.label}</span>
               <span className="btn-round mt-6 text-white group-hover:bg-white group-hover:text-brand-ink">
                 <ArrowRight size={20} aria-hidden="true" />

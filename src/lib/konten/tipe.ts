@@ -33,6 +33,8 @@ export type Berita = Meta & {
   keteranganHalaman?: string;
   fotoLain?: string[];
   sumber?: string;
+  /** Posisi kartu di "Kabar sekolah" beranda ("1"–"4"). Kosong = mengikuti urutan terbaru. */
+  beranda?: string;
   status: Status;
   contoh: boolean;
 };
@@ -211,9 +213,28 @@ export type Spmb = {
   tahunAjaran: string;
   status: string;
   contoh: boolean;
-  jalur: { nama: string; kuota: string; teks: string }[];
+  /** Alamat portal SPMB resmi provinsi. */
+  portal?: string;
+  /** Kanal/tautan kumpulan video tutorial pendaftaran. */
+  tutorial?: string;
+  /** Video YouTube tutorial pendaftaran yang diputar di halaman SPMB. */
+  videoTutorial?: string;
+  /** Daya tampung per jalur (grafik kuota). */
+  kuota?: { nama: string; jumlah: number }[];
+  jalur: {
+    nama: string;
+    kuota: string;
+    teks: string;
+    /** Tahapan khusus jalur ini (pendaftaran, seleksi, pengumuman, daftar ulang). */
+    jadwal?: { tahap: string; waktu: string }[];
+    syarat?: string[];
+    /** Urutan kriteria seleksi. */
+    kriteria?: string[];
+  }[];
   jadwal: { tahap: string; waktu: string; keterangan?: string }[];
+  /** Persyaratan umum. */
   syarat: string[];
+  syaratKhusus?: string[];
   alur: { judul: string; teks: string }[];
   tanya: { q: string; a: string }[];
 };

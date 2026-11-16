@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import { ArrowLeft, Lock, MessageCircle, Phone, Search, Send, ShieldAlert, Trash2, Users } from "lucide-react";
+import { ArrowLeft, EyeOff, Lock, MessageCircle, Phone, Search, Send, ShieldAlert, Trash2, Users } from "lucide-react";
 import {
   JENIS_LAPORAN,
   LABEL_JENIS,
@@ -55,7 +55,7 @@ export function KelolaLaporan({ laporan, bukaAwal, admin }: { laporan: LaporanDa
     return laporan.filter((l) => {
       if (tab === "aktif" ? !AKTIF.includes(l.status) : tab !== "semua" && l.status !== tab) return false;
       if (jenis && l.jenis !== jenis) return false;
-      return !q || [l.nomor, l.nama, l.kelas, l.isi, l.terlibat ?? ""].join(" ").toLowerCase().includes(q);
+      return !q || [l.nomor, l.anonim ? "anonim" : l.nama, l.kelas, l.isi, l.terlibat ?? ""].join(" ").toLowerCase().includes(q);
     });
   }, [laporan, tab, jenis, cari]);
 
@@ -78,7 +78,9 @@ export function KelolaLaporan({ laporan, bukaAwal, admin }: { laporan: LaporanDa
     if (untukPelapor) {
       const ok = await konfirmasi({
         judul: "Kirim balasan ke pelapor?",
-        pesan: `Balasan ini bisa dibaca ${dipilih.nama} di halaman cek status laporan.`,
+        pesan: dipilih.anonim
+          ? "Pelapor anonim. Balasan ini bisa dibaca siapa pun yang memegang kode laporan ini di halaman cek status."
+          : `Balasan ini bisa dibaca ${dipilih.nama} di halaman cek status laporan.`,
         tombol: "Kirim balasan",
       });
       if (!ok) return;
@@ -166,7 +168,13 @@ export function KelolaLaporan({ laporan, bukaAwal, admin }: { laporan: LaporanDa
                     <span className="shrink-0 text-xs text-muted">{waktuRelatif(l.dibuat)}</span>
                   </span>
                   <span className="truncate text-sm text-ink-2">
-                    {l.nama} · {l.kelas}
+                    {l.anonim ? (
+                      <span className="inline-flex items-center gap-1 italic">
+                        <EyeOff size={13} aria-hidden="true" /> Anonim
+                      </span>
+                    ) : (
+                      `${l.nama} · ${l.kelas}`
+                    )}
                   </span>
                   <span className="flex items-center gap-2">
                     <span className="font-mono text-xs text-muted">{l.nomor}</span>
@@ -201,6 +209,15 @@ export function KelolaLaporan({ laporan, bukaAwal, admin }: { laporan: LaporanDa
               {/* Pelapor */}
               <section className="rounded-xl border border-line bg-paper-2 p-4">
                 <p className="text-xs font-semibold uppercase tracking-wide text-muted">Pelapor</p>
+                {dipilih.anonim ? (
+                  <>
+                    <p className="mt-1 flex items-center gap-2 text-base font-semibold text-ink">
+                      <EyeOff size={16} aria-hidden="true" /> Anonim <Lencana>Tanpa nama</Lencana>
+                    </p>
+                    <p className="mt-1 text-sm text-muted">Pelapor tidak mencantumkan identitas. Pakai &quot;Balas ke pelapor&quot; di bawah; pelapor membacanya dengan kode laporan.</p>
+                  </>
+                ) : (
+                  <>
                 <p className="mt-1 text-base font-semibold text-ink">
                   {dipilih.nama} <span className="font-normal text-ink-2">· Kelas {dipilih.kelas}</span>
                 </p>
@@ -220,6 +237,8 @@ export function KelolaLaporan({ laporan, bukaAwal, admin }: { laporan: LaporanDa
                   </div>
                 ) : (
                   <p className="mt-1 text-sm text-muted">Tidak mencantumkan nomor HP.</p>
+                )}
+                  </>
                 )}
               </section>
 
