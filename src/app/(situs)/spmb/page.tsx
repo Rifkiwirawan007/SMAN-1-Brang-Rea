@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { ArrowUpRight, FileText, MessageCircleQuestion } from "lucide-react";
+import { ArrowUpRight, MessageCircleQuestion } from "lucide-react";
 import { PageHero } from "@/components/ui/page-hero";
 import { SubNav } from "@/components/ui/sub-nav";
 import { SectionHead } from "@/components/ui/section-head";
@@ -45,7 +45,6 @@ export default async function Spmb() {
   const [sekolah, spmb] = await Promise.all([ambilSekolah(), ambilSpmb()]);
   const portal = spmb.portal?.trim();
   const idVideo = idYoutube(spmb.videoTutorial);
-  const portalTeks = portal?.replace(/^https?:\/\//, "").replace(/\/$/, "");
   // Matriks jadwal: baris = tahap (dari jalur pertama yang punya jadwal), kolom = jalur.
   const tahapJalur = spmb.jalur.find((j) => j.jadwal?.length)?.jadwal?.map((t) => t.tahap) ?? [];
   return (
@@ -336,19 +335,6 @@ export default async function Spmb() {
           <div className="mt-12 rounded-[18px] border border-line bg-paper p-6 md:p-10">
             <WaForm keperluanAwal="SPMB / pendaftaran" />
           </div>
-          <p className="mt-6 flex items-center gap-2 text-sm text-muted">
-            <FileText size={16} aria-hidden="true" />
-            {portal ? (
-              <>
-                Portal SPMB resmi Provinsi NTB:{" "}
-                <a href={portal} target="_blank" rel="noopener noreferrer" className="font-semibold text-brand underline underline-offset-4">
-                  {portalTeks}
-                </a>
-              </>
-            ) : (
-              "Tautan portal SPMB resmi Provinsi NTB akan dicantumkan di sini setelah diumumkan."
-            )}
-          </p>
         </div>
       </section>
     </>
