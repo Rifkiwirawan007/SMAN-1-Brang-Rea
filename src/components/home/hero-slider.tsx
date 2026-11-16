@@ -8,6 +8,7 @@ import { apakahIlustrasi } from "@/lib/konten/util";
 import { Contoh, LabelIlustrasi } from "@/components/ui/contoh";
 import { cx } from "@/lib/format";
 import { KetikUlang } from "@/components/ui/ketik-ulang";
+import { langgananPemuat, pemuatMasihAktif } from "@/lib/pemuat";
 
 export type SlideHero = {
   tab: string;
@@ -94,6 +95,9 @@ export function HeroSlider({ slides, durasi = 7000 }: { slides: SlideHero[]; dur
     () => window.matchMedia(kueriGerak).matches,
     () => false,
   );
+  // Selama layar pemuat BAREMA menutupi halaman, efek mengetik & video ditahan
+  // (bilah progres dan zoom ditahan lewat CSS .pemuat-aktif), jadi slide baru mulai saat terlihat.
+  const pemuatSelesai = useSyncExternalStore(langgananPemuat, () => !pemuatMasihAktif(), () => false);
   // Gerak dikurangi = tidak berputar otomatis, kecuali pengguna menekan putar.
   const jeda = jedaPengguna ?? gerakDikurangi;
 
@@ -161,7 +165,7 @@ export function HeroSlider({ slides, durasi = 7000 }: { slides: SlideHero[]; dur
                 />
               ) : null}
               {muatMedia && s.video ? (
-                <VideoHero video={s.video} poster={s.gambar} main={on && !jeda && terlihat && !gerakDikurangi} aktif={on} />
+                <VideoHero video={s.video} poster={s.gambar} main={on && !jeda && terlihat && !gerakDikurangi && pemuatSelesai} aktif={on} />
               ) : null}
             </div>
             <div className={cx(s.video || s.poster ? "scrim-video" : "scrim-hero", "absolute inset-0 -z-10")} aria-hidden="true" />
@@ -189,7 +193,7 @@ export function HeroSlider({ slides, durasi = 7000 }: { slides: SlideHero[]; dur
               <div className="hero-copy max-w-[44rem]">
                 {s.contoh ? <Contoh className="mb-4" /> : null}
                 <Judul className="text-display max-w-[15ch] text-white">
-                  <JudulKetik judul={s.judul} aktif={on && !gerakDikurangi} />
+                  <JudulKetik judul={s.judul} aktif={on && !gerakDikurangi && pemuatSelesai} />
                 </Judul>
                 <p className="mt-5 max-w-[46ch] text-lead text-white/88">{s.teks}</p>
                 <div className="mt-8 flex flex-wrap gap-3">

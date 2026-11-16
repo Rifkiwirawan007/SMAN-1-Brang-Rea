@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { setelahPemuat } from "@/lib/pemuat";
 
 declare global {
   interface Window {
@@ -66,10 +67,14 @@ export function RevealObserver() {
         io.observe(el);
       });
     };
-    pindai();
+    // Elemen yang sudah terlihat baru dianimasikan setelah layar pemuat selesai (tidak di belakangnya).
     const mo = new MutationObserver(pindai);
-    mo.observe(document.body, { childList: true, subtree: true });
+    const batal = setelahPemuat(() => {
+      pindai();
+      mo.observe(document.body, { childList: true, subtree: true });
+    });
     return () => {
+      batal();
       io.disconnect();
       mo.disconnect();
     };

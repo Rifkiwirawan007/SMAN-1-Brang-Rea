@@ -6,7 +6,8 @@ import "./globals.css";
 const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  // 800 hanya dipakai tulisan BAREMA di layar pemuat; file font variabelnya sama, jadi tidak menambah unduhan.
+  weight: ["300", "400", "500", "600", "700", "800"],
   display: "swap",
 });
 
@@ -42,7 +43,10 @@ export const viewport: Viewport = {
 
 // Pasang kelas .js sebelum cat pertama (animasi muncul aktif hanya bila JS jalan),
 // dan cabut lagi bila React gagal memuat, supaya konten tidak pernah tersembunyi.
-const skripAwal = `document.documentElement.classList.add('js');setTimeout(function(){if(!window.__revealReady){document.documentElement.classList.remove('js')}},3500);`;
+// .pemuat-aktif: layar pemuat (BAREMA di beranda, tiga titik di halaman lain) sedang tampil;
+// hero & reveal menunggu sampai LayarPemuat melepasnya. Halaman tanpa pemuat (dashboard, 404)
+// langsung melepasnya begitu HTML selesai diurai.
+const skripAwal = `var h=document.documentElement;h.classList.add('js','pemuat-aktif');document.addEventListener('DOMContentLoaded',function(){if(!document.querySelector('.pemuat'))h.classList.remove('pemuat-aktif')});setTimeout(function(){if(!window.__revealReady){h.classList.remove('js','pemuat-aktif')}},3500);`;
 
 // Header/footer situs publik ada di app/(situs)/layout.tsx, sehingga halaman admin tidak ikut memakainya.
 export default function RootLayout({ children }: LayoutProps<"/">) {

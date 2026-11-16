@@ -7,7 +7,7 @@ export default async function LayoutSitus({ children }: { children: React.ReactN
   const sekolah = await ambilSekolah();
   return (
     <>
-      <LayarPemuat label={`Memuat ${sekolah.namaPendek}`} />
+      <LayarPemuat label={`Memuat ${sekolah.namaPendek}`} subjudul={sekolah.nama} />
       <KerangkaSitus sekolah={sekolah}>{children}</KerangkaSitus>
     </>
   );

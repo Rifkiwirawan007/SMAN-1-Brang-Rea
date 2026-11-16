@@ -579,15 +579,6 @@
       0 2px 3px rgb(6 16 11 / 0.14),
       0 22px 30px -16px rgb(6 16 11 / 0.38);
   }
-  /* Latar potret kepala sekolah (foto potongan transparan) */
-  .bg-potret {
-    background: radial-gradient(
-      120% 85% at 50% 22%,
-      color-mix(in oklab, var(--color-brand) 72%, white) 0%,
-      var(--color-brand) 48%,
-      var(--color-brand-ink) 100%
-    );
-  }
   /* Slide video: judul sudah ada di dalam film, cukup gelap tipis untuk header dan tab. */
   .scrim-video {
     background:
@@ -790,6 +781,20 @@ html:not(.js) .hero-slide:not([data-active="true"]) {
 }
 .hero-slide[data-active="true"] .hero-copy > *:nth-child(4) {
   transition-delay: 360ms;
+}
+/* Selama layar pemuat tampil (html.pemuat-aktif), slide hero belum "mulai": bilah progres,
+   zoom foto, dan zoom banner halaman ditahan; teks hero menunggu di bawah lalu naik saat
+   pemuat memudar. Judul (h1) tetap terlihat agar tetap dihitung sebagai LCP. */
+.pemuat-aktif .hero-tab[data-active="true"] .hero-bar,
+.pemuat-aktif .hero-slide[data-active="true"] .hero-media,
+.pemuat-aktif .page-hero-media {
+  animation: none;
+}
+.js.pemuat-aktif .hero-slide[data-active="true"] .hero-copy > * {
+  transform: translate3d(0, 26px, 0);
+}
+.js.pemuat-aktif .hero-slide[data-active="true"] .hero-copy > :not(h1) {
+  opacity: 0;
 }
 /* Tombol garis di atas foto: alas gelap tipis agar tetap terbaca di langit terang. */
 .hero-copy .btn-pill:not(:hover) {
@@ -1036,23 +1041,6 @@ dialog.lightbox::backdrop {
   border-right: 0;
   border-radius: 999px 0 0 999px;
 }
-/* Versi HP: garis vertikal */
-.tl-v {
-  position: relative;
-  display: flex;
-  gap: 1rem;
-}
-.tl-v-garis {
-  position: absolute;
-  left: calc(1.375rem - 3px);
-  top: 2.75rem;
-  bottom: 0;
-  width: 6px;
-  border-radius: 3px;
-}
-.tl-v:last-child .tl-v-garis {
-  display: none;
-}
 
 /* ---------- Efek mengetik berulang (judul hero) ---------- */
 .ketik {
@@ -1141,7 +1129,7 @@ dialog.lightbox::backdrop {
   }
 }
 
-/* ---------- Animasi pemuat: tiga titik hijau memantul ---------- */
+/* ---------- Pemuat halaman selain beranda: tiga titik hijau memantul ---------- */
 .titik-pemuat {
   display: inline-flex;
   align-items: center;
@@ -1175,23 +1163,9 @@ dialog.lightbox::backdrop {
     transform: translateY(-60%);
   }
 }
-.pemuat {
-  position: fixed;
-  inset: 0;
-  z-index: 200;
-  display: grid;
-  place-items: center;
+.pemuat[data-mode="titik"] {
   background: var(--color-paper);
-  transition:
-    opacity 0.5s ease,
-    visibility 0.5s;
-}
-.pemuat[data-selesai] {
-  opacity: 0;
-  visibility: hidden;
-}
-html:not(.js) .pemuat {
-  display: none;
+  transition: opacity 0.45s ease;
 }
 @media (prefers-reduced-motion: reduce) {
   .titik-pemuat span {
@@ -1199,6 +1173,245 @@ html:not(.js) .pemuat {
   }
 }
 
+/* ---------- Layar pemuat: logo muncul, lalu bergeser & tulisan BAREMA terbuka di sampingnya ---------- */
+.pemuat {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  background: #fdfdfc;
+  /* Latar putih memudar setelah logo & BAREMA hilang lebih dulu */
+  transition: opacity 0.6s ease 0.25s;
+}
+.pemuat-isi {
+  display: flex;
+  align-items: center;
+  transition:
+    opacity 0.3s ease,
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.pemuat-logo {
+  position: relative;
+  width: clamp(92px, 18vw, 290px);
+  aspect-ratio: 1;
+  animation: pemuat-logo 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+}
+/* Pendar lembut di belakang logo */
+.pemuat-logo::before {
+  content: "";
+  position: absolute;
+  inset: -45%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(52 114 76 / 0.12), transparent 70%);
+  animation: pemuat-pudar-masuk 1.2s ease 0.3s both;
+}
+.pemuat-logo img {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 14px 22px rgb(13 24 19 / 0.16));
+}
+/* Wadah teks melebar dari 0 → lebar penuh; karena isi berada di tengah, logo ikut bergeser ke kiri */
+.pemuat-teks-wadah {
+  display: grid;
+  grid-template-columns: 0fr;
+  animation: pemuat-buka 0.85s cubic-bezier(0.65, 0, 0.35, 1) 0.8s both;
+}
+.pemuat-teks {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2vw, 28px);
+  min-width: 0;
+  overflow: hidden;
+  padding-left: clamp(14px, 2vw, 28px);
+  white-space: nowrap;
+}
+.pemuat-garis {
+  flex: none;
+  width: 2px;
+  height: clamp(80px, 14vw, 215px);
+  border-radius: 2px;
+  background: rgb(240 138 36 / 0.45);
+  transform-origin: 50% 50%;
+  animation: pemuat-garis 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.85s both;
+}
+.pemuat-judul {
+  display: grid;
+  font-size: clamp(2.9rem, 13vw, 10.8rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  animation: pemuat-geser 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.95s both;
+}
+.pemuat-judul > span {
+  grid-area: 1 / 1;
+}
+.pemuat-judul-dasar {
+  color: var(--color-brand);
+}
+/* Foto kegiatan berganti cepat di dalam huruf BAREMA */
+.pemuat-judul-foto {
+  color: transparent;
+  will-change: opacity;
+  background-size: cover;
+  background-position: center;
+  -webkit-background-clip: text;
+  background-clip: text;
+  opacity: 0;
+  animation: pemuat-ganti calc(var(--n) * 140ms) step-end infinite;
+  animation-delay: calc(var(--i) * 140ms);
+}
+/* Foto baru diunduh setelah cat pertama (atribut dari JS), agar tidak berebut dengan gambar hero */
+.pemuat[data-foto] .pemuat-judul-foto {
+  background-image: var(--foto);
+}
+.pemuat-subjudul {
+  margin-top: 0.75em;
+  font-size: clamp(0.62rem, 1.3vw, 1.2rem);
+  font-weight: 700;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: #8b95a1;
+  animation: pemuat-geser 0.85s cubic-bezier(0.16, 1, 0.3, 1) 1.08s both;
+}
+/* Selesai: memudar, isi sedikit membesar */
+.pemuat[data-selesai] {
+  opacity: 0;
+  pointer-events: none;
+}
+/* Setelah memudar, dilepas dari layar sepenuhnya (atribut dipasang JS) */
+.pemuat[data-hilang] {
+  display: none;
+}
+.pemuat[data-selesai] .pemuat-isi {
+  opacity: 0;
+  transform: scale(1.04);
+}
+html:not(.js) .pemuat {
+  display: none;
+}
+@keyframes pemuat-logo {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.55);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes pemuat-pudar-masuk {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes pemuat-buka {
+  to {
+    grid-template-columns: 1fr;
+  }
+}
+@keyframes pemuat-garis {
+  from {
+    transform: scaleY(0);
+  }
+}
+@keyframes pemuat-geser {
+  from {
+    opacity: 0;
+    transform: translateX(-28px);
+  }
+}
+@keyframes pemuat-ganti {
+  0% {
+    opacity: 1;
+  }
+  10%,
+  100% {
+    opacity: 0;
+  }
+}
+/* Versi HP (ringan): logo di atas, BAREMA di bawah; tanpa garis, tanpa foto di dalam huruf, tanpa animasi lebar grid,
+   bayangan, atau pendar. Hanya transform + opacity (dikerjakan GPU), jadi mulus di HP murah. */
+@media (max-width: 767px) {
+  .pemuat-isi {
+    flex-direction: column;
+    gap: 18px;
+  }
+  .pemuat-logo {
+    width: 104px;
+    animation: pemuat-hp-logo 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+  }
+  .pemuat-logo::before,
+  .pemuat-judul-foto {
+    display: none;
+  }
+  .pemuat-logo img {
+    filter: none;
+  }
+  .pemuat-teks-wadah {
+    display: block;
+    animation: none;
+  }
+  .pemuat-teks {
+    flex-direction: column;
+    gap: 14px;
+    padding-left: 0;
+    overflow: visible;
+    text-align: center;
+  }
+  /* Tanpa garis oranye: logo di atas, BAREMA langsung di bawahnya */
+  .pemuat-garis {
+    display: none;
+  }
+  .pemuat-judul {
+    font-size: clamp(3.2rem, 17vw, 4.6rem);
+    animation: pemuat-hp-naik 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both;
+  }
+  .pemuat-subjudul {
+    margin-top: 0.9em;
+    font-size: 0.66rem;
+    letter-spacing: 0.3em;
+    animation: pemuat-hp-naik 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.47s both;
+  }
+  /* Keluar lebih cepat: latar mulai memudar 0,15 dtk setelah logo & BAREMA hilang */
+  .pemuat {
+    transition: opacity 0.45s ease 0.15s;
+  }
+}
+@keyframes pemuat-hp-logo {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+}
+@keyframes pemuat-hp-naik {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pemuat-logo,
+  .pemuat-logo::before,
+  .pemuat-garis,
+  .pemuat-judul,
+  .pemuat-subjudul,
+  .pemuat-judul-foto {
+    animation: none;
+  }
+  .pemuat-judul-foto:nth-child(2) {
+    opacity: 1;
+  }
+  .pemuat-teks-wadah {
+    animation: none;
+    grid-template-columns: 1fr;
+  }
+  .pemuat[data-selesai] .pemuat-isi {
+    transform: none;
+  }
+}
 /* Petunjuk geser tabel di HP */
 .geser-panah {
   display: inline-block;

@@ -351,8 +351,8 @@ const hero: ModulKoleksi<SlideHero & Item> = {
       nama: "video",
       label: "Video latar (opsional)",
       bidang: [
-        { jenis: "teks", nama: "besar", label: "Video layar besar", format: "tautan", placeholder: "/video/ekskul-hd.mp4", lebar: "setengah" },
-        { jenis: "teks", nama: "kecil", label: "Video HP", format: "tautan", placeholder: "/video/ekskul-hp.mp4", lebar: "setengah" },
+        { jenis: "teks", nama: "besar", label: "Video layar besar", format: "tautan", placeholder: "/video/profil-hd.mp4", lebar: "setengah" },
+        { jenis: "teks", nama: "kecil", label: "Video HP", format: "tautan", placeholder: "/video/profil-hp.mp4", lebar: "setengah" },
       ],
     },
     { jenis: "saklar", nama: "aktif", label: "Status", teks: "Tampilkan di beranda", sisi: true },

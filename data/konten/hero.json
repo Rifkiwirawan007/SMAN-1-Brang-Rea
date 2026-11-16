@@ -2,8 +2,8 @@
   {
     "id": "7e74661be2",
     "dibuat": "2026-11-12T14:51:12.699Z",
-    "diubah": "2026-11-12T14:51:12.699Z",
-    "oleh": "Sistem",
+    "diubah": "2026-11-16T16:53:56.028Z",
+    "oleh": "Rifki Wirawan",
     "tab": "Selamat datang",
     "judul": "Selamat datang di SMAN 1 Brang Rea",
     "teks": "Sekolah menengah atas negeri di Desa Beru, Sumbawa Barat, sejak 2006.",
@@ -19,7 +19,9 @@
       "href": "/spmb"
     },
     "aktif": true,
-    "posisiHp": "18% 40%"
+    "posisiHp": "18% 40%",
+    "durasi": 3,
+    "poster": false
   },
   {
     "id": "561239d939",
