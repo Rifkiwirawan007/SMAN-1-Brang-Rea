@@ -165,7 +165,7 @@ export function SiteHeader() {
               <Link
                 href="/spmb"
                 className={cx(
-                  "rounded-full border px-4 py-1.5 text-[0.8125rem] font-medium transition-colors duration-200",
+                  "rounded-full border-[1.5px] px-5 py-2 text-[0.9375rem] font-semibold transition-colors duration-200",
                   transparan
                     ? "border-white/60 text-white hover:bg-white hover:text-brand-ink"
                     : "border-brand text-brand hover:bg-brand hover:text-white",

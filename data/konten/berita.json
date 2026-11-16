@@ -567,8 +567,8 @@
   {
     "id": "2ae6ea28ea",
     "dibuat": "2026-11-12T14:51:12.699Z",
-    "diubah": "2026-11-12T14:51:12.699Z",
-    "oleh": "Sistem",
+    "diubah": "2026-11-16T10:27:39.244Z",
+    "oleh": "Rifki Wirawan",
     "slug": "jadwal-sas-ganjil-2026",
     "judul": "Jadwal Sumatif Akhir Semester ganjil 2026/2027",
     "kategori": "Pengumuman",
@@ -579,13 +579,13 @@
       "Siswa wajib hadir pukul 07.00 WITA, berseragam lengkap, dan membawa kartu peserta. Jadwal per mata pelajaran dibagikan wali kelas."
     ],
     "contoh": true,
-    "status": "terbit"
+    "status": "draf"
   },
   {
     "id": "45c861763f",
     "dibuat": "2026-11-12T14:51:12.699Z",
-    "diubah": "2026-11-12T14:51:12.699Z",
-    "oleh": "Sistem",
+    "diubah": "2026-11-16T10:27:39.244Z",
+    "oleh": "Rifki Wirawan",
     "slug": "pembagian-rapor-ganjil",
     "judul": "Pembagian rapor semester ganjil",
     "kategori": "Pengumuman",
@@ -596,13 +596,13 @@
       "Orang tua yang berhalangan hadir dapat menghubungi wali kelas untuk mengatur jadwal pengambilan."
     ],
     "contoh": true,
-    "status": "terbit"
+    "status": "draf"
   },
   {
     "id": "7537d1f992",
     "dibuat": "2026-11-12T14:51:12.699Z",
-    "diubah": "2026-11-12T14:51:12.699Z",
-    "oleh": "Sistem",
+    "diubah": "2026-11-16T10:27:39.244Z",
+    "oleh": "Rifki Wirawan",
     "slug": "pendataan-peserta-tka",
     "judul": "Pendataan calon peserta TKA kelas XII",
     "kategori": "Pengumuman",
@@ -613,13 +613,13 @@
       "Perbaikan data dapat disampaikan kepada operator sekolah paling lambat satu pekan setelah pengumuman ini."
     ],
     "contoh": true,
-    "status": "terbit"
+    "status": "draf"
   },
   {
     "id": "44cfb98032",
     "dibuat": "2026-11-12T14:51:12.699Z",
-    "diubah": "2026-11-12T14:51:12.699Z",
-    "oleh": "Sistem",
+    "diubah": "2026-11-16T10:27:39.244Z",
+    "oleh": "Rifki Wirawan",
     "slug": "libur-akhir-tahun-2026",
     "judul": "Libur semester dan akhir tahun 2026",
     "kategori": "Pengumuman",
@@ -629,6 +629,6 @@
       "Libur semester ganjil berlangsung pada 21 Desember 2026 sampai 2 Januari 2027. Kegiatan belajar semester genap dimulai Senin, 4 Januari 2027."
     ],
     "contoh": true,
-    "status": "terbit"
+    "status": "draf"
   }
 ]

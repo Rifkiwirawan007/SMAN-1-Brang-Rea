@@ -97,12 +97,27 @@ export default async function Profil() {
         </div>
       </section>
 
-      {/* Video profil */}
-      <section id="video" aria-labelledby="judul-video" className="section-y">
-        <div className="container-site">
+      {/* Video profil: latar foto apel di lapangan sekolah dengan gradasi hijau tua, seperti seksi gelap lainnya */}
+      <section id="video" aria-labelledby="judul-video" className="on-dark section-y relative overflow-hidden bg-brand-ink text-white">
+        <Image src="/images/sekolah/banner-apel-lapangan.webp" alt="" fill sizes="100vw" quality={70} className="object-cover" style={{ objectPosition: "center 45%" }} />
+        <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-b from-brand-ink/95 via-brand-ink/80 to-brand-ink/90" />
+        {/* Batas atas berombak: diisi warna latar seksi sebelumnya (putih) */}
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 1440 120"
+          preserveAspectRatio="none"
+          className="pointer-events-none absolute inset-x-0 top-[-1px] z-[1] h-[48px] w-full text-paper md:h-[90px]"
+        >
+          <path
+            fill="currentColor"
+            d="M0 0H1440V46C1360 78 1290 98 1200 92C1090 84 1020 34 900 30C780 26 720 86 600 96C480 106 420 52 300 44C190 37 110 70 0 92Z"
+          />
+        </svg>
+        <div className="container-site relative z-[2] py-6 md:py-10">
           <div data-reveal className="mx-auto max-w-3xl text-center">
-            <h2 id="judul-video" className="text-h2 text-brand-ink">Video profil sekolah</h2>
-            <p className="mt-4 text-lead text-ink-2">Mengenal lebih dekat suasana belajar, kegiatan, dan warga SMA Negeri 1 Brang Rea.</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-aksen">Video profil</p>
+            <h2 id="judul-video" className="mt-4 text-h2 text-white">Video profil sekolah</h2>
+            <p className="mt-4 text-lead text-white/75">Mengenal lebih dekat suasana belajar, kegiatan, dan warga SMA Negeri 1 Brang Rea.</p>
           </div>
           <div data-reveal className="mx-auto mt-10 max-w-5xl md:mt-12">
             {/* Bayangan di sekeliling video, terlihat timbul */}
@@ -110,13 +125,25 @@ export default async function Profil() {
               className="overflow-hidden rounded-[14px]"
               style={{
                 boxShadow:
-                  "0 0 0 1px rgb(0 0 0 / 0.08), 0 0 12px 2px rgb(0 0 0 / 0.22), 0 0 40px 8px rgb(0 0 0 / 0.28), 0 0 80px 16px rgb(0 0 0 / 0.22)",
+                  "0 0 0 1px rgb(255 255 255 / 0.12), 0 0 12px 2px rgb(0 0 0 / 0.22), 0 0 40px 8px rgb(0 0 0 / 0.28), 0 0 80px 16px rgb(0 0 0 / 0.22)",
               }}
             >
               <VideoYoutube id="1PU1U5qi0J4" judul="Video profil SMA Negeri 1 Brang Rea" />
             </div>
           </div>
         </div>
+        {/* Batas bawah berombak: diisi warna latar seksi Identitas (putih) */}
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 1440 120"
+          preserveAspectRatio="none"
+          className="pointer-events-none absolute inset-x-0 bottom-[-1px] z-[1] h-[48px] w-full text-paper md:h-[90px]"
+        >
+          <path
+            fill="currentColor"
+            d="M0 120H1440V70C1330 34 1240 22 1130 32C1010 43 950 96 820 98C690 100 640 40 520 30C400 20 330 74 210 84C130 90 60 76 0 58Z"
+          />
+        </svg>
       </section>
 
       {/* Identitas */}
@@ -258,11 +285,9 @@ export default async function Profil() {
       {/* Struktur */}
       <section id="struktur" aria-labelledby="judul-struktur" className="section-y">
         <div className="container-site">
-          <SectionHead
-            id="judul-struktur"
-            judul="Struktur organisasi"
-            teks={<p>Pimpinan dan pengelola sekolah. Nama yang belum tersedia ditandai dan akan dilengkapi.</p>}
-          />
+          <h2 id="judul-struktur" data-reveal className="text-center text-h2">
+            Struktur organisasi
+          </h2>
           <CarouselRail
             ariaLabel="Struktur organisasi sekolah"
             wrapClassName="mt-10 lg:mt-12"
