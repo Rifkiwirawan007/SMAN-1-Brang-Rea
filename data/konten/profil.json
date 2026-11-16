@@ -24,7 +24,7 @@
       "tahun": "2009",
       "judul": "Lulusan angkatan pertama",
       "teks": "Siswa angkatan pertama menyelesaikan pendidikan dan melanjutkan ke perguruan tinggi maupun dunia kerja.",
-      "contoh": true
+      "contoh": false
     },
     {
       "tahun": "2018",
@@ -43,33 +43,33 @@
     {
       "jabatan": "Kepala sekolah",
       "nama": "Mustaram, S.Pd.",
-      "foto": "/media/2026/11/img-5893-5ff335.webp",
+      "foto": "/images/kepala-sekolah-biru.webp",
       "contoh": false
     },
     {
       "jabatan": "Wakil kepala sekolah bidang kurikulum",
       "nama": "Nama menyusul",
-      "contoh": true
+      "contoh": false
     },
     {
       "jabatan": "Wakil kepala sekolah bidang kesiswaan",
       "nama": "Nama menyusul",
-      "contoh": true
+      "contoh": false
     },
     {
       "jabatan": "Wakil kepala sekolah bidang sarana prasarana",
       "nama": "Nama menyusul",
-      "contoh": true
+      "contoh": false
     },
     {
       "jabatan": "Wakil kepala sekolah bidang humas",
       "nama": "Nama menyusul",
-      "contoh": true
+      "contoh": false
     },
     {
       "jabatan": "Kepala tata usaha",
       "nama": "Nama menyusul",
-      "contoh": true
+      "contoh": false
     },
     {
       "jabatan": "Operator Dapodik",
@@ -79,7 +79,7 @@
     {
       "jabatan": "Koordinator bimbingan konseling",
       "nama": "Nama menyusul",
-      "contoh": true
+      "contoh": false
     }
   ],
   "guru": [
@@ -132,13 +132,14 @@
     {
       "angka": 1,
       "satuan": "perpustakaan",
-      "ket": "Koleksi buku pelajaran dan bacaan umum."
+      "ket": "Koleksi buku pelajaran dan bacaan umum.",
+      "gambar": "/media/2026/11/gambar-perpustakaan-95c1e3.webp"
     },
     {
       "angka": 13000,
       "satuan": "m² luas lahan",
       "ket": "Lapangan upacara dan olahraga.",
-      "gambar": "/images/sekolah/apel-guru-2.jpg"
+      "gambar": "/images/sekolah/banner-senam-pagi.webp"
     }
   ]
 }

@@ -9,6 +9,7 @@ import { CountUp } from "@/components/ui/count-up";
 import { CatatanContoh, Contoh } from "@/components/ui/contoh";
 import { ambilAkademik, ambilSekolah } from "@/lib/konten/baca";
 import { cx } from "@/lib/format";
+import { JamWeker, TumpukanBuku } from "@/components/situs/ilustrasi-jadwal";
 
 /** Foto samar di belakang pita jadwal per hari (bergiliran). */
 const FOTO_JADWAL = [
@@ -169,9 +170,9 @@ export default async function Akademik() {
       {/* Jadwal: gaya poster "program mingguan": judul miring tebal, satu pita hijau per hari
           berlatar foto sekolah samar, susunan hari/jam bergantian kiri-kanan */}
       <section id="jadwal" aria-labelledby="judul-jadwal" className="section-y relative overflow-hidden bg-paper-2">
-        {/* Hiasan lingkaran hijau di tepi, seperti poster */}
-        <span aria-hidden="true" className="pointer-events-none absolute -left-28 top-1/2 h-64 w-64 rounded-full bg-brand/90 md:h-80 md:w-80" />
-        <span aria-hidden="true" className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-brand/90" />
+        {/* Hiasan ilustrasi bertekstur (gaya sablon): tumpukan buku di kiri, jam weker di kanan */}
+        <TumpukanBuku className="pointer-events-none absolute -left-16 top-1/2 w-60 -rotate-6 opacity-20 md:-left-6 md:w-72 md:opacity-40 xl:left-0 xl:w-60 xl:opacity-100" />
+        <JamWeker className="pointer-events-none absolute -right-12 top-14 w-44 rotate-[10deg] opacity-20 md:-right-4 md:w-56 md:opacity-40 xl:right-10 xl:w-64 xl:opacity-100" />
         <div className="container-site relative">
           <div data-reveal className="mx-auto max-w-3xl text-center">
             <h2 id="judul-jadwal" className="inline-block -rotate-3 text-[clamp(2.2rem,1.4rem+3.6vw,4.4rem)] font-black uppercase leading-[0.95] tracking-[-0.02em]">

@@ -16,7 +16,7 @@
         "teks": "Kegiatan pengembangan bakat dan minat di luar jam pelajaran, Pramuka wajib bagi kelas X."
       }
     ],
-    "contoh": true
+    "contoh": false
   },
   "mapel": {
     "umum": [
@@ -45,7 +45,7 @@
       "Bahasa Inggris tingkat lanjut",
       "Informatika lanjutan"
     ],
-    "contoh": true
+    "contoh": false
   },
   "jadwal": {
     "hari": [
@@ -84,7 +84,7 @@
       "09.45 – 10.00 WITA",
       "12.00 – 12.30 WITA"
     ],
-    "contoh": true
+    "contoh": false
   },
   "kalender": [
     {
@@ -155,5 +155,5 @@
       ]
     }
   ],
-  "kalenderContoh": true
+  "kalenderContoh": false
 }
