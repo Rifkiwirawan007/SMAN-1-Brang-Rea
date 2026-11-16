@@ -48,10 +48,6 @@ export function JalurTabs({ jalur }: { jalur: Jalur[] }) {
             <span className={cx("text-sm font-semibold tabular-nums tracking-[0.2em]", aktif === i ? "text-aksen" : "text-aksen-ink")}>JALUR {nomor(i)}</span>
             <span className="mt-2 text-[1.375rem] font-bold leading-tight">{j.nama}</span>
             <span className={cx("mt-1 text-sm", aktif === i ? "text-white/70" : "text-muted")}>{j.kuota}</span>
-            <span
-              aria-hidden="true"
-              className={cx("absolute inset-x-0 bottom-0 h-[3px] origin-left bg-aksen transition-transform duration-500", aktif === i ? "scale-x-100" : "scale-x-0")}
-            />
           </button>
         ))}
       </div>
@@ -66,7 +62,7 @@ export function JalurTabs({ jalur }: { jalur: Jalur[] }) {
           className="mt-6 overflow-hidden rounded-[22px] border border-line bg-paper shadow-card"
         >
           {/* Kepala panel */}
-          <div className="grid gap-6 border-b border-line p-6 md:p-10 lg:grid-cols-[auto_minmax(0,1fr)] lg:items-end lg:gap-12">
+          <div className="grid gap-6 border-b border-line p-6 md:p-10 lg:grid-cols-[auto_minmax(0,1fr)] lg:items-start lg:gap-12">
             <span className="text-[clamp(4rem,3rem+4vw,7rem)] font-extralight leading-[0.8] tracking-[-0.05em] text-aksen tabular-nums" aria-hidden="true">
               {nomor(i)}
             </span>
