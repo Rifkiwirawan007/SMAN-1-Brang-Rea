@@ -138,30 +138,52 @@ export default async function Profil() {
         </div>
       </section>
 
-      {/* Sejarah */}
-      <section id="sejarah" aria-labelledby="judul-sejarah" className="section-y bg-paper-2">
-        <div className="container-site">
-          <SectionHead
-            id="judul-sejarah"
-            judul={`Perjalanan sejak ${sekolah.pendirian.tahun}`}
-            teks={<p>Dua dekade melayani pendidikan menengah atas di Brang Rea, Sumbawa Barat.</p>}
+      {/* Sejarah + Visi & misi: satu latar foto gedung sekolah dengan gradasi hijau tua yang menyambung */}
+      <div className="on-dark relative overflow-hidden bg-brand-ink text-white">
+        <Image src="/images/hero-sekolah-baru.jpg" alt="" fill sizes="100vw" quality={70} className="object-cover" style={{ objectPosition: "30% 45%" }} />
+        <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-b from-brand-ink/95 via-brand-ink/80 to-brand-ink/90" />
+        {/* Batas atas berombak: diisi warna latar seksi sebelumnya (putih) */}
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 1440 120"
+          preserveAspectRatio="none"
+          className="pointer-events-none absolute inset-x-0 top-[-1px] z-[1] h-[48px] w-full text-paper md:h-[90px]"
+        >
+          <path
+            fill="currentColor"
+            d="M0 0H1440V46C1360 78 1290 98 1200 92C1090 84 1020 34 900 30C780 26 720 86 600 96C480 106 420 52 300 44C190 37 110 70 0 92Z"
           />
+        </svg>
+
+      {/* Sejarah */}
+      <section id="sejarah" aria-labelledby="judul-sejarah" className="section-y relative">
+        <div className="container-site relative">
+          <div className="max-w-[60ch]">
+            <p data-reveal className="text-xs font-semibold uppercase tracking-[0.3em] text-aksen">Sejarah sekolah</p>
+            <h2 id="judul-sejarah" data-reveal className="mt-4 text-h2 text-white">
+              {`Perjalanan sejak ${sekolah.pendirian.tahun}`}
+            </h2>
+            <p data-reveal className="mt-4 text-lead text-white/75">
+              Dua dekade melayani pendidikan menengah atas di Brang Rea, Sumbawa Barat.
+            </p>
+          </div>
           <CarouselRail
             sebagai="ol"
             ariaLabel="Tonggak sejarah sekolah"
             wrapClassName="mt-10 lg:mt-14"
-            className="lg:grid lg:grid-cols-4 lg:gap-px lg:overflow-hidden lg:rounded-[14px] lg:border lg:border-line lg:bg-line"
+            className="lg:grid lg:grid-cols-4 lg:gap-4"
           >
             {profil.sejarah.map((p, i) => (
               <li
                 key={`${i}-${p.tahun}`}
                 data-reveal
                 style={{ "--d": i } as React.CSSProperties}
-                className="flex w-[min(80vw,300px)] shrink-0 flex-col rounded-[14px] border border-line bg-paper p-6 sm:w-[320px] md:p-8 lg:w-auto lg:rounded-none lg:border-0"
+                className="flex w-[min(80vw,300px)] shrink-0 flex-col rounded-[14px] bg-white/[0.07] p-6 ring-1 ring-white/15 backdrop-blur-sm sm:w-[320px] md:p-8 lg:w-auto"
               >
-                <span className="text-stat text-brand">{p.tahun}</span>
-                <span className="mt-6 text-h3 text-ink">{p.judul}</span>
-                <span className="mt-3 text-[0.9375rem] text-ink-2">{p.teks}</span>
+                <span className="text-stat font-extralight text-aksen">{p.tahun}</span>
+                <span className="mt-6 block h-px w-12 bg-white/25" aria-hidden="true" />
+                <span className="mt-6 text-h3 text-white">{p.judul}</span>
+                <span className="mt-3 text-[0.9375rem] text-white/75">{p.teks}</span>
                 {p.contoh && <Contoh className="mt-5 self-start" />}
               </li>
             ))}
@@ -170,10 +192,7 @@ export default async function Profil() {
       </section>
 
       {/* Visi & misi */}
-      <section id="visi-misi" aria-labelledby="judul-visi" className="on-dark section-y relative overflow-hidden bg-brand-ink text-white">
-        {/* Hiasan cahaya lembut */}
-        <span aria-hidden="true" className="pointer-events-none absolute -left-40 -top-40 h-[480px] w-[480px] rounded-full bg-brand opacity-60 blur-[120px]" />
-        <span aria-hidden="true" className="pointer-events-none absolute -bottom-48 -right-32 h-[520px] w-[520px] rounded-full bg-brand opacity-50 blur-[130px]" />
+      <section id="visi-misi" aria-labelledby="judul-visi" className="section-y relative">
         <div className="container-site relative grid gap-14 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-20">
           <div className="lg:sticky lg:top-32 lg:self-start">
             <div data-reveal className="flex flex-wrap items-center gap-3">
@@ -222,6 +241,20 @@ export default async function Profil() {
         </div>
       </section>
 
+        {/* Batas bawah berombak: diisi warna latar seksi Struktur (putih) */}
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 1440 120"
+          preserveAspectRatio="none"
+          className="pointer-events-none absolute inset-x-0 bottom-[-1px] z-[1] h-[48px] w-full text-paper md:h-[90px]"
+        >
+          <path
+            fill="currentColor"
+            d="M0 120H1440V70C1330 34 1240 22 1130 32C1010 43 950 96 820 98C690 100 640 40 520 30C400 20 330 74 210 84C130 90 60 76 0 58Z"
+          />
+        </svg>
+      </div>
+
       {/* Struktur */}
       <section id="struktur" aria-labelledby="judul-struktur" className="section-y">
         <div className="container-site">
@@ -233,27 +266,29 @@ export default async function Profil() {
           <CarouselRail
             ariaLabel="Struktur organisasi sekolah"
             wrapClassName="mt-10 lg:mt-12"
-            className="lg:grid lg:grid-cols-4 lg:gap-5"
+            className="lg:grid lg:grid-cols-4 lg:gap-x-0 lg:gap-y-10"
           >
             {profil.struktur.map((p, i) => (
               <li
                 key={`${i}-${p.jabatan}`}
                 data-reveal
                 style={{ "--d": i % 4 } as React.CSSProperties}
-                className="zoom-wrap group relative flex aspect-[4/5] w-[min(76vw,260px)] shrink-0 flex-col justify-end overflow-hidden rounded-[10px] bg-brand-ink p-5 text-white sm:w-[280px] lg:w-auto"
+                className="group relative flex w-[min(76vw,260px)] shrink-0 flex-col sm:w-[280px] lg:w-auto rounded-[4px] pb-6 text-center transition-[background-color,box-shadow,transform] duration-300 hover:z-10 hover:bg-paper hover:shadow-[0_24px_50px_-12px_rgb(6_16_11/0.22)]"
               >
-                {p.foto ? (
-                  <Image src={p.foto} alt={p.nama} fill sizes="(min-width: 1024px) 300px, 280px" className="object-cover object-top" />
-                ) : (
-                  <span className="absolute inset-0 grid place-items-center bg-brand-soft pb-16 text-brand" aria-hidden="true">
-                    <UserRound size={64} strokeWidth={1.25} />
-                  </span>
-                )}
-                <span className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-brand-ink/95 via-brand-ink/60 to-transparent" aria-hidden="true" />
-                <div className="relative flex flex-col">
-                  <p className="text-sm text-white/80 first-letter:uppercase">{p.jabatan}</p>
-                  <p className="mt-1 text-[1.125rem] font-semibold leading-tight text-white">{p.nama}</p>
-                  {p.contoh && <Contoh className="mt-3 self-start" />}
+                {/* Seperti referensi: pita gradasi lembut di belakang kaki foto, nama di tengah; saat hover kartu putih berbayang muncul */}
+                <div className="relative aspect-[4/5] bg-gradient-to-b from-transparent from-40% to-brand-ink/[0.07] group-hover:from-transparent group-hover:to-transparent">
+                  {p.foto ? (
+                    <Image src={p.foto} alt={p.nama} fill sizes="(min-width: 1024px) 300px, 280px" className="object-contain object-bottom" />
+                  ) : (
+                    <span className="absolute inset-0 grid place-items-end justify-center pb-6 text-brand/50" aria-hidden="true">
+                      <UserRound size={120} strokeWidth={1} />
+                    </span>
+                  )}
+                </div>
+                <div className="flex flex-col items-center px-4 pt-5">
+                  <p className="text-[1.125rem] font-semibold leading-tight text-ink">{p.nama}</p>
+                  <p className="mt-1 text-sm text-ink-2 first-letter:uppercase">{p.jabatan}</p>
+                  {p.contoh && <Contoh className="mt-3 self-center" />}
                 </div>
               </li>
             ))}
@@ -291,24 +326,25 @@ export default async function Profil() {
           <CarouselRail
             ariaLabel="Daftar guru dan tenaga kependidikan"
             wrapClassName="mt-6"
-            className="lg:grid lg:grid-cols-4 lg:gap-4"
+            className="lg:grid lg:grid-cols-4 lg:gap-x-0 lg:gap-y-10"
           >
             {profil.guru.map((g, i) => (
               <li
                 key={`${i}-${g.nama}`}
-                className="zoom-wrap group relative flex aspect-[4/5] w-[min(72vw,240px)] shrink-0 flex-col justify-end overflow-hidden rounded-[10px] bg-brand-ink p-5 text-white sm:w-[260px] lg:w-auto"
+                className="group relative flex w-[min(72vw,240px)] shrink-0 flex-col sm:w-[260px] lg:w-auto rounded-[4px] pb-6 text-center transition-[background-color,box-shadow,transform] duration-300 hover:z-10 hover:bg-paper hover:shadow-[0_24px_50px_-12px_rgb(6_16_11/0.22)]"
               >
-                {"foto" in g && g.foto ? (
-                  <Image src={g.foto as string} alt={g.nama} fill sizes="(min-width: 1024px) 300px, 260px" className="object-cover object-top" />
-                ) : (
-                  <span className="absolute inset-0 grid place-items-center bg-brand-soft pb-16 text-brand" aria-hidden="true">
-                    <UserRound size={56} strokeWidth={1.25} />
-                  </span>
-                )}
-                <span className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-brand-ink/95 via-brand-ink/60 to-transparent" aria-hidden="true" />
-                <span className="relative flex flex-col">
-                  <span className="text-[1.125rem] font-semibold leading-tight text-white">{g.nama}</span>
-                  <span className="mt-1 text-sm text-white/80">Guru {g.mapel}</span>
+                <div className="relative aspect-[4/5] bg-gradient-to-b from-transparent from-40% to-brand-ink/[0.07] group-hover:from-transparent group-hover:to-transparent">
+                  {"foto" in g && g.foto ? (
+                    <Image src={g.foto as string} alt={g.nama} fill sizes="(min-width: 1024px) 300px, 260px" className="object-contain object-bottom" />
+                  ) : (
+                    <span className="absolute inset-0 grid place-items-end justify-center pb-6 text-brand/50" aria-hidden="true">
+                      <UserRound size={110} strokeWidth={1} />
+                    </span>
+                  )}
+                </div>
+                <span className="flex flex-col items-center px-4 pt-5">
+                  <span className="text-[1.125rem] font-semibold leading-tight text-ink">{g.nama}</span>
+                  <span className="mt-1 text-sm text-ink-2">Guru {g.mapel}</span>
                 </span>
               </li>
             ))}
