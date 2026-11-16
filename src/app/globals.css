@@ -722,10 +722,11 @@ details[open] > summary .chev {
   transform: rotate(180deg);
 }
 
-/* Sub-navigasi lengket mengikuti header */
+/* Sub-navigasi lengket: ikut digulir, turun di bawah header hanya saat sudah menempel
+   (pakai `top`, bukan transform, supaya tidak muncul celah putih saat belum menempel) */
 .subnav {
-  transform: translateY(var(--header-offset, 0px));
-  transition: transform 420ms var(--ease-out-soft);
+  top: var(--header-offset, 0px);
+  transition: top 420ms var(--ease-out-soft);
 }
 
 /* ---------- Hero slider ---------- */

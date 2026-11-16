@@ -5,7 +5,7 @@ import { cx } from "@/lib/format";
 
 type Item = { id: string; label: string };
 
-/** Navigasi bagian halaman yang lengket + penanda bagian aktif (scroll spy). */
+/** Navigasi bagian halaman yang lengket saat digulir + penanda bagian aktif (scroll spy). */
 export function SubNav({ items }: { items: Item[] }) {
   const [aktif, setAktif] = useState(items[0]?.id ?? "");
   const listRef = useRef<HTMLUListElement>(null);
@@ -37,7 +37,7 @@ export function SubNav({ items }: { items: Item[] }) {
   }, [aktif]);
 
   return (
-    <div className="subnav sticky top-0 z-30 border-b border-line bg-paper/95 backdrop-blur-md">
+    <div className="subnav sticky z-30 border-b border-line bg-paper/95 backdrop-blur-md">
       <nav aria-label="Bagian halaman" className="container-site">
         <ul ref={listRef} className="rail -mx-1 flex gap-1 overflow-x-auto scroll-px-1">
           {items.map((i) => {
