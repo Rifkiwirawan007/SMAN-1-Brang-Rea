@@ -1,7 +1,12 @@
 import type { Spmb } from "@/lib/konten/tipe";
 
-/** Warna irisan grafik (gradasi hijau sekolah), berurutan sesuai daftar kuota di dashboard. */
-const WARNA = ["#7cc49a", "#d4ecdd", "#4f9a6c", "#a9d8bb", "#3a8257", "#eef7f1", "#96cfad", "#5fae80"];
+/**
+ * Warna irisan grafik: palet "satu nada" (tonal harmony). Rona disebar mengelilingi roda warna,
+ * tapi kejenuhan & kecerahan dibuat seragam (pastel cerah ±HSL S70% L65%) sehingga tetap serasi di latar hijau tua.
+ * Dibuka dengan hijau sekolah dan oranye aksen (#f28c00) agar nyambung dengan identitas situs.
+ * Urutan: hijau, amber, biru langit, merah muda, ungu, koral, toska, kuning — warna bersebelahan sengaja berjauhan.
+ */
+const WARNA = ["#5fd896", "#f5bd47", "#5cbfef", "#f080a6", "#b28cf0", "#f2875c", "#4ac9be", "#ede25c"];
 
 const persen = (n: number, total: number) => {
   const p = total ? (n / total) * 100 : 0;
