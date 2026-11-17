@@ -209,7 +209,8 @@ const prestasi: ModulKoleksi<Prestasi & Item> = {
   satuan: "prestasi",
   ikon: Trophy,
   grup: "Konten",
-  deskripsi: "Tabel prestasi siswa di halaman Kesiswaan. Urutan di sini = urutan di situs.",
+  deskripsi:
+    "Catatan tertulis semua prestasi, tampil sebagai TABEL di halaman Kesiswaan (urutan di sini = urutan di tabel). Foto/poster TIDAK tampil di situs dari menu ini: untuk memajang poster di beranda dan Kesiswaan, tambahkan juga di menu Poster prestasi.",
   urutan: "manual",
   bawaan: () => ({ tahun: String(new Date().getFullYear()), tingkat: "—", contoh: false }),
   bidang: [
@@ -218,7 +219,7 @@ const prestasi: ModulKoleksi<Prestasi & Item> = {
     { jenis: "teks", nama: "tahun", label: "Tahun", wajib: true, maks: 9, lebar: "sepertiga" },
     { jenis: "pilihan", nama: "tingkat", label: "Tingkat", wajib: true, opsi: TINGKAT, lebar: "sepertiga", bantuan: "Pilih — bila tidak diketahui." },
     { jenis: "teks", nama: "bidang", label: "Bidang", wajib: true, maks: 60, placeholder: "Seni (FLS3N)", lebar: "sepertiga" },
-    { jenis: "gambar", nama: "gambar", label: "Poster / foto", sisi: true },
+    { jenis: "gambar", nama: "gambar", label: "Poster / foto (arsip)", sisi: true, bantuan: "Hanya arsip di dashboard, tidak tampil di situs. Agar poster tampil, tambahkan di menu Poster prestasi." },
     bidContoh,
   ],
   judul: (x) => x.judul,
@@ -243,14 +244,15 @@ const posterPrestasi: ModulKoleksi<PosterPrestasi & Item> = {
   satuan: "poster",
   ikon: Medal,
   grup: "Konten",
-  deskripsi: "Kartu bergambar di tab Prestasi beranda (maks. 6 bertanda Beranda) dan galeri poster di halaman Kesiswaan.",
+  deskripsi:
+    "Poster/gambar prestasi untuk dipajang: semua tampil di galeri poster halaman Kesiswaan, dan maks. 6 teratas yang bertanda Beranda tampil di tab Prestasi beranda. Poster tidak masuk tabel prestasi: catat juga di menu Prestasi agar tercatat lengkap.",
   urutan: "manual",
   bawaan: () => ({ beranda: false }),
   bidang: [
     { jenis: "gambar", nama: "src", label: "Poster / foto", wajib: true },
     { jenis: "teks", nama: "judul", label: "Judul", wajib: true, maks: 120, placeholder: "Juara 1 O2SN: atletik" },
     { jenis: "teks", nama: "ket", label: "Keterangan singkat", maks: 80, placeholder: "2026, tingkat Provinsi NTB" },
-    { jenis: "saklar", nama: "beranda", label: "Beranda", teks: "Tampilkan di beranda", sisi: true, bantuan: "Beranda memuat maksimal 6 poster bertanda ini, sesuai urutan." },
+    { jenis: "saklar", nama: "beranda", label: "Beranda", teks: "Tampilkan di beranda", sisi: true, bantuan: "Beranda hanya memuat 6 poster teratas yang bertanda ini (sesuai urutan). Matikan poster lama bila sudah ada 6." },
   ],
   judul: (x) => x.judul,
   sub: (x) => x.ket,
