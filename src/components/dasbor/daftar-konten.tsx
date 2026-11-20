@@ -275,7 +275,7 @@ export function DaftarKonten({ kunci, items }: { kunci: NamaKoleksi; items: Item
 
       {/* Bilah pilihan massal */}
       {terpilih.size > 0 && !modeUrut && (
-        <div className="sticky top-[4.5rem] z-10 mb-3 flex flex-wrap items-center gap-2 rounded-xl border border-brand bg-brand-soft px-4 py-2.5">
+        <div className="sticky top-[5.5rem] z-10 mb-3 flex flex-wrap items-center gap-2 rounded-2xl border border-brand bg-brand-soft px-4 py-2.5 lg:top-[6.5rem]">
           <p className="mr-auto text-sm font-semibold text-brand-deep">{terpilih.size} dipilih</p>
           {modul.status && (
             <>
@@ -297,7 +297,8 @@ export function DaftarKonten({ kunci, items }: { kunci: NamaKoleksi; items: Item
       )}
 
       {/* Daftar */}
-      <div className="d-kartu overflow-hidden">
+      {/* Mode kartu tanpa overflow-hidden supaya menu aksi di baris terbawah tidak terpotong. */}
+      <div className={`d-kartu ${modul.tampilan === "kartu" && !modeUrut && tampil.length ? "" : "overflow-hidden"}`}>
         {tampil.length === 0 ? (
           items.length === 0 ? (
             <Kosong
@@ -313,6 +314,70 @@ export function DaftarKonten({ kunci, items }: { kunci: NamaKoleksi; items: Item
           ) : (
             <Kosong ikon={Search} judul="Tidak ada yang cocok" teks="Coba kata kunci lain atau reset filter." />
           )
+        ) : modul.tampilan === "kartu" && !modeUrut ? (
+          <ul className="grid grid-cols-2 gap-x-3 gap-y-5 p-3 sm:gap-x-4 sm:p-4 md:grid-cols-3 xl:grid-cols-4">
+            {tampil.map((x) => {
+              const gambar = modul.gambar?.(x as never);
+              const publik = modul.publik?.(x as never);
+              const pilih = terpilih.has(x.id);
+              return (
+                <li key={x.id} className="group relative min-w-0">
+                  <Link
+                    href={`/dashboard/${kunci}/${x.id}`}
+                    className={`relative block aspect-[9/10] overflow-hidden rounded-[16px] border bg-paper-3 transition-shadow ${pilih ? "border-brand ring-2 ring-brand" : "border-white/80 group-hover:shadow-[0_18px_34px_-20px_rgb(6_16_11/0.55)]"}`}
+                  >
+                    {gambar ? (
+                      <Image src={gambar} alt="" fill sizes="(min-width: 1280px) 22vw, (min-width: 768px) 30vw, 45vw" className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]" />
+                    ) : (
+                      <ImageOff size={22} className="absolute inset-0 m-auto text-muted" aria-hidden="true" />
+                    )}
+                  </Link>
+                  <label className="absolute left-2.5 top-2.5 grid h-8 w-8 cursor-pointer place-items-center rounded-full bg-white/90 shadow-sm">
+                    <input
+                      type="checkbox"
+                      className="d-kotak-centang"
+                      aria-label={`Pilih ${modul.judul(x as never)}`}
+                      checked={pilih}
+                      onChange={() =>
+                        setTerpilih((t) => {
+                          const n = new Set(t);
+                          if (n.has(x.id)) n.delete(x.id);
+                          else n.add(x.id);
+                          return n;
+                        })
+                      }
+                    />
+                  </label>
+                  <div className="absolute right-2.5 top-2.5 rounded-full bg-white/90 shadow-sm">
+                    <MenuBaris>
+                      <Link href={`/dashboard/${kunci}/${x.id}`} className="d-menu-item">
+                        <Pencil size={15} aria-hidden="true" /> Ubah
+                      </Link>
+                      {publik && (
+                        <a href={publik} target="_blank" rel="noopener noreferrer" className="d-menu-item">
+                          <ExternalLink size={15} aria-hidden="true" /> Lihat di situs
+                        </a>
+                      )}
+                      <button type="button" className="d-menu-item" onClick={() => void gandakan(x.id)}>
+                        <Copy size={15} aria-hidden="true" /> Gandakan
+                      </button>
+                      <button type="button" className="d-menu-item text-[#b42318]" onClick={() => void hapus([x.id])}>
+                        <Trash2 size={15} aria-hidden="true" /> Hapus
+                      </button>
+                    </MenuBaris>
+                  </div>
+                  <Link href={`/dashboard/${kunci}/${x.id}`} className="mt-3 line-clamp-2 block text-sm font-semibold leading-snug text-ink hover:text-brand">
+                    {modul.judul(x as never) || "(tanpa judul)"}
+                  </Link>
+                  {modul.sub && <p className="mt-1 line-clamp-3 text-[0.8125rem] leading-snug text-muted">{modul.sub(x as never)}</p>}
+                  <div className="mt-2 flex flex-wrap gap-1 empty:hidden">
+                    {modul.contoh?.(x as never) && <Lencana>Contoh</Lencana>}
+                    {kunci === "poster-prestasi" && x.beranda === true && <Lencana warna="hijau">Beranda</Lencana>}
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
         ) : (
           <div className="overflow-x-auto">
             <table className="d-tabel">

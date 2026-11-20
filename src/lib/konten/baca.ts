@@ -84,14 +84,7 @@ export async function ambilAgenda() {
   return [...semua].sort((a, b) => a.tanggal.localeCompare(b.tanggal));
 }
 
-/** Prestasi sesuai urutan di dashboard. */
-export async function ambilPrestasi() {
-  "use cache";
-  cacheTag(tagKonten("prestasi"));
-  return bacaKoleksi("prestasi");
-}
-
-/** Poster prestasi sesuai urutan di dashboard. */
+/** Prestasi (poster + keterangan) sesuai urutan di dashboard. */
 export async function ambilPosterPrestasi() {
   "use cache";
   cacheTag(tagKonten("poster-prestasi"));

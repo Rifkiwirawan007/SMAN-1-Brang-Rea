@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { PemicuLightbox } from "@/components/ui/gambar-perbesar";
-import { Award, CircleCheck, HeartHandshake, MessageCircle, ShieldAlert } from "lucide-react";
+import { CircleCheck, HeartHandshake, MessageCircle, ShieldAlert } from "lucide-react";
 import { PageHero } from "@/components/ui/page-hero";
 import { SubNav } from "@/components/ui/sub-nav";
 import { SectionHead } from "@/components/ui/section-head";
@@ -10,7 +10,7 @@ import { CarouselRail } from "@/components/ui/carousel-rail";
 import { CatatanContoh, Contoh } from "@/components/ui/contoh";
 import { IkonWhatsApp } from "@/components/ui/icons";
 import { EkskulGrid } from "@/components/kesiswaan/ekskul-grid";
-import { ambilEkskul, ambilKesiswaan, ambilPosterPrestasi, ambilPrestasi, ambilSekolah } from "@/lib/konten/baca";
+import { ambilEkskul, ambilKesiswaan, ambilPosterPrestasi, ambilSekolah } from "@/lib/konten/baca";
 import { KATEGORI_EKSKUL } from "@/lib/konten/tipe";
 import { angkaHuruf, waLink } from "@/lib/format";
 
@@ -28,11 +28,10 @@ const BAGIAN = [
 ];
 
 export default async function Kesiswaan() {
-  const [sekolah, ekskul, kesiswaan, prestasi, poster] = await Promise.all([
+  const [sekolah, ekskul, kesiswaan, poster] = await Promise.all([
     ambilSekolah(),
     ambilEkskul(),
     ambilKesiswaan(),
-    ambilPrestasi(),
     ambilPosterPrestasi(),
   ]);
   const { osis, tataTertib, layananBk } = kesiswaan;
@@ -122,40 +121,6 @@ export default async function Kesiswaan() {
               </li>
             ))}
           </CarouselRail>
-          <p className="mt-10 flex items-center gap-2 text-sm text-muted md:hidden" aria-hidden="true">
-            Geser tabel ke samping <span className="geser-panah">→</span>
-          </p>
-          <div data-reveal className="mt-3 overflow-x-auto rounded-[14px] border border-line md:mt-12">
-            <table className="w-full min-w-[640px] text-left">
-              <caption className="sr-only">Daftar prestasi siswa</caption>
-              <thead className="bg-paper-2">
-                <tr className="text-sm text-muted">
-                  <th scope="col" className="px-6 py-4 font-medium">Tahun</th>
-                  <th scope="col" className="px-6 py-4 font-medium">Prestasi</th>
-                  <th scope="col" className="px-6 py-4 font-medium">Tingkat</th>
-                  <th scope="col" className="px-6 py-4 font-medium">Bidang</th>
-                </tr>
-              </thead>
-              <tbody>
-                {prestasi.map((p) => (
-                  <tr key={p.id} className="border-t border-line">
-                    <td className="px-6 py-4 tabular-nums text-ink-2">{p.tahun}</td>
-                    <th scope="row" className="px-6 py-4 font-semibold text-ink">
-                      <span className="flex items-start gap-3">
-                        <Award size={18} aria-hidden="true" className="mt-0.5 shrink-0 text-brand" />
-                        <span>
-                          {p.judul}
-                          {p.nama && <span className="mt-0.5 block text-sm font-normal text-ink-2">{p.nama}</span>}
-                        </span>
-                      </span>
-                    </th>
-                    <td className="px-6 py-4 text-ink-2">{p.tingkat}</td>
-                    <td className="px-6 py-4 text-ink-2">{p.bidang}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
         </div>
       </section>
 

@@ -108,7 +108,7 @@ export function EkskulTabs({ ekskul, prestasi }: { ekskul: Ekskul[]; prestasi: P
                     />
                   </span>
                   <span className="flex flex-1 flex-col p-5">
-                    <span className="text-sm text-muted">{p.ket}</span>
+                    <span className="line-clamp-2 text-sm text-muted">{p.ket}</span>
                     <span className="mt-1 font-semibold leading-snug text-ink">{p.judul}</span>
                   </span>
                 </Link>

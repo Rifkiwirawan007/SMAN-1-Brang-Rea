@@ -6,7 +6,6 @@ import {
   Image as IkonGambar,
   Images,
   LayoutTemplate,
-  Medal,
   MessageSquareQuote,
   Newspaper,
   School,
@@ -27,7 +26,6 @@ import {
   type NamaDokumen,
   type NamaKoleksi,
   type PosterPrestasi,
-  type Prestasi,
   type SlideHero,
 } from "@/lib/konten/tipe";
 import { formatTanggal } from "@/lib/format";
@@ -64,6 +62,8 @@ export type ModulKoleksi<T extends Item = Item> = {
   filter?: { kunci: string; label: string; opsi?: readonly string[]; ambil: (x: T) => string }[];
   publik?: (x: T) => string | null;
   contoh?: (x: T) => boolean;
+  /** "kartu" = daftar dashboard berupa kartu bergambar (seperti di situs), bukan tabel. */
+  tampilan?: "kartu";
   /** Unggah banyak foto sekaligus jadi item baru (galeri). */
   unggahMassal?: { bidangGambar: string; bidangJudul: string; bawaan: Record<string, unknown> };
   /** Validasi tambahan antarbidang. */
@@ -95,7 +95,6 @@ const bidContoh: Bidang = {
   sisi: true,
 };
 
-const TINGKAT = ["—", "Sekolah", "Kecamatan", "Kabupaten", "Provinsi", "Provinsi NTB", "Nasional", "Internasional"] as const;
 
 const LABEL_IKON: Record<(typeof IKON_EKSKUL_NAMA)[number], string> = {
   tenda: "Tenda (Pramuka)",
@@ -202,57 +201,30 @@ const agenda: ModulKoleksi<Agenda & Item> = {
   contoh: (x) => !!x.contoh,
 };
 
-const prestasi: ModulKoleksi<Prestasi & Item> = {
+const posterPrestasi: ModulKoleksi<PosterPrestasi & Item> = {
   jenis: "koleksi",
-  kunci: "prestasi",
+  kunci: "poster-prestasi",
   label: "Prestasi",
   satuan: "prestasi",
   ikon: Trophy,
   grup: "Konten",
   deskripsi:
-    "Catatan tertulis semua prestasi, tampil sebagai TABEL di halaman Kesiswaan (urutan di sini = urutan di tabel). Foto/poster TIDAK tampil di situs dari menu ini: untuk memajang poster di beranda dan Kesiswaan, tambahkan juga di menu Poster prestasi.",
+    "Prestasi siswa beserta poster/fotonya. Semua tampil sebagai kartu bergambar di halaman Kesiswaan (urutan di sini = urutan di situs), dan maks. 6 teratas yang bertanda Beranda tampil di tab Prestasi beranda. Satu poster untuk beberapa juara cukup satu item: tulis semua namanya di keterangan.",
   urutan: "manual",
-  bawaan: () => ({ tahun: String(new Date().getFullYear()), tingkat: "—", contoh: false }),
-  bidang: [
-    { jenis: "teks", nama: "judul", label: "Prestasi", wajib: true, maks: 160, placeholder: "Juara 1 FLS3N mata lomba baca puisi" },
-    { jenis: "teks", nama: "nama", label: "Nama siswa / tim", maks: 200 },
-    { jenis: "teks", nama: "tahun", label: "Tahun", wajib: true, maks: 9, lebar: "sepertiga" },
-    { jenis: "pilihan", nama: "tingkat", label: "Tingkat", wajib: true, opsi: TINGKAT, lebar: "sepertiga", bantuan: "Pilih — bila tidak diketahui." },
-    { jenis: "teks", nama: "bidang", label: "Bidang", wajib: true, maks: 60, placeholder: "Seni (FLS3N)", lebar: "sepertiga" },
-    { jenis: "gambar", nama: "gambar", label: "Poster / foto (arsip)", sisi: true, bantuan: "Hanya arsip di dashboard, tidak tampil di situs. Agar poster tampil, tambahkan di menu Poster prestasi." },
-    bidContoh,
-  ],
-  judul: (x) => x.judul,
-  sub: (x) => x.nama ?? "",
-  gambar: (x) => x.gambar,
-  kolom: [
-    { label: "Tahun", isi: (x) => x.tahun },
-    { label: "Tingkat", isi: (x) => x.tingkat },
-  ],
-  filter: [
-    { kunci: "tahun", label: "Tahun", ambil: (x) => x.tahun },
-    { kunci: "tingkat", label: "Tingkat", ambil: (x) => x.tingkat },
-  ],
-  publik: () => "/kesiswaan#prestasi",
-  contoh: (x) => !!x.contoh,
-};
-
-const posterPrestasi: ModulKoleksi<PosterPrestasi & Item> = {
-  jenis: "koleksi",
-  kunci: "poster-prestasi",
-  label: "Poster prestasi",
-  satuan: "poster",
-  ikon: Medal,
-  grup: "Konten",
-  deskripsi:
-    "Poster/gambar prestasi untuk dipajang: semua tampil di galeri poster halaman Kesiswaan, dan maks. 6 teratas yang bertanda Beranda tampil di tab Prestasi beranda. Poster tidak masuk tabel prestasi: catat juga di menu Prestasi agar tercatat lengkap.",
-  urutan: "manual",
+  tampilan: "kartu",
   bawaan: () => ({ beranda: false }),
   bidang: [
     { jenis: "gambar", nama: "src", label: "Poster / foto", wajib: true },
-    { jenis: "teks", nama: "judul", label: "Judul", wajib: true, maks: 120, placeholder: "Juara 1 O2SN: atletik" },
-    { jenis: "teks", nama: "ket", label: "Keterangan singkat", maks: 80, placeholder: "2026, tingkat Provinsi NTB" },
-    { jenis: "saklar", nama: "beranda", label: "Beranda", teks: "Tampilkan di beranda", sisi: true, bantuan: "Beranda hanya memuat 6 poster teratas yang bertanda ini (sesuai urutan). Matikan poster lama bila sudah ada 6." },
+    { jenis: "teks", nama: "judul", label: "Prestasi", wajib: true, maks: 120, placeholder: "Juara 1 O2SN: atletik" },
+    {
+      jenis: "teks",
+      nama: "ket",
+      label: "Keterangan",
+      maks: 300,
+      placeholder: "2026, tingkat Provinsi NTB · Mardiana",
+      bantuan: "Tahun, tingkat, dan nama juara. Bila beberapa siswa, pisahkan dengan koma, mis. Angel (menulis puisi), Nur (fotografi).",
+    },
+    { jenis: "saklar", nama: "beranda", label: "Beranda", teks: "Tampilkan di beranda", sisi: true, bantuan: "Beranda hanya memuat 6 prestasi teratas yang bertanda ini (sesuai urutan). Matikan yang lama bila sudah ada 6." },
   ],
   judul: (x) => x.judul,
   sub: (x) => x.ket,
@@ -1028,7 +1000,6 @@ const sekolah: ModulDokumen = {
 export const KOLEKSI: Record<NamaKoleksi, ModulKoleksi> = {
   berita: berita as unknown as ModulKoleksi,
   agenda: agenda as unknown as ModulKoleksi,
-  prestasi: prestasi as unknown as ModulKoleksi,
   "poster-prestasi": posterPrestasi as unknown as ModulKoleksi,
   ekskul: ekskul as unknown as ModulKoleksi,
   galeri: galeri as unknown as ModulKoleksi,

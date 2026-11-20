@@ -60,10 +60,9 @@ export default async function Ringkasan({ searchParams }: PageProps<"/dashboard"
   const admin = boleh(p.peran, "pesan");
   const sp = await searchParams;
 
-  const [berita, agenda, prestasi, poster, ekskul, galeri, hero, sambutan, profil, akademik, kesiswaan, spmb] = await Promise.all([
+  const [berita, agenda, poster, ekskul, galeri, hero, sambutan, profil, akademik, kesiswaan, spmb] = await Promise.all([
     bacaKoleksi("berita"),
     bacaKoleksi("agenda"),
-    bacaKoleksi("prestasi"),
     bacaKoleksi("poster-prestasi"),
     bacaKoleksi("ekskul"),
     bacaKoleksi("galeri"),
@@ -87,7 +86,7 @@ export default async function Ringkasan({ searchParams }: PageProps<"/dashboard"
   const tujuhHari = kunjungan ? kunjungan.seri.slice(-7).reduce((n, s) => n + s.tampil, 0) : 0;
   const tujuhLalu = kunjungan ? kunjungan.seri.slice(0, 7).reduce((n, s) => n + s.tampil, 0) : 0;
 
-  const koleksi = { berita, agenda, prestasi, "poster-prestasi": poster, ekskul, galeri, hero } as const;
+  const koleksi = { berita, agenda, "poster-prestasi": poster, ekskul, galeri, hero } as const;
   const daftarContoh = [
     ...NAMA_KOLEKSI.map((k) => ({
       href: `/dashboard/${k}`,
@@ -115,7 +114,7 @@ export default async function Ringkasan({ searchParams }: PageProps<"/dashboard"
   const kartu = [
     { label: "Berita terbit", nilai: beritaTerbit.length, ket: draf.length ? `${draf.length} draf menunggu` : "tidak ada draf", href: "/dashboard/berita", ikon: Newspaper },
     { label: "Agenda mendatang", nilai: agendaMendatang.length, ket: agendaMendatang[0] ? `berikutnya ${formatTanggal(agendaMendatang[0].tanggal, { pendek: true })}` : "belum ada agenda", href: "/dashboard/agenda", ikon: CalendarDays },
-    { label: "Prestasi", nilai: prestasi.length, ket: `${poster.length} poster, ${poster.filter((x) => x.beranda).length} di beranda`, href: "/dashboard/prestasi", ikon: Trophy },
+    { label: "Prestasi", nilai: poster.length, ket: `${poster.filter((x) => x.beranda).length} tampil di beranda`, href: "/dashboard/poster-prestasi", ikon: Trophy },
     { label: "Foto galeri", nilai: galeri.length, ket: `${ekskul.length} ekskul, ${hero.filter((h) => h.aktif !== false).length} slide aktif`, href: "/dashboard/galeri", ikon: ImagePlus },
   ];
 
@@ -142,7 +141,7 @@ export default async function Ringkasan({ searchParams }: PageProps<"/dashboard"
       <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
           <p className="text-sm text-muted">{formatTanggal(hariIni)}</p>
-          <h1 className="mt-1 text-[1.625rem] font-semibold tracking-[-0.015em] text-ink md:text-[1.875rem]">
+          <h1 className="mt-1 text-[1.75rem] font-bold tracking-[-0.02em] text-ink md:text-[2.25rem]">
             {sapaan()}, {p.nama.split(" ")[0]}
           </h1>
         </div>
@@ -156,22 +155,22 @@ export default async function Ringkasan({ searchParams }: PageProps<"/dashboard"
           <Link href="/dashboard/galeri" className="d-btn d-btn-garis">
             <ImagePlus size={16} aria-hidden="true" /> Foto
           </Link>
-          <Link href="/dashboard/prestasi/baru" className="d-btn d-btn-garis">
+          <Link href="/dashboard/poster-prestasi/baru" className="d-btn d-btn-garis">
             <Trophy size={16} aria-hidden="true" /> Prestasi
           </Link>
         </div>
       </div>
 
-      <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <ul className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
         {kartu.map((k) => (
           <li key={k.label}>
-            <Link href={k.href} className="d-kartu group flex h-full flex-col p-5 transition-shadow hover:shadow-[0_12px_32px_-20px_rgb(6_16_11/0.4)]">
-              <span className="flex items-center justify-between text-sm text-muted">
-                {k.label}
-                <k.ikon size={18} aria-hidden="true" className="text-brand" />
+            <Link href={k.href} className="d-kartu group flex h-full flex-col p-4 transition-[transform,box-shadow] sm:p-5 duration-200 hover:-translate-y-0.5 hover:shadow-[0_22px_40px_-22px_rgb(6_16_11/0.45)]">
+              <span className="d-ikon-bulat h-10 w-10">
+                <k.ikon size={18} aria-hidden="true" />
               </span>
-              <span className="mt-2 text-[2rem] font-semibold leading-none tabular-nums tracking-[-0.02em] text-ink">{formatAngka(k.nilai)}</span>
-              <span className="mt-2 text-xs text-muted">{k.ket}</span>
+              <span className="mt-4 text-[1.875rem] font-bold leading-none tabular-nums tracking-[-0.03em] text-ink sm:mt-5 sm:text-[2.25rem]">{formatAngka(k.nilai)}</span>
+              <span className="mt-2 text-sm font-semibold text-ink">{k.label}</span>
+              <span className="mt-0.5 text-xs text-muted">{k.ket}</span>
             </Link>
           </li>
         ))}

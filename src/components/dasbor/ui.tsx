@@ -35,9 +35,9 @@ export function JudulHalaman({
             ))}
           </nav>
         )}
-        <h1 className="flex items-center gap-3 text-[1.5rem] font-semibold leading-tight tracking-[-0.015em] text-ink md:text-[1.75rem]">
+        <h1 className="flex items-center gap-3 text-[1.625rem] font-bold leading-tight tracking-[-0.02em] text-ink md:text-[2rem]">
           {Ikon && (
-            <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand">
+            <span className="d-ikon-bulat h-11 w-11">
               <Ikon size={20} aria-hidden="true" />
             </span>
           )}
@@ -70,7 +70,7 @@ export function Kartu({
       {(judul || aksi) && (
         <header className="flex items-start justify-between gap-3 border-b border-line px-5 py-4">
           <div className="min-w-0">
-            {judul && <h2 className="text-[0.9375rem] font-semibold text-ink">{judul}</h2>}
+            {judul && <h2 className="text-base font-semibold tracking-[-0.01em] text-ink">{judul}</h2>}
             {deskripsi && <p className="mt-0.5 text-[0.8125rem] leading-relaxed text-muted">{deskripsi}</p>}
           </div>
           {aksi && <div className="flex shrink-0 items-center gap-2">{aksi}</div>}
@@ -84,7 +84,7 @@ export function Kartu({
 export function Kosong({ ikon: Ikon, judul, teks, aksi }: { ikon: LucideIcon; judul: string; teks?: string; aksi?: React.ReactNode }) {
   return (
     <div className="flex flex-col items-center px-6 py-14 text-center">
-      <span className="grid h-14 w-14 place-items-center rounded-2xl bg-paper-3 text-muted">
+      <span className="d-ikon-bulat h-14 w-14 text-muted">
         <Ikon size={26} aria-hidden="true" />
       </span>
       <p className="mt-4 font-semibold text-ink">{judul}</p>

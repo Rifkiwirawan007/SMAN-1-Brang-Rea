@@ -139,7 +139,7 @@ export function KelolaMedia() {
         )}
       </div>
 
-      <aside className="d-kartu h-fit p-5 xl:sticky xl:top-24">
+      <aside className="d-kartu h-fit p-5 xl:sticky xl:top-28">
         {!aktif ? (
           <p className="py-8 text-center text-sm text-muted">Klik foto untuk melihat detail, menyalin alamat, atau menghapusnya.</p>
         ) : (

@@ -36,7 +36,7 @@ export default async function HalamanMasuk({ searchParams }: PageProps<"/masuk">
         </div>
       </div>
 
-      <div className="flex flex-col px-5 py-8 sm:px-10">
+      <div className="flex flex-col bg-paper-2 px-5 py-8 sm:px-10">
         <Link href="/" className="inline-flex items-center gap-2 self-start text-sm text-muted hover:text-brand">
           <ArrowLeft size={16} aria-hidden="true" /> Kembali ke situs
         </Link>

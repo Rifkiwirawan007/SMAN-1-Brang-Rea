@@ -48,17 +48,6 @@ export type Agenda = Meta & {
   contoh: boolean;
 };
 
-export type Prestasi = Meta & {
-  tahun: string;
-  judul: string;
-  nama?: string;
-  /** "—" bila tingkat tidak diketahui. */
-  tingkat: string;
-  bidang: string;
-  gambar?: string;
-  contoh: boolean;
-};
-
 export type PosterPrestasi = Meta & {
   src: string;
   judul: string;
@@ -243,7 +232,6 @@ export type Spmb = {
 export type PetaKoleksi = {
   berita: Berita;
   agenda: Agenda;
-  prestasi: Prestasi;
   "poster-prestasi": PosterPrestasi;
   ekskul: Ekskul;
   galeri: FotoGaleri;
@@ -262,7 +250,7 @@ export type PetaDokumen = {
 };
 export type NamaDokumen = keyof PetaDokumen;
 
-export const NAMA_KOLEKSI: NamaKoleksi[] = ["berita", "agenda", "prestasi", "poster-prestasi", "ekskul", "galeri", "hero"];
+export const NAMA_KOLEKSI: NamaKoleksi[] = ["berita", "agenda", "poster-prestasi", "ekskul", "galeri", "hero"];
 export const NAMA_DOKUMEN: NamaDokumen[] = ["sekolah", "sambutan", "profil", "akademik", "kesiswaan", "spmb"];
 
 /** Tag cache tiap koleksi / dokumen (dipakai cacheTag di situs dan updateTag di dashboard). */

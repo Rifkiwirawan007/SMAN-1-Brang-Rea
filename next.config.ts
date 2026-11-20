@@ -11,6 +11,10 @@ const nextConfig: NextConfig = {
     qualities: [60, 70, 75, 90],
     formats: ["image/avif", "image/webp"],
   },
+  // Menu Prestasi lama digabung ke koleksi poster-prestasi; tautan lama tetap berfungsi.
+  async redirects() {
+    return [{ source: "/dashboard/prestasi/:path*", destination: "/dashboard/poster-prestasi/:path*", permanent: false }];
+  },
   partialPrefetching: true,
   turbopack: {
     rules: {

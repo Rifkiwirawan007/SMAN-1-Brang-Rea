@@ -111,7 +111,7 @@ function usePintasanSimpan(fn: () => void) {
 
 function BilahAksi({ kotor, kiri, children }: { kotor: boolean; kiri?: React.ReactNode; children: React.ReactNode }) {
   return (
-    <div className="sticky top-16 z-10 -mx-4 mb-6 flex flex-wrap items-center gap-3 border-b border-line bg-paper-2/90 px-4 py-3 backdrop-blur md:-mx-8 md:px-8">
+    <div className="sticky top-20 z-10 mb-6 flex flex-wrap items-center gap-3 rounded-[18px] border border-white/80 bg-white/80 px-4 py-3 shadow-[0_12px_30px_-18px_rgb(6_16_11/0.45)] backdrop-blur lg:top-24">
       <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2 text-sm">
         {kiri}
         {kotor ? (
@@ -335,7 +335,7 @@ export function FormulirDokumen({ kunci, awal }: { kunci: NamaDokumen; awal: Rek
       <div className={`grid gap-6 ${modul.bagian.length > 2 ? "lg:grid-cols-[200px_minmax(0,1fr)]" : ""}`}>
         {modul.bagian.length > 2 && (
           <nav aria-label="Bagian formulir" className="hidden lg:block">
-            <ul className="sticky top-36 flex flex-col gap-0.5 text-sm">
+            <ul className="sticky top-44 flex flex-col gap-0.5 text-sm">
               {modul.bagian.map((b, i) => (
                 <li key={b.judul}>
                   <a href={`#${idBagian(i)}`} className="flex items-center justify-between gap-2 rounded-lg px-3 py-1.5 text-ink-2 hover:bg-paper-3 hover:text-ink">
