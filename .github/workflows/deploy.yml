@@ -1,0 +1,54 @@
+name: Deploy ke VPS
+
+# Setiap push ke main -> website online ikut ter-update (sekitar 2-4 menit).
+# Bisa juga dijalankan manual: tab Actions > Deploy ke VPS > Run workflow.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Deploy berurutan; push beruntun tidak saling bertabrakan.
+concurrency:
+  group: deploy-produksi
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      VPS_HOST: ${{ secrets.VPS_HOST }}
+      VPS_PORT: ${{ secrets.VPS_PORT || '22' }}
+    steps:
+      - name: Cek pengaturan server
+        id: cek
+        run: |
+          if [ -z "$VPS_HOST" ]; then
+            echo "::notice::Secret VPS_HOST belum diisi, deploy dilewati (server belum disiapkan)."
+            echo "lanjut=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "lanjut=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.cek.outputs.lanjut == 'true'
+
+      - name: Siapkan kunci SSH
+        if: steps.cek.outputs.lanjut == 'true'
+        env:
+          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$VPS_SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -p "$VPS_PORT" -H "$VPS_HOST" >> ~/.ssh/known_hosts 2>/dev/null
+
+      - name: Kirim kode ke server
+        if: steps.cek.outputs.lanjut == 'true'
+        run: |
+          git archive --format=tar.gz -o rilis.tgz HEAD
+          scp -P "$VPS_PORT" rilis.tgz "sekolah@$VPS_HOST:/srv/sman1/incoming/$GITHUB_SHA.tgz"
+
+      - name: Build dan jalankan versi baru
+        if: steps.cek.outputs.lanjut == 'true'
+        run: ssh -p "$VPS_PORT" "sekolah@$VPS_HOST" "bash -s -- $GITHUB_SHA" < deploy/deploy.sh

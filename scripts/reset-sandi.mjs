@@ -6,7 +6,9 @@ import { randomBytes, scrypt } from "node:crypto";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
-const FILE = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "data", "privat", "pengguna.json");
+// Di server: DATA_DIR=/srv/sman1/data node scripts/reset-sandi.mjs
+const AKAR_DATA = process.env.DATA_DIR || path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "data");
+const FILE = path.join(AKAR_DATA, "privat", "pengguna.json");
 const N = 16384, R = 8, P = 1, PANJANG = 64;
 
 function hashSandi(sandi) {

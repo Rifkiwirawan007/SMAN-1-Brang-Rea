@@ -31,6 +31,12 @@
   --color-aksen: #7cc49a;
   --color-aksen-terang: #d4ecdd;
   --color-aksen-ink: #285c3c;
+  /* Token gaya shadcn untuk komponen ui pihak ketiga (mis. wordmark-footer). */
+  --color-background: #f5f8f6;
+  --color-foreground: #0d1813;
+  --color-muted-foreground: #5f6c65;
+  --color-primary: #34724c;
+  --color-emerald-500: #34724c;
 
   --ease-out-soft: cubic-bezier(0.16, 0.84, 0.24, 1);
   --radius-card: 14px;

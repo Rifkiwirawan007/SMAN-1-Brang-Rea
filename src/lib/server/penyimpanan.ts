@@ -5,13 +5,17 @@ import { randomBytes } from "node:crypto";
 import type { NamaDokumen, NamaKoleksi, PetaDokumen, PetaKoleksi } from "@/lib/konten/tipe";
 
 /**
- * Penyimpanan berbasis file JSON di folder data/ (tanpa database).
+ * Penyimpanan berbasis file JSON di folder data/ (tanpa database; lokasinya bisa diganti lewat env DATA_DIR).
  * - data/konten/   isi situs (ikut di-commit)
  * - data/unggahan/ foto yang diunggah lewat dashboard (ikut di-commit)
  * - data/privat/   akun, pesan, statistik, log (TIDAK di-commit)
  * Penulisan memakai kunci per file + tulis-ke-file-sementara-lalu-rename agar file tidak pernah setengah jadi.
  */
-export const AKAR_DATA = path.join(process.cwd(), "data");
+/**
+ * Lokasi folder data. Di laptop: ./data (bawaan). Di server: diisi lewat env DATA_DIR
+ * (mis. /srv/sman1/data) supaya data dashboard terpisah dari kode dan tidak tertimpa saat update.
+ */
+export const AKAR_DATA = process.env.DATA_DIR ? path.resolve(process.env.DATA_DIR) : path.join(process.cwd(), "data");
 export const DIR_KONTEN = path.join(AKAR_DATA, "konten");
 export const DIR_UNGGAHAN = path.join(AKAR_DATA, "unggahan");
 export const DIR_PRIVAT = path.join(AKAR_DATA, "privat");

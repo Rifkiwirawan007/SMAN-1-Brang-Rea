@@ -1,0 +1,2 @@
+# Tidak ikut dikirim ke server saat deploy (git archive): bahan mentah foto/dokumen.
+bahan/ export-ignore
