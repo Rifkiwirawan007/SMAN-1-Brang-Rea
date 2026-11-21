@@ -35,6 +35,8 @@ export interface WordmarkFooterProps extends React.HTMLAttributes<HTMLElement> {
   brand?: React.ReactNode
   /** (Tambahan) Isi ekstra di bawah deskripsi, mis. ikon media sosial. */
   aside?: React.ReactNode
+  /** (Tambahan) Elemen hiasan di paling atas footer, mis. tepi kertas sobek. */
+  hiasanAtas?: React.ReactNode
 }
 
 /** Tautan internal pakai next/link (tanpa muat ulang halaman), tautan luar pakai <a>. */
@@ -69,12 +71,14 @@ export function WordmarkFooter({
   credit,
   brand,
   aside,
+  hiasanAtas,
   className,
   ...props
 }: WordmarkFooterProps) {
   return (
     <footer className={cn("relative overflow-hidden bg-background text-foreground", className)} {...props}>
-      <div className="mx-auto grid w-full max-w-[1200px] gap-12 px-6 pt-16 pb-10 max-md:gap-6 max-md:pt-12 max-md:pb-6 md:grid-cols-12 md:px-10">
+      {hiasanAtas}
+      <div className="relative mx-auto grid w-full max-w-[1200px] gap-12 px-6 pt-16 pb-10 max-md:gap-6 max-md:pt-12 max-md:pb-6 md:grid-cols-12 md:px-10">
         <div className="md:col-span-12 lg:col-span-4">
           {brand ?? (
             <span className="block text-[25px] leading-none tracking-[-0.02em]" style={{ fontFamily: serif, fontWeight: 380 }}>

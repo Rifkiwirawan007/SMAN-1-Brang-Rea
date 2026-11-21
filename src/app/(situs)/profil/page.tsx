@@ -67,15 +67,15 @@ export default async function Profil() {
 
       {/* Sambutan */}
       <section id="sambutan" aria-labelledby="judul-sambutan" className="section-y">
-        <div className="container-site grid items-start gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-20">
-          {/* Potret berdiri di atas alas 3D tipis (diam, tanpa animasi). */}
-          <div className="mx-auto w-full max-w-[460px]">
+        {/* Baris 1: potret | teks. Baris 2 (desktop): garis bawah potret sejajar dengan garis di atas nama. */}
+        <div className="container-site grid gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-x-20 lg:gap-y-0">
+          <div className="mx-auto w-full max-w-[460px] lg:col-start-1 lg:row-start-1 lg:self-end">
             <div className="relative aspect-[4/5]">
               <Image src={sambutan.foto2 ?? sambutan.foto} alt={`${sambutan.nama}, ${sambutan.jabatan}`} fill sizes="(min-width: 1024px) 460px, 90vw" className="object-contain object-bottom" />
             </div>
-            <div className="potret-alas" aria-hidden="true" />
+            <div className="potret-alas lg:hidden" aria-hidden="true" />
           </div>
-          <div className="min-w-0">
+          <div className="min-w-0 lg:col-start-2 lg:row-start-1 lg:pb-8">
             <div data-reveal className="flex flex-wrap items-center gap-3">
               <h2 id="judul-sambutan" className="text-h2">
                 Sambutan kepala sekolah
@@ -89,10 +89,13 @@ export default async function Profil() {
               ))}
               <p>{sambutan.penutup}</p>
             </div>
-            <div data-reveal style={{ "--d": 2 } as React.CSSProperties} className="mt-8 border-t border-line pt-6">
-              <p className="text-h3">{sambutan.nama}</p>
-              <p className="mt-1 text-ink-2">{sambutan.jabatan}</p>
-            </div>
+          </div>
+          <div className="mx-auto hidden w-full max-w-[460px] lg:col-start-1 lg:row-start-2 lg:block" aria-hidden="true">
+            <div className="potret-alas" />
+          </div>
+          <div data-reveal style={{ "--d": 2 } as React.CSSProperties} className="border-t border-line pt-6 max-lg:-mt-4 lg:col-start-2 lg:row-start-2">
+            <p className="text-h3">{sambutan.nama}</p>
+            <p className="mt-1 text-ink-2">{sambutan.jabatan}</p>
           </div>
         </div>
       </section>

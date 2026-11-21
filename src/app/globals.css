@@ -566,24 +566,13 @@
       transparent 100%
     );
   }
-  /* Alas 3D tipis di bawah potret potongan: permukaan terang, sisi depan lebih gelap, bayangan jatuh. */
+  /* Garis tipis abu di bawah potret potongan, sama dengan garis border-line di sampingnya. */
   .potret-alas {
     position: relative;
     z-index: 1;
-    height: 16px;
+    height: 1px;
     margin-inline: -7%;
-    border-radius: 6px;
-    background: linear-gradient(
-      to bottom,
-      var(--color-paper) 0%,
-      var(--color-paper) 38%,
-      color-mix(in oklab, var(--color-line-2) 85%, var(--color-ink) 15%) 40%,
-      color-mix(in oklab, var(--color-line-2) 70%, var(--color-ink) 30%) 100%
-    );
-    box-shadow:
-      inset 0 1px 0 rgb(255 255 255 / 0.9),
-      0 2px 3px rgb(6 16 11 / 0.14),
-      0 22px 30px -16px rgb(6 16 11 / 0.38);
+    background: var(--color-line);
   }
   /* Slide video: judul sudah ada di dalam film, cukup gelap tipis untuk header dan tab. */
   .scrim-video {
@@ -1545,3 +1534,41 @@ html:not(.js) .pemuat {
 }
 .tema-lucci .chip-filter { background: transparent; border-color: rgb(239 230 207 / 0.4); color: #efe6cf; }
 .tema-lucci .chip-filter[aria-pressed="true"] { background: #efe6cf; color: #15301f; border-color: #efe6cf; }
+
+
+/* ---------- Footer: tepi kertas sobek + hijau bertekstur rumput (CSS/SVG, tanpa foto) ---------- */
+.footer-rumput {
+  --sobek: var(--color-paper);
+  /* token teks dipetakan ke terang di atas hijau */
+  --color-foreground: #ffffff;
+  --color-muted-foreground: rgb(255 255 255 / 0.78);
+  --color-ink: #ffffff;
+  --color-ink-2: rgb(255 255 255 / 0.85);
+  --color-muted: rgb(255 255 255 / 0.72);
+  --color-line-2: rgb(255 255 255 / 0.35);
+  --color-primary: #efe6cf;
+  color: #ffffff;
+  padding-top: 90px;
+  background-color: #568d2f;
+  background-image:
+    /* sedikit lebih gelap ke bawah supaya teks tetap terbaca */
+    linear-gradient(180deg, transparent 30%, rgb(20 45 12 / 0.22) 100%),
+    /* serat rumput: noise halus memanjang vertikal */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2 0.14' numOctaves='2' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.82  0 0 0 0 0.93  0 0 0 0 0.55  0 0 0 0.42 -0.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='480'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.05 0.11' numOctaves='3' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.08  0 0 0 0 0.2  0 0 0 0 0.1  0 0 0 0.9 -0.35'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E"),
+    radial-gradient(120% 60% at 50% 0%, #7fae45 0%, transparent 65%),
+    linear-gradient(180deg, #6a9c38 0%, #568d2f 40%, #4a8030 70%, #3f7330 100%);
+  background-size: 100% 100%, 320px 320px, 480px 480px, 100% 100%, 100% 100%;
+}
+@media (min-width: 768px) {
+  .footer-rumput {
+    padding-top: 160px;
+  }
+}
+/* halaman bertema hijau gelap (Kesiswaan): kertasnya ikut hijau gelap */
+body:has(.tema-hijau) .footer-rumput {
+  --sobek: #15301f;
+}
+.footer-rumput a:focus-visible {
+  outline-color: #ffffff;
+}
