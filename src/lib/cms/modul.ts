@@ -460,6 +460,7 @@ const profil: ModulDokumen = {
           bidang: [
             { jenis: "teks", nama: "nama", label: "Nama", wajib: true, lebar: "setengah" },
             { jenis: "teks", nama: "mapel", label: "Mata pelajaran", wajib: true, lebar: "setengah" },
+            { jenis: "gambar", nama: "foto", label: "Foto (opsional)", rasio: "1/1", bantuan: "Foto setengah badan dengan latar polos/transparan (PNG) paling bagus, seperti foto struktur organisasi." },
           ],
         },
       ],

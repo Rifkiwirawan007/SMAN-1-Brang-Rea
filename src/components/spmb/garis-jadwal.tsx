@@ -76,7 +76,7 @@ export function GarisJadwal({ jadwal }: { jadwal: Tahap[] }) {
     <ol ref={ref} className="garis-jadwal relative mx-auto max-w-[1040px]" aria-label="Linimasa SPMB">
       {/* Rel garis: abu tipis + isian hijau yang tumbuh */}
       <span aria-hidden="true" className="absolute bottom-0 left-[15px] top-0 w-[2px] rounded-full bg-white/20 md:left-1/2 md:-translate-x-1/2">
-        <span ref={isiRef} style={{ transform: "scaleY(0)" }} className="block h-full w-full origin-top rounded-full bg-gradient-to-b from-aksen-terang via-aksen to-aksen-ink" />
+        <span ref={isiRef} style={{ transform: "scaleY(0)" }} className="block h-full w-full origin-top rounded-full bg-brand" />
       </span>
 
       {jadwal.map((t, i) => {
@@ -94,10 +94,10 @@ export function GarisJadwal({ jadwal }: { jadwal: Tahap[] }) {
               aria-hidden="true"
               className={cx(
                 "relative z-[1] col-start-1 row-start-1 mt-6 grid h-[32px] w-[32px] place-items-center rounded-full border-2 bg-paper transition-[border-color,box-shadow] duration-500 md:col-start-2 md:mx-auto",
-                aktif ? "border-aksen shadow-[0_0_0_6px_color-mix(in_oklab,var(--color-aksen)_22%,transparent)]" : "border-line-2",
+                aktif ? "border-brand shadow-[0_0_0_6px_color-mix(in_oklab,var(--color-brand)_18%,transparent)]" : "border-line-2",
               )}
             >
-              <span className={cx("h-3 w-3 rounded-full transition-[background-color,transform] duration-500", aktif ? "scale-100 bg-aksen" : "scale-50 bg-line-2")} />
+              <span className={cx("h-3 w-3 rounded-full transition-[background-color,transform] duration-500", aktif ? "scale-100 bg-brand" : "scale-50 bg-line-2")} />
             </span>
 
             {/* Kartu */}
@@ -113,20 +113,20 @@ export function GarisJadwal({ jadwal }: { jadwal: Tahap[] }) {
               <div
                 className={cx(
                   "relative overflow-hidden rounded-[20px] border bg-paper p-6 transition-[border-color,box-shadow] duration-500 md:p-7",
-                  aktif ? "border-aksen/60 shadow-card" : "border-line",
+                  aktif ? "border-brand/50 shadow-card" : "border-line",
                 )}
               >
                 <span
                   aria-hidden="true"
                   className={cx(
-                    "absolute top-0 h-[3px] w-full bg-gradient-to-r from-aksen via-aksen-terang to-aksen transition-transform duration-700",
+                    "absolute top-0 h-[3px] w-full bg-brand transition-transform duration-700",
                     kiri ? "right-0 origin-right md:origin-right" : "left-0 origin-left",
                     aktif ? "scale-x-100" : "scale-x-0",
                   )}
                 />
-                <span className="text-xs font-semibold uppercase tracking-[0.2em] text-aksen-ink">Tahap {String(i + 1).padStart(2, "0")}</span>
+                <span className="text-xs font-semibold uppercase tracking-[0.2em] text-brand">Tahap {String(i + 1).padStart(2, "0")}</span>
                 <h3 className="mt-2 text-[1.25rem] font-bold leading-snug text-ink">{t.tahap}</h3>
-                <p className={cx("mt-3 inline-flex rounded-full px-3.5 py-1 text-sm font-semibold", aktif ? "bg-brand-ink text-aksen-terang" : "bg-paper-2 text-brand")}>{t.waktu}</p>
+                <p className={cx("mt-3 inline-flex rounded-full px-3.5 py-1 text-sm font-semibold", aktif ? "bg-brand text-white" : "bg-paper-2 text-brand")}>{t.waktu}</p>
                 {t.keterangan ? <p className="mt-3 text-sm leading-relaxed text-muted">{t.keterangan}</p> : null}
               </div>
             </div>

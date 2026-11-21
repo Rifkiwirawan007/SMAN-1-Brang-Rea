@@ -58,11 +58,11 @@ export default async function Spmb() {
         jejak={[{ label: "Beranda", href: "/" }, { label: "SPMB" }]}
         tambahan={
           <>
-            <span className="inline-flex items-center rounded-full border border-aksen/70 bg-brand-ink/40 px-4 py-1.5 text-sm font-medium text-aksen-terang backdrop-blur-sm">
+            <span className="inline-flex items-center rounded-full border border-white/50 bg-brand-ink/40 px-4 py-1.5 text-sm font-medium text-white backdrop-blur-sm">
               Status: {spmb.status}
             </span>
             {portal && (
-              <a href={portal} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full bg-aksen px-4 py-1.5 text-sm font-semibold text-brand-ink hover:bg-aksen-terang">
+              <a href={portal} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full bg-brand px-4 py-1.5 text-sm font-semibold text-white hover:bg-brand-deep">
                 Portal SPMB NTB <ArrowUpRight size={16} aria-hidden="true" />
               </a>
             )}
@@ -110,7 +110,7 @@ export default async function Spmb() {
           aria-hidden="true"
           viewBox="0 0 1440 120"
           preserveAspectRatio="none"
-          className="pointer-events-none absolute inset-x-0 top-[-1px] z-[1] h-[48px] w-full text-paper md:h-[90px]"
+          className="pointer-events-none absolute inset-x-0 top-[-3px] z-[1] h-[48px] w-full text-paper md:h-[90px]"
         >
           <path
             fill="currentColor"
@@ -122,7 +122,7 @@ export default async function Spmb() {
       <section id="kuota" aria-labelledby="judul-kuota" className="section-y relative">
         <div className="container-site relative">
           <div className="max-w-[60ch]">
-            <p data-reveal className="text-xs font-semibold uppercase tracking-[0.3em] text-aksen">Tahun pelajaran {spmb.tahunAjaran}</p>
+            <p data-reveal className="text-xs font-semibold uppercase tracking-[0.3em] text-white/70">Tahun pelajaran {spmb.tahunAjaran}</p>
             <h2 id="judul-kuota" data-reveal className="mt-4 text-h2 text-white">
               Kuota pendaftaran murid baru
             </h2>
@@ -141,7 +141,7 @@ export default async function Spmb() {
         <div className="container-site relative">
           <div className="grid gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,5fr)] lg:gap-10">
             <div>
-              <p data-reveal className="text-xs font-semibold uppercase tracking-[0.3em] text-aksen">Jadwal kegiatan</p>
+              <p data-reveal className="text-xs font-semibold uppercase tracking-[0.3em] text-white/70">Jadwal kegiatan</p>
               <h2 id="judul-jadwal-spmb" data-reveal className="mt-4 max-w-[18ch] text-h2 text-white">
                 Jadwal kegiatan SPMB {spmb.tahunAjaran}
               </h2>
@@ -164,10 +164,10 @@ export default async function Spmb() {
                 <caption className="sr-only">Jadwal tiap jalur SPMB {spmb.tahunAjaran}</caption>
                 <thead>
                   <tr className="bg-brand-ink text-white">
-                    <th scope="col" className="px-6 py-5 text-xs font-semibold uppercase tracking-[0.2em] text-aksen">Kegiatan</th>
+                    <th scope="col" className="px-6 py-5 text-xs font-semibold uppercase tracking-[0.2em] text-white/70">Kegiatan</th>
                     {spmb.jalur.map((j, i) => (
                       <th key={j.nama} scope="col" className="px-6 py-5">
-                        <span className="block text-[0.6875rem] font-semibold tracking-[0.2em] text-aksen/80">JALUR {String(i + 1).padStart(2, "0")}</span>
+                        <span className="block text-[0.6875rem] font-semibold tracking-[0.2em] text-white/60">JALUR {String(i + 1).padStart(2, "0")}</span>
                         <span className="text-lg font-bold">{j.nama}</span>
                       </th>
                     ))}
@@ -195,7 +195,7 @@ export default async function Spmb() {
           aria-hidden="true"
           viewBox="0 0 1440 120"
           preserveAspectRatio="none"
-          className="pointer-events-none absolute inset-x-0 bottom-[-1px] z-[1] h-[48px] w-full text-paper-2 md:h-[90px]"
+          className="pointer-events-none absolute inset-x-0 bottom-[-3px] z-[1] h-[48px] w-full text-paper-2 md:h-[90px]"
         >
           <path
             fill="currentColor"
@@ -234,12 +234,12 @@ export default async function Spmb() {
               .filter((g) => g.isi.length > 0)
               .map((g) => (
                 <div key={g.judul} data-reveal className="relative overflow-hidden rounded-[22px] border border-line bg-paper p-6 shadow-card md:p-10">
-                  <span aria-hidden="true" className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-aksen via-aksen-terang to-aksen" />
-                  <h3 className="text-xs font-semibold uppercase tracking-[0.24em] text-aksen-ink">{g.judul}</h3>
+                  <span aria-hidden="true" className="absolute inset-x-0 top-0 h-[3px] bg-brand" />
+                  <h3 className="text-xs font-semibold uppercase tracking-[0.24em] text-brand">{g.judul}</h3>
                   <ol className="mt-6 flex flex-col gap-5">
                     {g.isi.map((x, i) => (
                       <li key={x} className="grid grid-cols-[2rem_minmax(0,1fr)] gap-3 text-ink-2">
-                        <span className="font-serif text-lg italic leading-6 text-aksen-ink">{String.fromCharCode(97 + i)}.</span>
+                        <span className="font-serif text-lg italic leading-6 text-brand">{String.fromCharCode(97 + i)}.</span>
                         <span>{x}</span>
                       </li>
                     ))}
@@ -253,10 +253,10 @@ export default async function Spmb() {
       {/* Alur */}
       <section id="alur" aria-labelledby="judul-alur" className="on-dark section-y relative overflow-hidden bg-brand-ink text-white">
         {/* Batas atas & bawah melengkung besar (busur, beda dari ombak di Kuota/Jadwal): diisi putih seksi tetangga */}
-        <svg aria-hidden="true" viewBox="0 0 1440 100" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 top-[-1px] h-[36px] w-full text-paper md:h-[72px]">
+        <svg aria-hidden="true" viewBox="0 0 1440 100" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 top-[-3px] h-[36px] w-full text-paper md:h-[72px]">
           <path fill="currentColor" d="M0 0H1440V100C1080 -8 360 -8 0 100Z" />
         </svg>
-        <svg aria-hidden="true" viewBox="0 0 1440 100" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 bottom-[-1px] h-[36px] w-full text-paper md:h-[72px]">
+        <svg aria-hidden="true" viewBox="0 0 1440 100" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 bottom-[-3px] h-[36px] w-full text-paper md:h-[72px]">
           <path fill="currentColor" d="M0 0C360 108 1080 108 1440 0V100H0Z" />
         </svg>
         <div className="container-site relative">
@@ -275,10 +275,10 @@ export default async function Spmb() {
                 key={a.judul}
                 data-reveal
                 style={{ "--d": i % 3 } as React.CSSProperties}
-                className="w-[min(80vw,300px)] shrink-0 rounded-[14px] border border-white/25 bg-white/10 p-6 sm:w-[320px] lg:w-auto lg:rounded-none lg:border-0 lg:border-t lg:border-aksen/40 lg:bg-transparent lg:p-0 lg:pt-6"
+                className="w-[min(80vw,300px)] shrink-0 rounded-[14px] border border-white/25 bg-white/10 p-6 sm:w-[320px] lg:w-auto lg:rounded-none lg:border-0 lg:border-t lg:border-white/25 lg:bg-transparent lg:p-0 lg:pt-6"
               >
                 <h3 className="text-h3 text-white">
-                  <span className="tabular-nums text-aksen">{String(i + 1).padStart(2, "0")}</span> {a.judul}
+                  <span className="tabular-nums text-white/60">{String(i + 1).padStart(2, "0")}</span> {a.judul}
                 </h3>
                 <p className="mt-2 text-white/85">{a.teks}</p>
               </li>

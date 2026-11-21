@@ -18,8 +18,9 @@ export function VideoYoutube({ id, judul }: { id: string; judul: string }) {
         />
       ) : (
         <button type="button" onClick={() => setMain(true)} className="group absolute inset-0 grid place-items-center" aria-label={`Putar video: ${judul}`}>
+          {/* Thumbnail YouTube punya pita gelap di atas; gambar digeser naik supaya pita itu terpotong. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={`https://i.ytimg.com/vi/${id}/maxresdefault.jpg`} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+          <img src={`https://i.ytimg.com/vi/${id}/maxresdefault.jpg`} alt="" loading="lazy" className="absolute inset-x-0 -top-[7%] h-[107%] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
           <span className="absolute inset-0 bg-brand-ink/25" aria-hidden="true" />
           <span className="relative grid h-16 w-16 place-items-center rounded-full bg-white text-brand shadow-lg transition-transform duration-300 group-hover:scale-110 md:h-20 md:w-20">
             <Play size={30} fill="currentColor" className="ml-1" aria-hidden="true" />

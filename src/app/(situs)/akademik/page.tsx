@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { BookOpenCheck, CalendarDays, Coffee, Download, Layers3, Sparkles, UsersRound } from "lucide-react";
+import { CalendarDays, Coffee, Download, UsersRound } from "lucide-react";
 import { PageHero } from "@/components/ui/page-hero";
 import { SubNav } from "@/components/ui/sub-nav";
 import { SectionHead } from "@/components/ui/section-head";
@@ -34,7 +34,6 @@ const BAGIAN = [
   { id: "kalender", label: "Kalender akademik" },
 ];
 
-const IKON_KOMPONEN = [BookOpenCheck, Layers3, Sparkles];
 
 export default async function Akademik() {
   const [sekolah, akademik] = await Promise.all([ambilSekolah(), ambilAkademik()]);
@@ -53,39 +52,34 @@ export default async function Akademik() {
       />
       <SubNav items={BAGIAN} />
 
-      {/* Kurikulum */}
+      {/* Kurikulum: logo Kurikulum Merdeka + ringkasan di kiri, tiga komponen sebagai daftar bernomor yang bersih */}
       <section id="kurikulum" aria-labelledby="judul-kurikulum" className="section-y">
-        <div className="container-site">
-          <SectionHead
-            id="judul-kurikulum"
-            judul={kurikulum.nama}
-            tambahan={kurikulum.contoh ? <Contoh className="self-start" /> : null}
-            teks={<p>{kurikulum.ringkas}</p>}
-          />
-          <CarouselRail
-            ariaLabel="Komponen kurikulum"
-            wrapClassName="mt-10 lg:mt-14"
-            className="lg:grid lg:grid-cols-3 lg:gap-5"
-          >
-            {kurikulum.komponen.map((k, i) => {
-              const Ikon = IKON_KOMPONEN[i % IKON_KOMPONEN.length];
-              return (
-                <li
-                  key={k.nama}
-                  data-reveal
-                  style={{ "--d": i } as React.CSSProperties}
-                  className="flex w-[min(82vw,320px)] shrink-0 flex-col rounded-[14px] border border-line bg-paper p-6 sm:w-[340px] sm:p-8 lg:w-auto"
-                >
-                  <span className="grid h-12 w-12 place-items-center rounded-full bg-brand-soft text-brand">
-                    <Ikon size={22} aria-hidden="true" />
-                  </span>
-                  <h3 className="mt-6 text-h3">{k.nama}</h3>
-                  <span aria-hidden="true" className="mt-4 block h-1 w-10 rounded-full bg-sun" />
-                  <p className="mt-4 text-ink-2">{k.teks}</p>
-                </li>
-              );
-            })}
-          </CarouselRail>
+        <div className="container-site grid gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] lg:items-center lg:gap-20">
+          <div data-reveal>
+            <h2 id="judul-kurikulum" className="sr-only">
+              {kurikulum.nama}
+            </h2>
+            <Image
+              src="/images/akademik/kurikulum-merdeka.webp"
+              alt={kurikulum.nama}
+              width={1085}
+              height={422}
+              sizes="(min-width: 1024px) 420px, 80vw"
+              className="h-auto w-full max-w-[420px]"
+            />
+            {kurikulum.contoh ? <Contoh className="mt-4" /> : null}
+          </div>
+          <ol className="border-t border-line">
+            {kurikulum.komponen.map((k, i) => (
+              <li key={k.nama} data-reveal style={{ "--d": i } as React.CSSProperties} className="grid grid-cols-[3rem_minmax(0,1fr)] gap-x-4 border-b border-line py-7 sm:grid-cols-[4rem_minmax(0,1fr)] sm:py-8">
+                <span className="text-sm font-semibold tabular-nums text-brand">{String(i + 1).padStart(2, "0")}</span>
+                <div>
+                  <h3 className="text-h3">{k.nama}</h3>
+                  <p className="mt-2 text-ink-2">{k.teks}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
@@ -100,7 +94,7 @@ export default async function Akademik() {
         <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-r from-brand-ink/95 via-brand-ink/85 to-brand-ink/70" />
         <div className="container-site relative">
           <div className="max-w-[60ch]">
-            <p data-reveal className="text-xs font-semibold uppercase tracking-[0.3em] text-aksen">Semester {s.semesterData}</p>
+            <p data-reveal className="text-xs font-semibold uppercase tracking-[0.3em] text-white/70">Semester {s.semesterData}</p>
             <h2 id="judul-rombel" data-reveal className="mt-4 text-h2 text-white">
               Rombongan belajar tahun ini
             </h2>
@@ -116,7 +110,7 @@ export default async function Akademik() {
               { k: "Siswa per guru", v: s.rasioSiswaGuru, ket: `dengan ${s.guru} guru` },
             ].map((d, i) => (
               <div key={d.k} data-reveal style={{ "--d": i } as React.CSSProperties} className="border-l border-white/20 pl-5">
-                <dt className="text-sm font-semibold text-aksen">{d.k}</dt>
+                <dt className="text-sm font-semibold text-white/70">{d.k}</dt>
                 <dd className="mt-4 text-stat font-extralight text-white">
                   <CountUp nilai={d.v} />
                 </dd>
@@ -133,7 +127,8 @@ export default async function Akademik() {
           <SectionHead
             id="judul-mapel"
             judul="Mata pelajaran"
-            tambahan={mapel.contoh ? <Contoh className="self-start" /> : null}
+            tengah
+            tambahan={mapel.contoh ? <Contoh /> : null}
             teks={<p>Kelas X mempelajari mata pelajaran umum. Mulai kelas XI, siswa memilih mata pelajaran sesuai minat dan rencana studi lanjut.</p>}
           />
           <CarouselRail
@@ -238,6 +233,7 @@ export default async function Akademik() {
           <SectionHead
             id="judul-kalender"
             judul="Kalender akademik 2026/2027"
+            tengah
             teks={<p>Tanggal penting dua semester. Kalender resmi mengikuti ketetapan Dinas Pendidikan dan Kebudayaan Provinsi NTB.</p>}
           />
           {akademik.kalenderContoh ? (

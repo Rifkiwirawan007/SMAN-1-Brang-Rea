@@ -24,9 +24,9 @@ export function TombolDaftar({ portal, status, className }: { portal?: string; s
           <span className="tombol-daftar-isi">
             <span className="flex flex-col text-left">
               <span className="text-[1.375rem] font-extrabold leading-tight tracking-[-0.01em] text-white md:text-[1.625rem]">Daftar sekarang</span>
-              <span className="mt-0.5 text-sm text-aksen-terang/80">{domain}</span>
+              <span className="mt-0.5 text-sm text-white/70">{domain}</span>
             </span>
-            <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-aksen text-brand-ink transition-transform duration-300 group-hover:rotate-45 group-hover:scale-105">
+            <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-brand text-white transition-transform duration-300 group-hover:rotate-45 group-hover:scale-105">
               <ArrowUpRight size={26} strokeWidth={2.25} aria-hidden="true" />
             </span>
           </span>

@@ -1185,6 +1185,7 @@ dialog.lightbox::backdrop {
   transition: opacity 0.6s ease 0.25s;
 }
 .pemuat-isi {
+  --ukuran-barema: clamp(2.9rem, 13vw, 10.8rem);
   display: flex;
   align-items: center;
   transition:
@@ -1239,7 +1240,7 @@ dialog.lightbox::backdrop {
 }
 .pemuat-judul {
   display: grid;
-  font-size: clamp(2.9rem, 13vw, 10.8rem);
+  font-size: var(--ukuran-barema);
   font-weight: 800;
   line-height: 1;
   letter-spacing: -0.02em;
@@ -1268,6 +1269,8 @@ dialog.lightbox::backdrop {
   background-image: var(--foto);
 }
 .pemuat-subjudul {
+  /* Geser sejauh ruang kosong di kiri huruf B, supaya S sejajar dengan batang B */
+  padding-left: calc(var(--ukuran-barema) * 0.075);
   margin-top: 0.75em;
   font-size: clamp(0.62rem, 1.3vw, 1.2rem);
   font-weight: 700;
@@ -1365,12 +1368,15 @@ html:not(.js) .pemuat {
   .pemuat-garis {
     display: none;
   }
+  .pemuat-isi {
+    --ukuran-barema: clamp(3.2rem, 17vw, 4.6rem);
+  }
   .pemuat-judul {
-    font-size: clamp(3.2rem, 17vw, 4.6rem);
     animation: pemuat-hp-naik 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both;
   }
   .pemuat-subjudul {
     margin-top: 0.9em;
+    padding-left: 0; /* di HP teks di tengah, jadi tidak perlu digeser */
     font-size: 0.66rem;
     letter-spacing: 0.3em;
     animation: pemuat-hp-naik 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.47s both;
@@ -1427,3 +1433,109 @@ html:not(.js) .pemuat {
     animation: none;
   }
 }
+
+
+/* Tema hijau gelap untuk satu halaman (Kesiswaan): token warna terang dipetakan ulang ke hijau tua, teks putih. */
+.tema-hijau {
+  --color-paper: #15301f;
+  --color-paper-2: #1b3b27;
+  --color-paper-3: #24472f;
+  --color-ink: #ffffff;
+  --color-ink-2: #cfdcd4;
+  --color-muted: #9db3a6;
+  --color-line: #2d4c39;
+  --color-line-2: #46664f;
+  background: var(--color-paper);
+  color: var(--color-ink-2);
+}
+.tema-hijau .text-brand,
+.tema-hijau .hover\:text-brand:hover,
+.tema-hijau .chip-filter:hover,
+.tema-hijau .link-ink:hover {
+  color: var(--color-white);
+}
+.tema-hijau .bg-brand-soft {
+  background: rgb(255 255 255 / 0.1);
+  color: var(--color-white);
+}
+.tema-hijau .bg-brand-soft.text-brand-ink {
+  color: var(--color-white);
+}
+.tema-hijau .chip-filter:hover {
+  border-color: rgb(255 255 255 / 0.6);
+}
+/* Satu warna latar untuk semua seksi (tanpa selang-seling); kartu sedikit lebih terang. */
+.tema-hijau section.bg-paper-2 {
+  background: transparent;
+}
+.tema-hijau .bg-paper {
+  background: #1b3b27;
+}
+
+/* ===== Gaya ala Lucci Lambrusco (halaman Kesiswaan) ===== */
+.text-krem { color: #efe6cf; }
+.text-krem\/70 { color: rgb(239 230 207 / 0.7); }
+.text-krem\/80 { color: rgb(239 230 207 / 0.8); }
+.bg-krem { background-color: #efe6cf; }
+.border-krem\/25 { border-color: rgb(239 230 207 / 0.25); }
+.border-krem\/50 { border-color: rgb(239 230 207 / 0.5); }
+.judul-lucci {
+  font-family: var(--font-lucci), var(--font-display);
+  font-weight: 900;
+  font-stretch: 62%;
+  font-variation-settings: "wdth" 62;
+  text-transform: uppercase;
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.font-sambung {
+  font-family: var(--font-sambung), cursive;
+  font-weight: 400;
+  line-height: 1.1;
+}
+.lucci-marquee-jalur {
+  animation: lucci-jalan 38s linear infinite;
+}
+@keyframes lucci-jalan {
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lucci-marquee-jalur { animation: none; }
+}
+/* Di halaman ini semua seksi menyatu satu warna hijau tua */
+.tema-lucci { background: var(--color-brand-ink); }
+.tema-lucci section { background: transparent; }
+/* Tombol di blok krem */
+.btn-krem-isi,
+.btn-krem-garis {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  min-height: 3rem;
+  padding: 0 1.375rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  transition: background-color 200ms ease, color 200ms ease;
+}
+.btn-krem-isi { background: #15301f; color: #efe6cf; }
+.btn-krem-isi:hover { background: #34724c; }
+.btn-krem-garis { border: 1px solid #15301f; color: #15301f; }
+.btn-krem-garis:hover { background: #15301f; color: #efe6cf; }
+/* Kartu ekskul ala "Dishes that love Lucci": tanpa kotak, foto membulat */
+.tema-lucci .ekskul-kartu { background: transparent; border: 0; border-radius: 0; }
+.tema-lucci .ekskul-kartu > div:first-child { border-radius: 18px; }
+.tema-lucci .ekskul-kartu > div:last-child { padding: 1.25rem 0 0; }
+.tema-lucci .ekskul-kartu h3 {
+  font-family: var(--font-lucci), var(--font-display);
+  font-weight: 900;
+  font-stretch: 62%;
+  font-variation-settings: "wdth" 62;
+  text-transform: uppercase;
+  line-height: 0.95;
+  font-size: 1.75rem;
+  color: #efe6cf;
+}
+.tema-lucci .chip-filter { background: transparent; border-color: rgb(239 230 207 / 0.4); color: #efe6cf; }
+.tema-lucci .chip-filter[aria-pressed="true"] { background: #efe6cf; color: #15301f; border-color: #efe6cf; }

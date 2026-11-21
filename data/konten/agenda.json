@@ -2,58 +2,61 @@
   {
     "id": "f952177420",
     "dibuat": "2026-11-12T14:51:12.699Z",
-    "diubah": "2026-11-12T14:51:12.699Z",
-    "oleh": "Sistem",
+    "diubah": "2026-11-21T01:40:24.786Z",
+    "oleh": "Rifki Wirawan",
     "tanggal": "2026-11-25",
     "judul": "Peringatan Hari Guru Nasional",
     "tempat": "Lapangan sekolah",
     "waktu": "07.15 WITA",
-    "contoh": true
+    "contoh": false,
+    "sampai": ""
   },
   {
     "id": "4ea499bc23",
     "dibuat": "2026-11-12T14:51:12.699Z",
-    "diubah": "2026-11-12T14:51:12.699Z",
-    "oleh": "Sistem",
+    "diubah": "2026-11-21T01:40:30.406Z",
+    "oleh": "Rifki Wirawan",
     "tanggal": "2026-12-01",
     "sampai": "2026-12-08",
     "judul": "Sumatif Akhir Semester ganjil",
     "tempat": "Ruang kelas",
     "waktu": "07.00 WITA",
-    "contoh": true
+    "contoh": false
   },
   {
     "id": "cc0b3c4153",
     "dibuat": "2026-11-12T14:51:12.699Z",
-    "diubah": "2026-11-12T14:51:12.699Z",
-    "oleh": "Sistem",
+    "diubah": "2026-11-21T01:40:36.095Z",
+    "oleh": "Rifki Wirawan",
     "tanggal": "2026-12-19",
     "judul": "Pembagian rapor semester ganjil",
     "tempat": "Ruang kelas masing-masing",
     "waktu": "08.00 WITA",
-    "contoh": true
+    "contoh": false,
+    "sampai": ""
   },
   {
     "id": "f46319af62",
     "dibuat": "2026-11-12T14:51:12.699Z",
-    "diubah": "2026-11-12T14:51:12.699Z",
-    "oleh": "Sistem",
+    "diubah": "2026-11-21T01:40:42.225Z",
+    "oleh": "Rifki Wirawan",
     "tanggal": "2027-01-04",
     "judul": "Hari pertama semester genap",
     "tempat": "Lapangan sekolah",
     "waktu": "07.15 WITA",
-    "contoh": true
+    "contoh": false,
+    "sampai": ""
   },
   {
     "id": "56e1f09082",
     "dibuat": "2026-11-12T14:51:12.699Z",
-    "diubah": "2026-11-12T14:51:12.699Z",
-    "oleh": "Sistem",
+    "diubah": "2026-11-21T01:40:51.612Z",
+    "oleh": "Rifki Wirawan",
     "tanggal": "2027-02-15",
     "sampai": "2027-02-20",
     "judul": "Pekan olahraga dan seni (Porseni)",
     "tempat": "Lapangan dan aula",
     "waktu": "07.30 WITA",
-    "contoh": true
+    "contoh": false
   }
 ]

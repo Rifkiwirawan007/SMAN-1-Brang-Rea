@@ -49,7 +49,7 @@ export function KuotaSpmb({ spmb }: { spmb: Spmb }) {
           ))}
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-          <span className="text-xs font-semibold uppercase tracking-[0.28em] text-aksen">Daya tampung</span>
+          <span className="text-xs font-semibold uppercase tracking-[0.28em] text-white/70">Daya tampung</span>
           <span className="mt-2 text-[clamp(3.5rem,3rem+3vw,5.5rem)] font-extralight leading-none tracking-[-0.04em] text-white tabular-nums">{total}</span>
           <span className="mt-2 text-sm text-white/70">kursi murid baru</span>
         </div>
@@ -62,7 +62,7 @@ export function KuotaSpmb({ spmb }: { spmb: Spmb }) {
             <span className="font-medium text-white">{s.nama}</span>
             <span className="text-right tabular-nums">
               <span className="text-xl font-semibold text-white">{s.jumlah}</span>
-              <span className="ml-2 inline-block w-[3.5rem] text-sm text-aksen-terang/80">{persen(s.jumlah, total)}</span>
+              <span className="ml-2 inline-block w-[3.5rem] text-sm text-white/70">{persen(s.jumlah, total)}</span>
             </span>
             <span className="col-start-2 col-end-4 h-[3px] overflow-hidden rounded-full bg-white/8" aria-hidden="true">
               <span className="block h-full rounded-full" style={{ width: `${(s.jumlah / Math.max(...kuota.map((k) => k.jumlah))) * 100}%`, background: s.warna }} />

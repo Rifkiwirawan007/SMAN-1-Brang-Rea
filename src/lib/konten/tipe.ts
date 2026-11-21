@@ -178,7 +178,7 @@ export type Profil = {
   misi: { butir: string[]; contoh: boolean };
   sejarah: Peristiwa[];
   struktur: Pejabat[];
-  guru: { nama: string; mapel: string }[];
+  guru: { nama: string; mapel: string; foto?: string }[];
   sarana: { angka: number; satuan: string; ket: string; gambar?: string }[];
 };
 

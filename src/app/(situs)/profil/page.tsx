@@ -98,15 +98,19 @@ export default async function Profil() {
       </section>
 
       {/* Video profil: latar foto apel di lapangan sekolah dengan gradasi hijau tua, seperti seksi gelap lainnya */}
-      <section id="video" aria-labelledby="judul-video" className="on-dark section-y relative overflow-hidden bg-brand-ink text-white">
-        <Image src="/images/sekolah/banner-apel-lapangan.webp" alt="" fill sizes="100vw" quality={70} className="object-cover" style={{ objectPosition: "center 45%" }} />
-        <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-b from-brand-ink/95 via-brand-ink/80 to-brand-ink/90" />
+      {/* Lapisan gelap dimulai 20px di bawah tepi atas (tertutup ombak putih) supaya tepi seksi tidak memunculkan garis tipis di layar zoom 125%/150%. */}
+      <section id="video" aria-labelledby="judul-video" className="on-dark section-y relative overflow-hidden text-white">
+        <span aria-hidden="true" className="absolute inset-x-0 bottom-0 top-5 bg-brand-ink" />
+        <span aria-hidden="true" className="absolute inset-x-0 bottom-0 top-5">
+          <Image src="/images/sekolah/banner-apel-lapangan.webp" alt="" fill sizes="100vw" quality={70} className="object-cover" style={{ objectPosition: "center 45%" }} />
+        </span>
+        <span aria-hidden="true" className="absolute inset-x-0 bottom-0 top-5 bg-gradient-to-b from-brand-ink/95 via-brand-ink/80 to-brand-ink/90" />
         {/* Batas atas berombak: diisi warna latar seksi sebelumnya (putih) */}
         <svg
           aria-hidden="true"
           viewBox="0 0 1440 120"
           preserveAspectRatio="none"
-          className="pointer-events-none absolute inset-x-0 top-[-1px] z-[1] h-[48px] w-full text-paper md:h-[90px]"
+          className="pointer-events-none absolute inset-x-0 top-[-3px] z-[1] h-[48px] w-full text-paper md:h-[90px]"
         >
           <path
             fill="currentColor"
@@ -115,7 +119,7 @@ export default async function Profil() {
         </svg>
         <div className="container-site relative z-[2] py-6 md:py-10">
           <div data-reveal className="mx-auto max-w-3xl text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-aksen">Video profil</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-white/70">Video profil</p>
             <h2 id="judul-video" className="mt-4 text-h2 text-white">Video profil sekolah</h2>
             <p className="mt-4 text-lead text-white/75">Mengenal lebih dekat suasana belajar, kegiatan, dan warga SMA Negeri 1 Brang Rea.</p>
           </div>
@@ -125,7 +129,7 @@ export default async function Profil() {
               className="overflow-hidden rounded-[14px]"
               style={{
                 boxShadow:
-                  "0 0 0 1px rgb(255 255 255 / 0.12), 0 0 12px 2px rgb(0 0 0 / 0.22), 0 0 40px 8px rgb(0 0 0 / 0.28), 0 0 80px 16px rgb(0 0 0 / 0.22)",
+                  "0 0 12px 2px rgb(0 0 0 / 0.22), 0 0 40px 8px rgb(0 0 0 / 0.28), 0 0 80px 16px rgb(0 0 0 / 0.22)",
               }}
             >
               <VideoYoutube id="1PU1U5qi0J4" judul="Video profil SMA Negeri 1 Brang Rea" />
@@ -137,7 +141,7 @@ export default async function Profil() {
           aria-hidden="true"
           viewBox="0 0 1440 120"
           preserveAspectRatio="none"
-          className="pointer-events-none absolute inset-x-0 bottom-[-1px] z-[1] h-[48px] w-full text-paper md:h-[90px]"
+          className="pointer-events-none absolute inset-x-0 bottom-[-3px] z-[1] h-[48px] w-full text-paper md:h-[90px]"
         >
           <path
             fill="currentColor"
@@ -174,7 +178,7 @@ export default async function Profil() {
           aria-hidden="true"
           viewBox="0 0 1440 120"
           preserveAspectRatio="none"
-          className="pointer-events-none absolute inset-x-0 top-[-1px] z-[1] h-[48px] w-full text-paper md:h-[90px]"
+          className="pointer-events-none absolute inset-x-0 top-[-3px] z-[1] h-[48px] w-full text-paper md:h-[90px]"
         >
           <path
             fill="currentColor"
@@ -186,7 +190,7 @@ export default async function Profil() {
       <section id="sejarah" aria-labelledby="judul-sejarah" className="section-y relative">
         <div className="container-site relative">
           <div className="max-w-[60ch]">
-            <p data-reveal className="text-xs font-semibold uppercase tracking-[0.3em] text-aksen">Sejarah sekolah</p>
+            <p data-reveal className="text-xs font-semibold uppercase tracking-[0.3em] text-white/70">Sejarah sekolah</p>
             <h2 id="judul-sejarah" data-reveal className="mt-4 text-h2 text-white">
               {`Perjalanan sejak ${sekolah.pendirian.tahun}`}
             </h2>
@@ -207,7 +211,7 @@ export default async function Profil() {
                 style={{ "--d": i } as React.CSSProperties}
                 className="flex w-[min(80vw,300px)] shrink-0 flex-col rounded-[14px] bg-white/[0.07] p-6 ring-1 ring-white/15 backdrop-blur-sm sm:w-[320px] md:p-8 lg:w-auto"
               >
-                <span className="text-stat font-extralight text-aksen">{p.tahun}</span>
+                <span className="text-stat font-extralight text-white">{p.tahun}</span>
                 <span className="mt-6 block h-px w-12 bg-white/25" aria-hidden="true" />
                 <span className="mt-6 text-h3 text-white">{p.judul}</span>
                 <span className="mt-3 text-[0.9375rem] text-white/75">{p.teks}</span>
@@ -273,7 +277,7 @@ export default async function Profil() {
           aria-hidden="true"
           viewBox="0 0 1440 120"
           preserveAspectRatio="none"
-          className="pointer-events-none absolute inset-x-0 bottom-[-1px] z-[1] h-[48px] w-full text-paper md:h-[90px]"
+          className="pointer-events-none absolute inset-x-0 bottom-[-3px] z-[1] h-[48px] w-full text-paper md:h-[90px]"
         >
           <path
             fill="currentColor"
@@ -347,7 +351,9 @@ export default async function Profil() {
               </div>
             ))}
           </dl>
-          <CatatanContoh className="mt-10">Nama dan foto guru di bawah masih contoh, akan diisi dari data kepegawaian sekolah.</CatatanContoh>
+          {profil.guru.some((g) => g.nama.startsWith("Nama Guru")) ? (
+            <CatatanContoh className="mt-10">Nama dan foto guru di bawah masih contoh, akan diisi dari data kepegawaian sekolah.</CatatanContoh>
+          ) : null}
           <CarouselRail
             ariaLabel="Daftar guru dan tenaga kependidikan"
             wrapClassName="mt-6"
@@ -359,8 +365,8 @@ export default async function Profil() {
                 className="group relative flex w-[min(72vw,240px)] shrink-0 flex-col sm:w-[260px] lg:w-auto rounded-[4px] pb-6 text-center transition-[background-color,box-shadow,transform] duration-300 hover:z-10 hover:bg-paper hover:shadow-[0_24px_50px_-12px_rgb(6_16_11/0.22)]"
               >
                 <div className="relative aspect-[4/5] bg-gradient-to-b from-transparent from-40% to-brand-ink/[0.07] group-hover:from-transparent group-hover:to-transparent">
-                  {"foto" in g && g.foto ? (
-                    <Image src={g.foto as string} alt={g.nama} fill sizes="(min-width: 1024px) 300px, 260px" className="object-contain object-bottom" />
+                  {g.foto ? (
+                    <Image src={g.foto} alt={g.nama} fill sizes="(min-width: 1024px) 300px, 260px" className="object-contain object-bottom" />
                   ) : (
                     <span className="absolute inset-0 grid place-items-end justify-center pb-6 text-brand/50" aria-hidden="true">
                       <UserRound size={110} strokeWidth={1} />
