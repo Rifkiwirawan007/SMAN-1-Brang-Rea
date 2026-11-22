@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { IdentitasRingkas, type BarisIdentitas } from "@/components/profil/identitas-ringkas";
 import { Eye, Target, UserRound } from "lucide-react";
 import { PageHero } from "@/components/ui/page-hero";
 import { SubNav } from "@/components/ui/sub-nav";
@@ -32,25 +33,26 @@ const BAGIAN = [
 export default async function Profil() {
   const [sekolah, sambutan, profil] = await Promise.all([ambilSekolah(), ambilSambutan(), ambilProfil()]);
   const s = sekolah.statistik;
-  const identitas: [string, React.ReactNode][] = [
-    ["Nama sekolah", sekolah.nama],
-    ["NPSN", sekolah.npsn],
-    ["Status", sekolah.status],
-    ["Bentuk pendidikan", sekolah.bentuk],
-    ["Akreditasi", `${sekolah.akreditasi.nilai} (SK ${sekolah.akreditasi.sk}, ${sekolah.akreditasi.tanggal})`],
-    ["SK pendirian", `Nomor ${sekolah.pendirian.sk}, ${sekolah.pendirian.tanggal}`],
-    ["Kepala sekolah", sekolah.kepalaSekolah],
-    ["Alamat", sekolah.alamat.jalan],
-    ["Desa", sekolah.alamat.desa.replace("Desa ", "")],
-    ["Kecamatan", sekolah.alamat.kecamatan.replace(/^(Kecamatan|Kec\.)\s*/i, "")],
-    ["Kabupaten", sekolah.alamat.kabupaten.replace(/^(Kabupaten|Kab\.)\s*/i, "")],
-    ["Provinsi", sekolah.alamat.provinsi],
-    ["Koordinat", `${sekolah.koordinat.lat}, ${sekolah.koordinat.lng}`],
-    ["Luas tanah", `${formatAngka(s.luasTanah)} m²`],
-    ["Daya listrik", s.listrik],
-    ["Akses internet", s.internet],
-    ["Waktu belajar", s.penyelenggaraan],
-    ["Email", sekolah.kontak.email],
+  // Urutan berpasangan untuk tampilan HP dua kolom: `lebar` = satu baris penuh di HP.
+  const identitas: BarisIdentitas[] = [
+    { label: "Nama sekolah", nilai: sekolah.nama, lebar: true },
+    { label: "NPSN", nilai: sekolah.npsn },
+    { label: "Status", nilai: sekolah.status },
+    { label: "Akreditasi", nilai: `${sekolah.akreditasi.nilai} (SK ${sekolah.akreditasi.sk}, ${sekolah.akreditasi.tanggal})`, lebar: true },
+    { label: "Bentuk pendidikan", nilai: sekolah.bentuk },
+    { label: "Kepala sekolah", nilai: sekolah.kepalaSekolah },
+    { label: "SK pendirian", nilai: `Nomor ${sekolah.pendirian.sk}, ${sekolah.pendirian.tanggal}`, lebar: true },
+    { label: "Alamat", nilai: sekolah.alamat.jalan, lebar: true },
+    { label: "Desa", nilai: sekolah.alamat.desa.replace("Desa ", "") },
+    { label: "Kecamatan", nilai: sekolah.alamat.kecamatan.replace(/^(Kecamatan|Kec\.)\s*/i, "") },
+    { label: "Kabupaten", nilai: sekolah.alamat.kabupaten.replace(/^(Kabupaten|Kab\.)\s*/i, "") },
+    { label: "Provinsi", nilai: sekolah.alamat.provinsi },
+    { label: "Koordinat", nilai: `${sekolah.koordinat.lat}, ${sekolah.koordinat.lng}` },
+    { label: "Luas tanah", nilai: `${formatAngka(s.luasTanah)} m²` },
+    { label: "Daya listrik", nilai: s.listrik },
+    { label: "Akses internet", nilai: s.internet },
+    { label: "Waktu belajar", nilai: s.penyelenggaraan, lebar: true },
+    { label: "Email", nilai: sekolah.kontak.email, lebar: true },
   ];
 
   return (
@@ -161,14 +163,7 @@ export default async function Profil() {
             judul="Identitas sekolah"
             teks={<p>Data resmi sekolah sebagaimana tercatat di Data Pokok Pendidikan Kementerian Pendidikan Dasar dan Menengah.</p>}
           />
-          <dl data-reveal className="mt-10 grid overflow-hidden rounded-[14px] border border-line bg-paper md:mt-12 md:grid-cols-2">
-            {identitas.map(([k, v]) => (
-              <div key={k} className="flex flex-col gap-0.5 border-b border-line px-5 py-3.5 sm:grid sm:grid-cols-[minmax(0,10rem)_minmax(0,1fr)] sm:gap-4 sm:px-6 sm:py-4 md:odd:border-r">
-                <dt className="text-xs font-medium text-muted sm:text-sm sm:font-normal">{k}</dt>
-                <dd className="min-w-0 break-words text-[0.9375rem] font-medium text-ink">{v}</dd>
-              </div>
-            ))}
-          </dl>
+          <IdentitasRingkas data={identitas} />
         </div>
       </section>
 
