@@ -7,6 +7,7 @@ import { KabarTabs } from "@/components/home/kabar-tabs";
 import { EkskulTabs } from "@/components/home/ekskul-tabs";
 import { TimelineSpmb } from "@/components/home/timeline-spmb";
 import { RevealParagraf } from "@/components/home/reveal-paragraf";
+import { NotifPengumuman, type PengumumanBaru } from "@/components/home/notif-pengumuman";
 import { SectionHead } from "@/components/ui/section-head";
 import { CarouselRail } from "@/components/ui/carousel-rail";
 import { CountUp } from "@/components/ui/count-up";
@@ -91,6 +92,19 @@ export default async function Beranda() {
   }));
   const berita = kartuBeranda(semuaBerita.filter((b) => b.kategori !== "Pengumuman")).map(beritaTampil);
   const pengumuman = semuaBerita.filter((b) => b.kategori === "Pengumuman").map(beritaTampil);
+  // Pengumuman terbaru untuk notifikasi pojok (umur "baru" dihitung di browser).
+  const notif: PengumumanBaru | null =
+    semuaBerita
+      .filter((b) => b.kategori === "Pengumuman")
+      .map((b) => ({
+        slug: b.slug,
+        judul: b.judul,
+        ringkasan: b.ringkasan,
+        terbit: b.tanggal || (b.dibuat ?? "").slice(0, 10),
+        tanggalTampil: b.tanggal ? formatTanggal(b.tanggal) : "",
+      }))
+      .filter((n) => n.terbit)
+      .sort((x, y) => y.terbit.localeCompare(x.terbit))[0] ?? null;
   const agenda = semuaAgenda.map((a) => {
     const t = bagianTanggal(a.tanggal);
     return {
@@ -145,6 +159,7 @@ export default async function Beranda() {
         }}
       />
       {slides.length > 0 ? <HeroSlider slides={slides} /> : null}
+      <NotifPengumuman data={notif} />
       <RevealParagraf />
       <div data-reveal-paragraf>
 

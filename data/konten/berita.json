@@ -1,5 +1,23 @@
 [
   {
+    "id": "5605eb6c03",
+    "dibuat": "2026-11-22T02:46:09.000Z",
+    "diubah": "2026-11-22T02:46:09.000Z",
+    "oleh": "Sistem",
+    "slug": "rapat-orang-tua-wali-kelas-xii-2026",
+    "judul": "Rapat orang tua/wali siswa kelas XII",
+    "kategori": "Pengumuman",
+    "tanggal": "2026-11-21",
+    "ringkasan": "Orang tua/wali siswa kelas XII diundang hadir pada rapat persiapan ujian dan kelulusan, Sabtu, 28 November 2026 pukul 08.00 WITA di aula sekolah.",
+    "isi": [
+      "Dengan hormat, kami mengundang Bapak/Ibu orang tua/wali siswa kelas XII SMA Negeri 1 Brang Rea untuk menghadiri rapat persiapan ujian dan kelulusan.",
+      "Hari/tanggal: Sabtu, 28 November 2026. Waktu: 08.00 WITA sampai selesai. Tempat: aula SMA Negeri 1 Brang Rea.",
+      "Mengingat pentingnya acara ini, kehadiran Bapak/Ibu sangat kami harapkan. Atas perhatian dan kehadirannya kami ucapkan terima kasih."
+    ],
+    "status": "terbit",
+    "contoh": true
+  },
+  {
     "id": "038593a7e1",
     "dibuat": "2026-11-16T04:58:09.000Z",
     "diubah": "2026-11-16T04:58:09.000Z",
@@ -567,19 +585,21 @@
   {
     "id": "2ae6ea28ea",
     "dibuat": "2026-11-12T14:51:12.699Z",
-    "diubah": "2026-11-16T10:27:39.244Z",
+    "diubah": "2026-11-22T02:45:24.712Z",
     "oleh": "Rifki Wirawan",
     "slug": "jadwal-sas-ganjil-2026",
     "judul": "Jadwal Sumatif Akhir Semester ganjil 2026/2027",
     "kategori": "Pengumuman",
-    "tanggal": "2026-11-09",
+    "tanggal": "2026-11-22",
     "ringkasan": "Sumatif akhir semester berlangsung 1–8 Desember 2026. Siswa wajib hadir pukul 07.00 WITA.",
     "isi": [
       "Sumatif Akhir Semester (SAS) ganjil tahun pelajaran 2026/2027 dilaksanakan pada 1–8 Desember 2026.",
       "Siswa wajib hadir pukul 07.00 WITA, berseragam lengkap, dan membawa kartu peserta. Jadwal per mata pelajaran dibagikan wali kelas."
     ],
     "contoh": true,
-    "status": "draf"
+    "status": "terbit",
+    "fotoLain": [],
+    "beranda": "3"
   },
   {
     "id": "45c861763f",
