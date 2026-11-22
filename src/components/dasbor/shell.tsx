@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import {
   BarChart3,
+  BookOpenCheck,
   CalendarDays,
   ChevronDown,
   ClipboardCheck,
@@ -48,6 +49,7 @@ function susunNav(peran: Peran, pesanBaru: number, laporanBaru: number): { judul
       judul: "Absensi",
       item: [
         { href: "/dashboard/absensi", label: "Absensi siswa", ikon: ClipboardCheck, kunci: "absensi" },
+        { href: "/dashboard/absen-kelas", label: "Absen kelas", ikon: BookOpenCheck, kunci: "absen-kelas" },
         { href: "/dashboard/izin-keluar", label: "Izin keluar", ikon: DoorOpen, kunci: "izin-keluar" },
         { href: "/dashboard/siswa", label: "Data siswa", ikon: Contact, kunci: "siswa" },
         { href: "/dashboard/kelulusan", label: "Kelulusan", ikon: GraduationCap, kunci: "kelulusan" },

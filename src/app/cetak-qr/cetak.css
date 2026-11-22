@@ -1,0 +1,83 @@
+/* Lembar stiker QR: 5 kolom × 6 baris = 30 stiker per A4, ukuran stiker 36 × 44 mm. */
+@page {
+  size: A4;
+  margin: 10mm;
+}
+.cq {
+  background: #eef1ee;
+  min-height: 100vh;
+  padding: 16px;
+  color: #111;
+  font-family: system-ui, sans-serif;
+}
+.cq-alat {
+  max-width: 190mm;
+  margin: 0 auto 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  align-items: center;
+  font-size: 14px;
+}
+.cq-form { display: flex; gap: 8px; align-items: center; }
+.cq-alat select, .cq-alat button {
+  font: inherit;
+  padding: 6px 10px;
+  border: 1px solid #b9c4bc;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+}
+.cq-alat .cq-cetak { background: #1f5b3a; color: #fff; border-color: #1f5b3a; }
+.cq-kembali { color: #1f5b3a; text-decoration: none; }
+.cq-bantuan { width: 100%; margin: 0; color: #5b665e; font-size: 12.5px; }
+.cq-kosong { text-align: center; color: #5b665e; margin-top: 60px; }
+
+.cq-kelas {
+  width: 190mm;
+  margin: 0 auto 16px;
+  background: #fff;
+  padding: 6mm 4mm;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.12);
+}
+.cq-kelas + .cq-kelas { break-before: page; }
+.cq-judul { font-size: 10pt; font-weight: 600; margin: 0 0 3mm; }
+.cq-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 36mm);
+  grid-auto-rows: 44mm;
+  justify-content: center;
+}
+.cq-stiker {
+  border: 0.3mm dashed #999;
+  margin: -0.15mm;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5mm;
+  break-inside: avoid;
+  overflow: hidden;
+  text-align: center;
+}
+.cq-qr { width: 28mm; height: 28mm; }
+.cq-qr svg { width: 100%; height: 100%; display: block; }
+.cq-nama {
+  margin-top: 1mm;
+  font-size: 7.5pt;
+  font-weight: 700;
+  line-height: 1.1;
+  max-height: 2.2em;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.cq-info { font-size: 7pt; font-family: ui-monospace, monospace; margin-top: 0.5mm; }
+
+@media print {
+  .cq { background: none; padding: 0; min-height: 0; }
+  .cq-alat { display: none; }
+  .cq-kelas { width: auto; margin: 0; padding: 0; box-shadow: none; }
+  .cq-stiker { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}

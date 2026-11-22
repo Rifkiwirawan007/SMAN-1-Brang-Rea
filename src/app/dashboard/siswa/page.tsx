@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { connection } from "next/server";
-import { Contact } from "lucide-react";
+import { Contact, QrCode } from "lucide-react";
 import { wajibMasuk } from "@/lib/server/pengguna";
 import { bacaSiswa } from "@/lib/server/absensi";
 import { JudulHalaman } from "@/components/dasbor/ui";
@@ -23,6 +23,11 @@ export default async function HalamanSiswa() {
         deskripsi="Daftar siswa untuk absensi. QR di kartu siswa dicocokkan dengan NISN (atau kolom Kode QR bila isi QR berbeda). Data ini privat, tidak tampil di situs."
         jejak={[{ label: "Ringkasan", href: "/dashboard" }, { label: "Absensi siswa", href: "/dashboard/absensi" }, { label: "Data siswa" }]}
       />
+      <div className="mb-4">
+        <a href="/cetak-qr" target="_blank" rel="noopener" className="d-btn d-btn-garis">
+          <QrCode className="size-4" aria-hidden /> Cetak stiker QR
+        </a>
+      </div>
       <KelolaSiswa daftar={siswa} />
     </>
   );

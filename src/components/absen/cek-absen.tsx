@@ -32,6 +32,10 @@ function kalimat(b: BarisCek) {
   return `Tidak hadir: ${LABEL_STATUS[b.status].toLowerCase()}${b.ket ? ` (${b.ket})` : ""}.`;
 }
 
+/** "Selasa, 18 Nov" dari YYYY-MM-DD. */
+const tanggalPendek = (t: string) =>
+  new Intl.DateTimeFormat("id-ID", { weekday: "long", day: "numeric", month: "short", timeZone: "Asia/Makassar" }).format(new Date(`${t}T08:00:00+08:00`));
+
 export function CekAbsen({ wajibTglLahir }: { wajibTglLahir: boolean }) {
   const id = useId();
   const [nisn, setNisn] = useState("");
@@ -179,6 +183,57 @@ export function CekAbsen({ wajibTglLahir }: { wajibTglLahir: boolean }) {
             </ul>
           )}
         </div>
+
+        {/* Per jam pelajaran */}
+        {h.rekapMapel.length > 0 && (
+          <div className="rounded-[18px] border border-line bg-paper">
+            <div className="border-b border-line p-5 md:px-6">
+              <p className="font-semibold text-ink">Kehadiran per mata pelajaran · {namaBulan(h.bulan)}</p>
+              <p className="mt-0.5 text-sm text-muted">Diisi guru mapel setiap jam pelajaran.</p>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-line text-left text-xs text-muted">
+                    <th className="px-5 py-2.5 font-medium md:px-6">Mata pelajaran</th>
+                    <th className="px-2 py-2.5 text-center font-medium">Pertemuan</th>
+                    <th className="px-2 py-2.5 text-center font-medium">Sakit</th>
+                    <th className="px-2 py-2.5 text-center font-medium">Izin</th>
+                    <th className="px-2 py-2.5 pr-5 text-center font-medium md:pr-6">Alpa</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-line">
+                  {h.rekapMapel.map((r) => (
+                    <tr key={r.mapel}>
+                      <td className="px-5 py-2.5 text-ink md:px-6">{r.mapel}</td>
+                      <td className="px-2 py-2.5 text-center tabular-nums text-ink-2">{r.pertemuan}</td>
+                      <td className="px-2 py-2.5 text-center tabular-nums">{r.sakit || "–"}</td>
+                      <td className="px-2 py-2.5 text-center tabular-nums">{r.izin || "–"}</td>
+                      <td className={`px-2 py-2.5 pr-5 text-center tabular-nums md:pr-6 ${r.alpa ? "font-semibold text-[#b42318]" : ""}`}>{r.alpa || "–"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            {h.mapel.length > 0 ? (
+              <ul className="divide-y divide-line border-t border-line">
+                {h.mapel.map((m, i) => (
+                  <li key={`${m.tanggal}-${m.jam}-${i}`} className="flex flex-wrap items-center gap-x-3 gap-y-1 px-5 py-3 text-sm md:px-6">
+                    <span className="font-medium text-ink sm:w-[150px]">{tanggalPendek(m.tanggal)}</span>
+                    <span className="text-ink-2">
+                      {m.jam} · {m.mapel}
+                    </span>
+                    <span className="ml-auto">
+                      <Status s={m.status} />
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="border-t border-line px-5 py-4 text-sm text-ink-2 md:px-6">Hadir di semua jam pelajaran yang sudah diabsen bulan ini.</p>
+            )}
+          </div>
+        )}
 
         <p className="flex items-start gap-2 text-sm text-muted">
           <ShieldCheck size={16} aria-hidden="true" className="mt-0.5 shrink-0 text-brand" />

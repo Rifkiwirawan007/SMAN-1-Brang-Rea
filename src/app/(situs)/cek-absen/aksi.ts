@@ -4,6 +4,12 @@ import { headers } from "next/headers";
 import { bolehLanjut } from "@/lib/server/batas";
 import { bacaAbsenBulan, bacaAturAbsensi, bacaSiswa, bacaTanggalLahir } from "@/lib/server/absensi";
 import { bulanSah, geserBulan, STATUS_ABSEN, tanggalIni, type CaraAbsen, type StatusAbsen } from "@/lib/absensi/tipe";
+import { bacaSesiBulan } from "@/lib/server/jadwal";
+import { labelJam, type StatusMapel } from "@/lib/jadwal/tipe";
+
+/** Satu ketidakhadiran di jam pelajaran. */
+export type BarisMapel = { tanggal: string; jam: string; mapel: string; status: Exclude<StatusMapel, "hadir"> };
+export type RekapMapel = { mapel: string; pertemuan: number; sakit: number; izin: number; alpa: number };
 
 export type BarisCek = { tanggal: string; status: StatusAbsen; jam?: string; ket?: string; cara: CaraAbsen; oleh: string; waktu: string };
 
@@ -19,6 +25,10 @@ export type HasilCek =
       daftar: BarisCek[];
       /** Ketidakhadiran / keterlambatan 14 hari terakhir, terbaru di depan. */
       pengumuman: BarisCek[];
+      /** Ketidakhadiran per jam pelajaran di bulan terpilih, terbaru di depan. */
+      mapel: BarisMapel[];
+      /** Rekap per mata pelajaran di bulan terpilih (hanya mapel yang sudah diabsen). */
+      rekapMapel: RekapMapel[];
     }
   | { ok: false; pesan: string };
 
@@ -65,11 +75,26 @@ export async function cekAbsensi(input: { nisn: string; tglLahir?: string; bulan
   const bulan = bulanSah(input.bulan) && input.bulan <= bulanIni ? input.bulan : bulanIni;
   const milik = (daftar: Awaited<ReturnType<typeof bacaAbsenBulan>>) => daftar.filter((c) => c.siswaId === siswa.id);
 
-  const [dataBulan, dataIni, dataLalu] = await Promise.all([
+  const [dataBulan, dataIni, dataLalu, sesiBulan] = await Promise.all([
     bacaAbsenBulan(bulan).then(milik),
     bulan === bulanIni ? null : bacaAbsenBulan(bulanIni).then(milik),
     bacaAbsenBulan(geserBulan(bulanIni, -1)).then(milik),
+    bacaSesiBulan(bulan),
   ]);
+  const sesiSiswa = sesiBulan.filter((x) => x.kelas === siswa.kelas || x.tidakHadir[siswa.id]);
+  const peta = new Map<string, RekapMapel>();
+  const mapel: BarisMapel[] = [];
+  for (const x of sesiSiswa) {
+    const r = peta.get(x.mapel) ?? { mapel: x.mapel, pertemuan: 0, sakit: 0, izin: 0, alpa: 0 };
+    r.pertemuan++;
+    const st = x.tidakHadir[siswa.id];
+    if (st) {
+      r[st]++;
+      mapel.push({ tanggal: x.tanggal, jam: labelJam(x), mapel: x.mapel, status: st });
+    }
+    peta.set(x.mapel, r);
+  }
+  mapel.sort((a, b) => b.tanggal.localeCompare(a.tanggal) || b.jam.localeCompare(a.jam, "id", { numeric: true }));
   const terkini = [...(dataIni ?? dataBulan), ...dataLalu];
 
   const rekap = Object.fromEntries(STATUS_ABSEN.map((s) => [s, 0])) as Record<StatusAbsen, number>;
@@ -92,5 +117,7 @@ export async function cekAbsensi(input: { nisn: string; tglLahir?: string; bulan
       .sort((a, b) => b.tanggal.localeCompare(a.tanggal))
       .slice(0, 6)
       .map(baris),
+    mapel,
+    rekapMapel: [...peta.values()].sort((a, b) => b.alpa + b.sakit + b.izin - (a.alpa + a.sakit + a.izin) || a.mapel.localeCompare(b.mapel, "id")),
   };
 }

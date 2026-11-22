@@ -10,7 +10,7 @@ export const LABEL_PERAN: Record<Peran, string> = { admin: "Admin", editor: "Edi
 export const KET_PERAN: Record<Peran, string> = {
   admin: "Semua fitur, termasuk info sekolah, pesan masuk, statistik, akun, dan log aktivitas.",
   editor: "Kelola konten: berita, agenda, prestasi, ekskul, galeri, dan isi halaman.",
-  guru: "Absensi siswa saja: scan QR kartu siswa, ubah status (sakit/izin/alpa), izin keluar siswa, dan kelola data siswa.",
+  guru: "Absensi siswa saja: scan QR kartu siswa, absen kelas per jam pelajaran, ubah status (sakit/izin/alpa), izin keluar siswa, dan kelola data siswa.",
   bk: "Laporan siswa saja: membaca laporan perundungan/masalah, menindaklanjuti, dan membalas pelapor.",
 };
 
@@ -26,6 +26,8 @@ export const AKSES: Record<string, Peran[]> = {
   ringkasan: SEMUA,
   akun: ["admin", "editor", "guru", "bk"],
   absensi: ABSENSI,
+  "absen-kelas": ABSENSI,
+  jadwal: ADMIN,
   "izin-keluar": ABSENSI,
   laporan: LAPORAN,
   siswa: ABSENSI,
