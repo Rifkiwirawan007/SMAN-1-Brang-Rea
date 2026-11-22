@@ -1565,8 +1565,9 @@ html:not(.js) .pemuat {
     padding-top: 160px;
   }
 }
-/* halaman bertema hijau gelap (Kesiswaan): kertasnya ikut hijau gelap */
-body:has(.tema-hijau) .footer-rumput {
+/* halaman bertema hijau gelap (Kesiswaan): kertasnya ikut hijau gelap. Penanda dipasang oleh
+   <KertasFooterHijau /> (bukan :has(), lihat komponennya). */
+body[data-kertas="hijau"] .footer-rumput {
   --sobek: #15301f;
 }
 .footer-rumput a:focus-visible {

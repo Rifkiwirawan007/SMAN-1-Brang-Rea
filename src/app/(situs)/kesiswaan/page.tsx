@@ -22,6 +22,7 @@ import {
 } from "@/lib/konten/baca";
 import { KATEGORI_EKSKUL } from "@/lib/konten/tipe";
 import { angkaHuruf, waLink } from "@/lib/format";
+import { KertasFooterHijau } from "@/components/situs/kertas-footer-hijau";
 
 /*
  * Gaya halaman ala luccilambrusco.com: latar hijau tua polos, aksen krem,
@@ -83,6 +84,7 @@ export default async function Kesiswaan() {
   return (
     <div className={`${archivo.variable} ${yellowtail.variable}`}>
 
+      <KertasFooterHijau />
       <div className="tema-hijau tema-lucci on-dark overflow-x-clip">
         <h1 className="sr-only">Kesiswaan SMA Negeri 1 Brang Rea</h1>
         {/* OSIS */}
