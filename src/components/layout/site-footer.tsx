@@ -6,7 +6,6 @@ import { IkonFacebook, IkonInstagram, IkonWhatsApp } from "@/components/ui/icons
 import { waLink } from "@/lib/format";
 import type { Sekolah } from "@/lib/konten/tipe";
 import { WordmarkFooter } from "@/components/ui/wordmark-footer";
-import { SobekanKertas } from "@/components/layout/sobekan-kertas";
 
 const KOLOM = [
   ...MENU_UTAMA.filter((m) => m.anak).map((m) => ({
@@ -26,7 +25,7 @@ const KOLOM = [
   },
 ];
 
-/** Footer situs publik: tepi kertas sobek, latar hijau bertekstur rumput, kolom tautan + tulisan besar "BAREMA". */
+/** Footer situs publik: latar hijau tua bergaris vertikal halus + bintik, kolom tautan + tulisan besar "BAREMA". */
 export function SiteFooter({ sekolah }: { sekolah: Sekolah }) {
   const tahun = 2026;
   const ikon =
@@ -38,7 +37,6 @@ export function SiteFooter({ sekolah }: { sekolah: Sekolah }) {
       year={tahun}
       navLabel="Tautan footer"
       className="footer-rumput"
-      hiasanAtas={<SobekanKertas />}
       description="Sekolah menengah atas negeri di Kecamatan Brang Rea, Sumbawa Barat. Mendidik generasi yang berkarakter dan berprestasi."
       columns={KOLOM.map((k) => ({ title: k.judul, links: k.tautan.map((t) => ({ label: t.label, href: t.href })) }))}
       credit={{ label: sekolah.tagar, href: "/" }}

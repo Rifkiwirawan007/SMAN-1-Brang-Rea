@@ -2,8 +2,8 @@
   {
     "id": "5605eb6c03",
     "dibuat": "2026-11-22T02:46:09.000Z",
-    "diubah": "2026-11-22T02:46:09.000Z",
-    "oleh": "Sistem",
+    "diubah": "2026-11-23T07:15:50.268Z",
+    "oleh": "Rifki Wirawan",
     "slug": "rapat-orang-tua-wali-kelas-xii-2026",
     "judul": "Rapat orang tua/wali siswa kelas XII",
     "kategori": "Pengumuman",
@@ -585,7 +585,7 @@
   {
     "id": "2ae6ea28ea",
     "dibuat": "2026-11-12T14:51:12.699Z",
-    "diubah": "2026-11-22T03:38:32.990Z",
+    "diubah": "2026-11-23T07:15:31.692Z",
     "oleh": "Rifki Wirawan",
     "slug": "jadwal-sas-ganjil-2026",
     "judul": "Jadwal Sumatif Akhir Semester ganjil 2026/2027",
@@ -597,7 +597,7 @@
       "Siswa wajib hadir pukul 07.00 WITA, berseragam lengkap, dan membawa kartu peserta. Jadwal per mata pelajaran dibagikan wali kelas."
     ],
     "contoh": true,
-    "status": "terbit",
+    "status": "draf",
     "fotoLain": [],
     "beranda": "3"
   },

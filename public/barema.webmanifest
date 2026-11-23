@@ -1,5 +1,5 @@
 {
-  "name": "BAREMA · SMA Negeri 1 Brang Rea",
+  "name": "BAREMA",
   "short_name": "BAREMA",
   "description": "Dashboard guru SMA Negeri 1 Brang Rea: absensi siswa, absen kelas, dan izin keluar.",
   "id": "/dashboard",
@@ -11,12 +11,39 @@
   "theme_color": "#34724c",
   "lang": "id",
   "icons": [
-    { "src": "/aplikasi/ikon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "/aplikasi/ikon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "/aplikasi/ikon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "/aplikasi/ikon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/aplikasi/ikon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
   ],
   "shortcuts": [
-    { "name": "Absen kelas", "url": "/dashboard/absen-kelas", "icons": [{ "src": "/aplikasi/ikon-192.png", "sizes": "192x192" }] },
-    { "name": "Absensi siswa (scan QR)", "url": "/dashboard/absensi", "icons": [{ "src": "/aplikasi/ikon-192.png", "sizes": "192x192" }] }
+    {
+      "name": "Absen kelas",
+      "url": "/dashboard/absen-kelas",
+      "icons": [
+        {
+          "src": "/aplikasi/ikon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Absensi siswa (scan QR)",
+      "url": "/dashboard/absensi",
+      "icons": [
+        {
+          "src": "/aplikasi/ikon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
   ]
 }

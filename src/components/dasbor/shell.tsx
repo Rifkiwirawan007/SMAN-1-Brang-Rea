@@ -130,9 +130,7 @@ export function ShellDasbor({
 
   const merek = (
     <Link href="/dashboard" className="flex items-center gap-3 px-4 py-4" onClick={() => setLaci(false)}>
-      <span className="grid h-11 w-11 shrink-0 place-items-center rounded-[14px] border border-white/15 bg-white/10 shadow-[inset_0_1px_0_rgb(255_255_255/0.12)]">
-        <Image src="/images/logo-sman1brangrea.png" alt="" width={36} height={36} className="h-8 w-8 object-contain" />
-      </span>
+      <Image src="/images/logo-sman1brangrea.png" alt="" width={44} height={44} className="h-11 w-11 shrink-0 object-contain" />
       <span className="min-w-0 leading-tight">
         <span className="block truncate text-[0.9375rem] font-bold text-white">{namaSekolah}</span>
         <span className="block text-xs text-white/55">Dashboard {LABEL_PERAN[pengguna.peran].toLowerCase()}</span>

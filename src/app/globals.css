@@ -1548,28 +1548,26 @@ html:not(.js) .pemuat {
   --color-line-2: rgb(255 255 255 / 0.35);
   --color-primary: #efe6cf;
   color: #ffffff;
-  padding-top: 90px;
-  background-color: #568d2f;
+  padding-top: 72px;
+  /* tepi atas melengkung seperti kubah */
+  border-radius: 50% 50% 0 0 / 56px 56px 0 0;
+  background-color: #285c3c;
   background-image:
-    /* sedikit lebih gelap ke bawah supaya teks tetap terbaca */
-    linear-gradient(180deg, transparent 30%, rgb(20 45 12 / 0.22) 100%),
-    /* serat rumput: noise halus memanjang vertikal */
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2 0.14' numOctaves='2' seed='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.82  0 0 0 0 0.93  0 0 0 0 0.55  0 0 0 0.42 -0.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E"),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='480' height='480'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.05 0.11' numOctaves='3' seed='11' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.08  0 0 0 0 0.2  0 0 0 0 0.1  0 0 0 0.9 -0.35'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E"),
-    radial-gradient(120% 60% at 50% 0%, #7fae45 0%, transparent 65%),
-    linear-gradient(180deg, #6a9c38 0%, #568d2f 40%, #4a8030 70%, #3f7330 100%);
-  background-size: 100% 100%, 320px 320px, 480px 480px, 100% 100%, 100% 100%;
+    /* bintik halus (grain) */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    /* garis vertikal tipis: tiap kolom ada tepi terang + bayangan halus seperti kaca bergaris */
+    linear-gradient(90deg, rgb(255 255 255 / 0.07) 0, rgb(255 255 255 / 0.07) 1px, rgb(255 255 255 / 0.025) 2px, transparent 45%, rgb(0 0 0 / 0.045) 100%);
+  background-size: 220px 220px, 100px 100%;
 }
 @media (min-width: 768px) {
   .footer-rumput {
-    padding-top: 160px;
+    padding-top: 96px;
+    border-radius: 50% 50% 0 0 / 110px 110px 0 0;
   }
 }
 /* halaman bertema hijau gelap (Kesiswaan): kertasnya ikut hijau gelap. Penanda dipasang oleh
    <KertasFooterHijau /> (bukan :has(), lihat komponennya). */
-body[data-kertas="hijau"] .footer-rumput {
-  --sobek: #15301f;
-}
+/* .alas-footer (sudut di luar lengkungan footer): warnanya diatur dengan kelas Tailwind di kerangka-situs.tsx. */
 .footer-rumput a:focus-visible {
   outline-color: #ffffff;
 }

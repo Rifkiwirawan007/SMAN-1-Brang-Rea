@@ -26,7 +26,9 @@ export function KerangkaSitus({
       <main id="konten" className="flex-1">
         {children}
       </main>
-      <SiteFooter sekolah={sekolah} />
+      <div className="alas-footer bg-paper [body[data-kertas=hijau]_&]:bg-[#15301f]">
+        <SiteFooter sekolah={sekolah} />
+      </div>
       <RevealObserver />
       {catatKunjungan ? <PencatatKunjungan /> : null}
     </SitusProvider>
