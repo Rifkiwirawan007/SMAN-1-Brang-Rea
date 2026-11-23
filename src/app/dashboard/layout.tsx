@@ -5,6 +5,7 @@ import { bacaDokumen } from "@/lib/server/penyimpanan";
 import { bacaSemuaPesan } from "@/lib/server/pesan";
 import { bacaSemuaLaporan } from "@/lib/server/laporan";
 import { boleh } from "@/lib/cms/peran";
+import { META_APLIKASI } from "@/lib/aplikasi";
 import { PenyediaDasbor } from "@/components/dasbor/penyedia";
 import { ShellDasbor } from "@/components/dasbor/shell";
 import "../dasbor.css";
@@ -12,6 +13,7 @@ import "../dasbor.css";
 export const metadata: Metadata = {
   title: { default: "Dashboard", template: "%s · Dashboard" },
   robots: { index: false, follow: false },
+  ...META_APLIKASI,
 };
 
 // Dashboard selalu dirender saat diminta (membaca sesi dan data terbaru).
@@ -19,7 +21,7 @@ export const instant = false;
 
 export default async function LayoutDasbor({ children }: LayoutProps<"/dashboard">) {
   await connection();
-  const p = await wajibMasuk();
+  const p = await wajibMasuk(undefined, true);
   const [sekolah, pesan, laporan] = await Promise.all([
     bacaDokumen("sekolah"),
     boleh(p.peran, "pesan") ? bacaSemuaPesan() : Promise.resolve([]),

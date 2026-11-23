@@ -16,6 +16,8 @@ export type Pengguna = {
   terakhirMasuk?: string;
   /** Dinaikkan saat sandi diganti / keluar dari semua perangkat: sesi lama otomatis tidak berlaku. */
   versiSesi: number;
+  /** Sandi awal dari admin: wajib diganti sendiri sebelum memakai dashboard. */
+  wajibGantiSandi?: boolean;
 };
 
 /** Data pengguna yang aman dikirim ke klien (tanpa hash sandi). */
@@ -31,6 +33,7 @@ export const amankan = (p: Pengguna): PenggunaAman => ({
   aktif: p.aktif,
   dibuat: p.dibuat,
   terakhirMasuk: p.terakhirMasuk,
+  wajibGantiSandi: p.wajibGantiSandi || undefined,
 });
 
 export function bacaSemuaPengguna(): Promise<Pengguna[]> {
@@ -62,9 +65,11 @@ export async function penggunaSaatIni(): Promise<PenggunaAman | null> {
 }
 
 /** Untuk halaman dashboard: wajib masuk, dan (opsional) wajib punya akses ke modul tertentu. */
-export async function wajibMasuk(modul?: string): Promise<PenggunaAman> {
+export async function wajibMasuk(modul?: string, dariLayout = false): Promise<PenggunaAman> {
   const p = await penggunaSaatIni();
   if (!p) redirect("/masuk");
+  // Sandi awal (mis. nama123) harus diganti dulu; hanya halaman Akun saya yang boleh dibuka.
+  if (p.wajibGantiSandi && modul !== "akun" && !dariLayout) redirect("/dashboard/akun");
   if (modul && !boleh(p.peran, modul)) redirect("/dashboard?akses=ditolak");
   return p;
 }

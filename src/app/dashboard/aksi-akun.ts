@@ -56,7 +56,7 @@ export async function gantiSandiSaya(lama: string, baru: string, ulang: string):
     semua.map((x) => {
       if (x.id !== p.id) return x;
       versi = x.versiSesi + 1;
-      return { ...x, hashSandi: hash, versiSesi: versi };
+      return { ...x, hashSandi: hash, versiSesi: versi, wajibGantiSandi: undefined };
     }),
   );
   await pasangSesi(p.id, versi, false); // perangkat lain otomatis keluar, perangkat ini tetap masuk

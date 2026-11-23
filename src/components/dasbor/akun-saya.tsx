@@ -31,7 +31,10 @@ export function AkunSaya({ nama: namaAwal }: { nama: string }) {
     setSibuk(null);
     setGalat(h.ok ? {} : (h.galat ?? {}));
     toast(h.pesan, h.ok ? "sukses" : "galat");
-    if (h.ok) setSandi({ lama: "", baru: "", ulang: "" });
+    if (h.ok) {
+      setSandi({ lama: "", baru: "", ulang: "" });
+      router.refresh();
+    }
   };
 
   const keluarSemua = async () => {

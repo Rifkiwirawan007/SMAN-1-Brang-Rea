@@ -29,7 +29,8 @@ const KOLOM = [
 /** Footer situs publik: tepi kertas sobek, latar hijau bertekstur rumput, kolom tautan + tulisan besar "BAREMA". */
 export function SiteFooter({ sekolah }: { sekolah: Sekolah }) {
   const tahun = 2026;
-  const ikon = "grid h-9 w-9 place-items-center rounded-full border border-line-2 text-ink-2 transition-colors duration-200 hover:border-brand hover:bg-brand hover:text-white";
+  const ikon =
+    "grid h-11 w-11 place-items-center rounded-full text-white shadow-[0_8px_18px_-6px_rgb(15_30_22/0.35)] transition-[transform,filter] duration-200 hover:-translate-y-0.5 hover:brightness-110";
   return (
     <WordmarkFooter
       name="BAREMA"
@@ -53,34 +54,34 @@ export function SiteFooter({ sekolah }: { sekolah: Sekolah }) {
       aside={
         <div className="mt-6 flex items-center gap-3">
           <a
+            href={waLink("Halo SMAN 1 Brang Rea, saya ingin bertanya.", sekolah.kontak.whatsapp)}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="WhatsApp sekolah"
+            className={`${ikon} bg-[#5fcf6f]`}
+          >
+            <IkonWhatsApp size={22} />
+          </a>
+          <a
             href={sekolah.kontak.instagramUrl || "https://www.instagram.com/sman1brangrea/"}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram SMAN 1 Brang Rea"
-            className={ikon}
+            className={`${ikon} bg-[#d1416a]`}
           >
-            <IkonInstagram size={18} />
+            <IkonInstagram size={22} />
           </a>
           <a
             href={sekolah.kontak.facebookUrl}
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Facebook ${sekolah.kontak.facebook}`}
-            className={ikon}
+            className={`${ikon} bg-[#2f63f0]`}
           >
-            <IkonFacebook size={18} />
+            <IkonFacebook size={22} />
           </a>
-          <a
-            href={waLink("Halo SMAN 1 Brang Rea, saya ingin bertanya.", sekolah.kontak.whatsapp)}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="WhatsApp sekolah"
-            className={ikon}
-          >
-            <IkonWhatsApp size={18} />
-          </a>
-          <a href={`mailto:${sekolah.kontak.email}`} aria-label="Email sekolah" className={ikon}>
-            <Mail size={17} aria-hidden="true" />
+          <a href={`mailto:${sekolah.kontak.email}`} aria-label="Email sekolah" className={`${ikon} bg-[#f28c00]`}>
+            <Mail size={20} aria-hidden="true" />
           </a>
         </div>
       }

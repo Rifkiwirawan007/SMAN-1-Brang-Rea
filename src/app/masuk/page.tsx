@@ -6,12 +6,14 @@ import { connection } from "next/server";
 import { ArrowLeft } from "lucide-react";
 import { adaPengguna, penggunaSaatIni } from "@/lib/server/pengguna";
 import { bacaDokumen } from "@/lib/server/penyimpanan";
+import { META_APLIKASI } from "@/lib/aplikasi";
 import { FormAdminPertama, FormMasuk } from "@/components/dasbor/form-masuk";
 import "../dasbor.css";
 
 export const metadata: Metadata = {
   title: "Masuk dashboard",
   robots: { index: false, follow: false },
+  ...META_APLIKASI,
 };
 
 export const instant = false;
