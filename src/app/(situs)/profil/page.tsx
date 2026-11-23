@@ -329,7 +329,7 @@ export default async function Profil() {
           <SectionHead
             id="judul-guru"
             judul="Guru dan tenaga kependidikan"
-            teks={<p>Pendidik yang mendampingi {s.siswa} siswa setiap hari, dengan rasio satu guru untuk {s.rasioSiswaGuru} siswa.</p>}
+            tengah
           />
           <dl className="mt-10 grid grid-cols-2 gap-6 border-y border-line py-8 sm:gap-8 sm:py-10 lg:mt-12 lg:grid-cols-4">
             <div data-reveal>
@@ -387,7 +387,7 @@ export default async function Profil() {
           <SectionHead
             id="judul-sarana"
             judul="Sarana dan prasarana"
-            teks={<p>Ruang belajar dan fasilitas pendukung di atas lahan seluas {formatAngka(s.luasTanah)} meter persegi.</p>}
+            tengah
           />
           <CarouselRail
             ariaLabel="Daftar sarana dan prasarana"
