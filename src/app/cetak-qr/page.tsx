@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { connection } from "next/server";
+import { Suspense } from "react";
 import Link from "next/link";
 import QRCode from "qrcode";
 import { wajibMasuk } from "@/lib/server/pengguna";
@@ -21,7 +22,16 @@ async function svgQr(isi: string) {
   return QRCode.toString(isi, { type: "svg", errorCorrectionLevel: "M", margin: 1 });
 }
 
-export default async function CetakQr({ searchParams }: Props) {
+export default function CetakQr(props: Props) {
+  // Data per-permintaan (login, searchParams) wajib di dalam Suspense supaya build tidak gagal prerender.
+  return (
+    <Suspense fallback={<p className="cq-kosong">Memuat…</p>}>
+      <IsiCetakQr {...props} />
+    </Suspense>
+  );
+}
+
+async function IsiCetakQr({ searchParams }: Props) {
   await connection();
   await wajibMasuk("siswa");
   const { kelas = "" } = await searchParams;
