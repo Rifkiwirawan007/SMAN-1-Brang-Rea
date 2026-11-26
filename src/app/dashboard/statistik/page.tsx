@@ -116,7 +116,7 @@ export default async function HalamanStatistik({ searchParams }: PageProps<"/das
         )}
       </Kartu>
 
-      <div className="grid gap-6 xl:grid-cols-2">
+      <div className="grid min-w-0 gap-6 xl:grid-cols-2 [&>*]:min-w-0">
         <Kartu judul="Halaman paling sering dibuka">
           <BatangHorizontal data={data.halaman.map((h) => ({ label: nama(h.path), nilai: h.jumlah, href: h.path }))} />
         </Kartu>

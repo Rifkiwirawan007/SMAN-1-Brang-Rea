@@ -12,7 +12,7 @@ export function GrafikHarian({ seri, tinggi = 180 }: { seri: { tanggal: string; 
   const langkah = Math.pow(10, Math.floor(Math.log10(maks)));
   const atas = Math.ceil(maks / langkah) * langkah;
   const garis = [0, 0.5, 1].map((f) => Math.round(atas * f));
-  const tiapLabel = Math.ceil(seri.length / 8);
+  const tiapLabel = Math.ceil(seri.length / 6);
 
   return (
     <div>
@@ -51,8 +51,10 @@ export function GrafikHarian({ seri, tinggi = 180 }: { seri: { tanggal: string; 
       </div>
       <div className="ml-10 mt-1.5 flex gap-[3px] text-[0.625rem] text-muted">
         {seri.map((s, i) => (
-          <span key={s.tanggal} className="flex-1 truncate text-center">
-            {i % tiapLabel === 0 ? labelTanggal(s.tanggal) : ""}
+          <span key={s.tanggal} className="relative h-3.5 flex-1">
+            {i % tiapLabel === 0 && (
+              <span className="absolute left-1/2 top-0 -translate-x-1/2 whitespace-nowrap">{labelTanggal(s.tanggal)}</span>
+            )}
           </span>
         ))}
       </div>
@@ -92,9 +94,9 @@ export function BatangHorizontal({ data, kosong = "Belum ada data." }: { data: {
   if (!data.length) return <p className="py-6 text-center text-sm text-muted">{kosong}</p>;
   const maks = Math.max(...data.map((d) => d.nilai));
   return (
-    <ul className="flex flex-col gap-2">
+    <ul className="flex min-w-0 flex-col gap-2">
       {data.map((d) => (
-        <li key={d.label} className="relative overflow-hidden rounded-lg">
+        <li key={d.label} className="relative min-w-0 overflow-hidden rounded-lg">
           <div className="absolute inset-y-0 left-0 rounded-lg bg-brand-soft" style={{ width: `${(d.nilai / maks) * 100}%` }} aria-hidden="true" />
           <div className="relative flex items-center justify-between gap-3 px-3 py-1.5 text-sm">
             {d.href ? (

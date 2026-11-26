@@ -246,10 +246,10 @@ export function KelolaIzinKeluar({
               : "Membuka dialog cetak browser dengan kertas 58 mm. Untuk printer yang sudah terpasang di laptop."
         }
       >
-        <div className="flex flex-wrap items-end gap-3">
-          <label className="flex flex-col gap-1.5">
+        <div className="flex min-w-0 flex-wrap items-end gap-3">
+          <label className="flex w-full min-w-0 flex-col gap-1.5 sm:w-auto">
             <span className="d-label">Cara cetak</span>
-            <select className="d-input w-auto" value={cara} onChange={(e) => gantiCara(e.target.value as CaraCetak)}>
+            <select className="d-input w-full min-w-0 max-w-full truncate sm:w-auto" value={cara} onChange={(e) => gantiCara(e.target.value as CaraCetak)}>
               {(Object.keys(LABEL_CARA) as CaraCetak[]).map((c) => (
                 <option key={c} value={c} disabled={c === "bluetooth" && !adaBt}>
                   {LABEL_CARA[c]}

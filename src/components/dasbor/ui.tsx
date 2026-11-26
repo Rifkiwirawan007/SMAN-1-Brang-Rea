@@ -66,7 +66,7 @@ export function Kartu({
   isiClassName?: string;
 }) {
   return (
-    <section className={`d-kartu ${className}`}>
+    <section className={`d-kartu min-w-0 ${className}`}>
       {(judul || aksi) && (
         <header className="flex items-start justify-between gap-3 border-b border-line px-5 py-4">
           <div className="min-w-0">
@@ -76,7 +76,7 @@ export function Kartu({
           {aksi && <div className="flex shrink-0 items-center gap-2">{aksi}</div>}
         </header>
       )}
-      <div className={isiClassName}>{children}</div>
+      <div className={`min-w-0 ${isiClassName}`}>{children}</div>
     </section>
   );
 }
