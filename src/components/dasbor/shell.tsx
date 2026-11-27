@@ -21,6 +21,7 @@ import {
   LogOut,
   Menu,
   ShieldAlert,
+  Scale,
   UserCog,
   UserRound,
   UsersRound,
@@ -56,8 +57,11 @@ function susunNav(peran: Peran, pesanBaru: number, laporanBaru: number): { judul
       ],
     },
     {
-      judul: "Bimbingan konseling",
-      item: [{ href: "/dashboard/laporan", label: "Laporan siswa", ikon: ShieldAlert, kunci: "laporan", lencana: laporanBaru }],
+      judul: "Kesiswaan",
+      item: [
+        { href: "/dashboard/poin", label: "Poin pelanggaran", ikon: Scale, kunci: "poin" },
+        { href: "/dashboard/laporan", label: "Laporan siswa", ikon: ShieldAlert, kunci: "laporan", lencana: laporanBaru },
+      ],
     },
     { judul: "Konten", item: [...dariModul("Konten"), { href: "/dashboard/media", label: "Pustaka foto", ikon: FolderOpen, kunci: "media" }] },
     { judul: "Halaman situs", item: dariModul("Halaman situs") },

@@ -6,6 +6,8 @@ import { bacaAbsenBulan, bacaAturAbsensi, bacaSiswa, bacaTanggalLahir } from "@/
 import { bulanSah, geserBulan, STATUS_ABSEN, tanggalIni, type CaraAbsen, type StatusAbsen } from "@/lib/absensi/tipe";
 import { bacaSesiBulan } from "@/lib/server/jadwal";
 import { labelJam, type StatusMapel } from "@/lib/jadwal/tipe";
+import { bacaAturanPoin, bacaPoinSemester } from "@/lib/server/poin";
+import { semesterDari, tingkatDari } from "@/lib/poin/tipe";
 
 /** Satu ketidakhadiran di jam pelajaran. */
 export type BarisMapel = { tanggal: string; jam: string; mapel: string; status: Exclude<StatusMapel, "hadir"> };
@@ -29,6 +31,8 @@ export type HasilCek =
       mapel: BarisMapel[];
       /** Rekap per mata pelajaran di bulan terpilih (hanya mapel yang sudah diabsen). */
       rekapMapel: RekapMapel[];
+      /** Poin pelanggaran tata tertib semester berjalan. */
+      poin: { semester: string; total: number; tingkat: string; sanksi: string; daftar: { tanggal: string; pelanggaran: string; poin: number }[] };
     }
   | { ok: false; pesan: string };
 
@@ -75,12 +79,18 @@ export async function cekAbsensi(input: { nisn: string; tglLahir?: string; bulan
   const bulan = bulanSah(input.bulan) && input.bulan <= bulanIni ? input.bulan : bulanIni;
   const milik = (daftar: Awaited<ReturnType<typeof bacaAbsenBulan>>) => daftar.filter((c) => c.siswaId === siswa.id);
 
-  const [dataBulan, dataIni, dataLalu, sesiBulan] = await Promise.all([
+  const sem = semesterDari(hariIni);
+  const [dataBulan, dataIni, dataLalu, sesiBulan, catatanPoin, aturanPoin] = await Promise.all([
     bacaAbsenBulan(bulan).then(milik),
     bulan === bulanIni ? null : bacaAbsenBulan(bulanIni).then(milik),
     bacaAbsenBulan(geserBulan(bulanIni, -1)).then(milik),
     bacaSesiBulan(bulan),
+    bacaPoinSemester(sem.kunci),
+    bacaAturanPoin(),
   ]);
+  const poinSiswa = catatanPoin.filter((c) => c.siswa.id === siswa.id && !c.batal).sort((a, b) => b.tanggal.localeCompare(a.tanggal));
+  const totalPoin = poinSiswa.reduce((n, c) => n + c.poin, 0);
+  const tingkatPoin = tingkatDari(totalPoin, aturanPoin.tingkat);
   const sesiSiswa = sesiBulan.filter((x) => x.kelas === siswa.kelas || x.tidakHadir[siswa.id]);
   const peta = new Map<string, RekapMapel>();
   const mapel: BarisMapel[] = [];
@@ -118,6 +128,13 @@ export async function cekAbsensi(input: { nisn: string; tglLahir?: string; bulan
       .slice(0, 6)
       .map(baris),
     mapel,
+    poin: {
+      semester: sem.label,
+      total: totalPoin,
+      tingkat: tingkatPoin.kode,
+      sanksi: tingkatPoin.sanksi,
+      daftar: poinSiswa.map((c) => ({ tanggal: c.tanggal, pelanggaran: c.pelanggaran.nama, poin: c.poin })),
+    },
     rekapMapel: [...peta.values()].sort((a, b) => b.alpa + b.sakit + b.izin - (a.alpa + a.sakit + a.izin) || a.mapel.localeCompare(b.mapel, "id")),
   };
 }

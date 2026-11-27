@@ -10,8 +10,8 @@ export const LABEL_PERAN: Record<Peran, string> = { admin: "Admin", editor: "Edi
 export const KET_PERAN: Record<Peran, string> = {
   admin: "Semua fitur, termasuk info sekolah, pesan masuk, statistik, akun, dan log aktivitas.",
   editor: "Kelola konten: berita, agenda, prestasi, ekskul, galeri, dan isi halaman.",
-  guru: "Absensi siswa saja: scan QR kartu siswa, absen kelas per jam pelajaran, ubah status (sakit/izin/alpa), izin keluar siswa, dan kelola data siswa.",
-  bk: "Laporan siswa saja: membaca laporan perundungan/masalah, menindaklanjuti, dan membalas pelapor.",
+  guru: "Absensi siswa saja: scan QR kartu siswa, absen kelas per jam pelajaran, ubah status (sakit/izin/alpa), izin keluar siswa, catat poin pelanggaran, dan kelola data siswa.",
+  bk: "Laporan siswa (membaca laporan perundungan/masalah, menindaklanjuti, membalas pelapor) dan poin pelanggaran tata tertib.",
 };
 
 /** Admin dan editor: pengelola konten situs. */
@@ -20,6 +20,8 @@ const ADMIN: Peran[] = ["admin"];
 const ABSENSI: Peran[] = ["admin", "guru"];
 /** Laporan siswa bersifat rahasia: hanya guru BK dan admin. */
 const LAPORAN: Peran[] = ["admin", "bk"];
+/** Poin pelanggaran tata tertib: semua guru termasuk guru BK. */
+const POIN: Peran[] = ["admin", "guru", "bk"];
 
 /** Kunci modul/halaman dashboard → peran yang boleh membuka. */
 export const AKSES: Record<string, Peran[]> = {
@@ -30,6 +32,8 @@ export const AKSES: Record<string, Peran[]> = {
   jadwal: ADMIN,
   "izin-keluar": ABSENSI,
   laporan: LAPORAN,
+  poin: POIN,
+  "poin-aturan": ADMIN,
   siswa: ABSENSI,
   kelulusan: ADMIN,
   media: SEMUA,

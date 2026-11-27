@@ -235,6 +235,38 @@ export function CekAbsen({ wajibTglLahir }: { wajibTglLahir: boolean }) {
           </div>
         )}
 
+        {/* Poin pelanggaran tata tertib */}
+        <div className="rounded-[18px] border border-line bg-paper">
+          <div className="flex flex-wrap items-start justify-between gap-3 border-b border-line p-5 md:px-6">
+            <div>
+              <p className="font-semibold text-ink">Poin pelanggaran tata tertib</p>
+              <p className="mt-0.5 text-sm text-muted">{h.poin.semester} · dihitung ulang dari 0 setiap semester.</p>
+            </div>
+            <div className="text-right">
+              <p className={`text-3xl font-bold tabular-nums ${h.poin.total >= 40 ? "text-[#b42318]" : h.poin.total > 0 ? "text-[#b54708]" : "text-[#067647]"}`}>{h.poin.total}</p>
+              <p className="text-xs text-muted">poin</p>
+            </div>
+          </div>
+          {h.poin.daftar.length === 0 ? (
+            <p className="px-5 py-4 text-sm text-ink-2 md:px-6">Tidak ada catatan pelanggaran semester ini.</p>
+          ) : (
+            <>
+              <p className="border-b border-line px-5 py-3 text-sm text-ink-2 md:px-6">
+                Tingkat <b className="text-ink">{h.poin.tingkat}</b>: {h.poin.sanksi}
+              </p>
+              <ul className="divide-y divide-line">
+                {h.poin.daftar.map((d, i) => (
+                  <li key={`${d.tanggal}-${i}`} className="flex flex-wrap items-center gap-x-3 gap-y-1 px-5 py-3 text-sm md:px-6">
+                    <span className="font-medium text-ink sm:w-[150px]">{tanggalPendek(d.tanggal)}</span>
+                    <span className="min-w-0 flex-1 text-ink-2">{d.pelanggaran}</span>
+                    <span className="font-semibold tabular-nums text-ink">+{d.poin}</span>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+        </div>
+
         <p className="flex items-start gap-2 text-sm text-muted">
           <ShieldCheck size={16} aria-hidden="true" className="mt-0.5 shrink-0 text-brand" />
           Data berasal dari absensi QR dan catatan guru di sekolah. Setiap perubahan status tersimpan beserta nama guru dan waktunya. Bila ada yang keliru,

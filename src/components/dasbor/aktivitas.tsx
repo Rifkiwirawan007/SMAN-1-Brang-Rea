@@ -35,7 +35,7 @@ export const KATA_AKSI: Record<JenisAksi, string> = {
   pesan: "memproses pesan",
 };
 
-const LABEL_LAIN: Record<string, string> = { akun: "Akun", pengguna: "Pengguna", pesan: "Pesan masuk", media: "Pustaka foto", absensi: "Absensi", "izin-keluar": "Izin keluar", siswa: "Data siswa", laporan: "Laporan siswa" };
+const LABEL_LAIN: Record<string, string> = { akun: "Akun", pengguna: "Pengguna", pesan: "Pesan masuk", media: "Pustaka foto", absensi: "Absensi", "izin-keluar": "Izin keluar", siswa: "Data siswa", laporan: "Laporan siswa", poin: "Poin pelanggaran" };
 export const labelModul = (k: string) => cariModul(k)?.label ?? LABEL_LAIN[k] ?? k;
 
 export function BarisAktivitas({ a, ringkas = false }: { a: Aktivitas; ringkas?: boolean }) {
